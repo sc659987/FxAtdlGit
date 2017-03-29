@@ -13,12 +13,19 @@
     -fx-padding: 8;
 }
 
-.titled-pane {
-    -fx-effect: dropshadow(three-pass-box, #9F9F9F, 15, 0, 0, 0);
-    -fx-animated: true;
-    -fx-text-fill: #505050;
-}
+/*.titled-pane > .title {*/
+    /*-fx-pref-height: 15.0;*/
+/*}*/
 
-.label {
-    -fx-text-fill: #f00
-}
+/*.titled-pane {*/
+    /*-fx-text-fill: #006FD8;*/
+/*}*/
+
+/*.titled-pane > .title > .arrow-button .arrow {*/
+    /*-fx-background-color: blue;*/
+
+/*}*/
+
+/*.label {*/
+    /*-fx-text-fill: #f00*/
+/*}*/

@@ -2,26 +2,29 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.layout.DropDownListT;
 import com.three360.ui.common.element.IFixDropDownListUiElement;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.three360.ui.fx8.FxUtils;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.util.stream.Collectors;
 
-public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<HBox, EventHandler<ActionEvent>> {
+public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pane, ChangeListener<String>> {
 
     private DropDownListT dropDownListT;
 
     private ComboBox<String> stringComboBox = new ComboBox<>();
 
-    private EventHandler<ActionEvent> handlers;
+    private ChangeListener<String> handlers;
     private Label label;
-    private HBox hBox;
+    private GridPane gridPane;
+
+    private int nextColumn = 0;
 
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
+    public void registerForEvent(ChangeListener<String> e) {
         this.handlers = e;
     }
 
@@ -31,20 +34,35 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<HBo
     }
 
     @Override
-    public HBox create() {
+    public Pane create() {
         if (this.dropDownListT != null) {
-            this.hBox = new HBox();
-            this.hBox.getChildren().add(this.label = new Label(this.dropDownListT.getLabel()));
+            this.gridPane = new GridPane();
+            if (this.dropDownListT.getLabel() != null && !this.dropDownListT.getLabel().equals("")) {
+                this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+                this.gridPane.add(this.label = new Label(this.dropDownListT.getLabel()), this.nextColumn++, 0);
+            }
             this.stringComboBox.getItems()
-                    .addAll(this.dropDownListT.getListItem().stream().map(listItemT -> listItemT.getUiRep()).collect(Collectors.toList()));
-            this.stringComboBox.getSelectionModel().selectFirst();
-            this.stringComboBox.setOnAction(event -> {
-                if (handlers != null)
-                    handlers.handle(event);
-                stringComboBox.getValue();
-            });
-            this.hBox.getChildren().add(this.stringComboBox);
-            return this.hBox;
+                    .addAll(this.dropDownListT
+                            .getListItem()
+                            .stream()
+                            .map(listItemT -> listItemT.getUiRep())
+                            .collect(Collectors.toList()));
+
+            if (this.dropDownListT.getInitValue() == null || this.dropDownListT.getInitValue().equals(""))
+                this.stringComboBox.getSelectionModel().selectFirst();
+            else
+                this.stringComboBox.getSelectionModel().select(this.dropDownListT.getInitValue());
+
+            this.stringComboBox
+                    .valueProperty()
+                    .addListener((observable, oldValue, newValue) -> {
+                        if (handlers != null)
+                            handlers.changed(observable, oldValue, newValue);
+                    });
+
+            this.gridPane.add(this.stringComboBox, this.nextColumn, 0);
+
+            return this.gridPane;
         }
         return null;
     }

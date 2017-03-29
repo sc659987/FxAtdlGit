@@ -25,7 +25,7 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<HBox, Eve
             this.label = new Label(this.textFieldT.getLabel());
             this.textField = new TextField(this.textFieldT.getInitValue());
             this.hBoxWrapper = new HBox();
-            this.hBoxWrapper.getChildren().addAll(this.label, this.textField, this.hBoxWrapper);
+            this.hBoxWrapper.getChildren().addAll(this.label, this.textField);
             return this.hBoxWrapper;
         }
         return null;

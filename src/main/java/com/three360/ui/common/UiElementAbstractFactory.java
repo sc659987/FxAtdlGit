@@ -36,6 +36,8 @@ public interface UiElementAbstractFactory {
 
     <T, K> IFixHiddenFieldUiElement<T, K> instantiateNewHiddenField();
 
-    IFixPanelUiElement instantiateNewPanel();
+    <T, K> IFixPanelUiElement<T, K> instantiateNewPanel();
+
+    <T, K> IFixLayoutUiElement<T, K> instantiateNewLayout();
 
 }

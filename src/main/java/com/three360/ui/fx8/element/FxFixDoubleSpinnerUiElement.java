@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 
 public class FxFixDoubleSpinnerUiElement implements IFixDoubleSpinnerUiElement<Pane, EventHandler<ActionEvent>> {
 
+
+
     @Override
     public Pane create() {
         return null;

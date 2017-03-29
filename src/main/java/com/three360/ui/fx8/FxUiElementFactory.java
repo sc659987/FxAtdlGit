@@ -3,6 +3,7 @@ package com.three360.ui.fx8;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.*;
 import com.three360.ui.fx8.element.*;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -26,7 +27,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixDropDownListUiElement<HBox, EventHandler<ActionEvent>> instantiateNewDropDownList() {
+    public IFixDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewDropDownList() {
         return new FxFixDropDownListUiElement();
     }
 
@@ -68,7 +69,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixClockUiElement<HBox, EventHandler<ActionEvent>> instantiateNewClock() {
+    public IFixClockUiElement<Pane, EventHandler<ActionEvent>> instantiateNewClock() {
         return new FxFixClockUiElement();
     }
 
@@ -78,7 +79,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixEditableDropDownListUiElement<HBox, EventHandler<ActionEvent>> instantiateNewEditableDropDownList() {
+    public IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewEditableDropDownList() {
         return new FxFixEditableDropDownListUiElement();
     }
 
@@ -100,5 +101,10 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     @Override
     public IFixTextFieldUiElement<HBox, EventHandler<ActionEvent>> instantiateNewTextField() {
         return new FxFixTextFieldUiElement();
+    }
+
+    @Override
+    public IFixLayoutUiElement<Node, EventHandler<ActionEvent>> instantiateNewLayout() {
+        return new FxFixLayoutUiElement();
     }
 }

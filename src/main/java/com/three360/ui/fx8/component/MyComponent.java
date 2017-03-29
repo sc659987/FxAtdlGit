@@ -3,6 +3,8 @@ package com.three360.ui.fx8.component;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.fx8.FxFixAtdlStrategyUI;
 import com.three360.ui.fx8.FxFixAtdlUi;
+import com.three360.ui.fx8.element.FxFixLabelUiElement;
+import com.three360.ui.fx8.element.FxFixLayoutUiElement;
 import com.three360.ui.fx8.element.FxFixPanelUiElement;
 import com.three360.ui.fx8.module.Fx8DependencyModule;
 import dagger.Component;
@@ -26,5 +28,7 @@ public interface MyComponent {
     void inject(FxFixAtdlStrategyUI strategyUI);
 
     void inject(FxFixPanelUiElement fxFixPanelUiElement);
+
+    void inject(FxFixLayoutUiElement fxFixLabelUiElement);
 
 }
