@@ -20,6 +20,7 @@ import java.math.BigInteger;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
+ * 
  * <pre>
  * &lt;complexType name="TagNum_t">
  *   &lt;complexContent>
@@ -33,30 +34,31 @@ import java.math.BigInteger;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TagNum_t")
 public class TagNumT
-        extends ParameterT {
+		extends ParameterT {
 
-    @XmlAttribute
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger constValue;
+	@XmlAttribute
+	@XmlSchemaType(name = "positiveInteger")
+	protected BigInteger constValue;
 
-    /**
-     * Gets the value of the constValue property.
-     *
-     * @return possible object is
-     * {@link BigInteger }
-     */
-    public BigInteger getConstValue() {
-        return constValue;
-    }
+	/**
+	 * Gets the value of the constValue property.
+	 *
+	 * @return possible object is
+	 *         {@link BigInteger }
+	 */
+	public BigInteger getConstValue() {
+		return constValue;
+	}
 
-    /**
-     * Sets the value of the constValue property.
-     *
-     * @param value allowed object is
-     *              {@link BigInteger }
-     */
-    public void setConstValue(BigInteger value) {
-        this.constValue = value;
-    }
+	/**
+	 * Sets the value of the constValue property.
+	 *
+	 * @param value
+	 *            allowed object is
+	 *            {@link BigInteger }
+	 */
+	public void setConstValue(BigInteger value) {
+		this.constValue = value;
+	}
 
 }

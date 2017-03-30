@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
+ * 
  * <pre>
  * &lt;complexType name="Language_t">
  *   &lt;complexContent>
@@ -37,30 +38,31 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Language_t")
 public class LanguageT
-        extends ParameterT {
+		extends ParameterT {
 
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String constValue;
+	@XmlAttribute
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+	protected String constValue;
 
-    /**
-     * Gets the value of the constValue property.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    public String getConstValue() {
-        return constValue;
-    }
+	/**
+	 * Gets the value of the constValue property.
+	 *
+	 * @return possible object is
+	 *         {@link String }
+	 */
+	public String getConstValue() {
+		return constValue;
+	}
 
-    /**
-     * Sets the value of the constValue property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setConstValue(String value) {
-        this.constValue = value;
-    }
+	/**
+	 * Sets the value of the constValue property.
+	 *
+	 * @param value
+	 *            allowed object is
+	 *            {@link String }
+	 */
+	public void setConstValue(String value) {
+		this.constValue = value;
+	}
 
 }

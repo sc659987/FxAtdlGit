@@ -7,9 +7,9 @@ import com.three360.fixatdl.layout.EditableDropDownListT;
  */
 public interface IFixEditableDropDownListUiElement<T, K> extends IFixUiElement<T, K> {
 
-    /***
-     *
-     * @param listT
-     */
-    void setEditableDropDownList(EditableDropDownListT listT);
+	/***
+	 *
+	 * @param listT
+	 */
+	void setEditableDropDownList(EditableDropDownListT listT);
 }

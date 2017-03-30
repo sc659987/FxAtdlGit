@@ -22,65 +22,69 @@ import javax.xml.bind.Unmarshaller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 
-    @Inject
-    Unmarshaller jaxbUnmarshaller;
+	@Inject
+	Unmarshaller jaxbUnmarshaller;
 
-    @Inject
-    UiElementAbstractFactory factory;
+	@Inject
+	UiElementAbstractFactory factory;
 
-    private IFixLayoutUiElement<Node, EventHandler<ActionEvent>> layoutUiElement;
+	private final VBox vBox = new VBox();
 
+	public FxFixAtdlUi() {
+		DaggerMyComponent.builder().build().inject(this);
+	}
 
-    public FxFixAtdlUi() {
-        DaggerMyComponent.builder().build().inject(this);
-    }
+	@Override
+	public Pane createUi() {
+		vBox.setAlignment(Pos.TOP_LEFT);
+		if (getStrategies() != null) {
+			vBox.getChildren().clear();
+			vBox.getChildren().add(0, createStrategySelectionPanel());
+			if (getStrategies().getStrategy().size() > 0)
+				setSelectedStrategy(getStrategies().getStrategy().get(0));
+			if (getSelectedStrategy() != null)
+				createFixLayout();
+		}
+		return vBox;
+	}
 
-    @Override
-    public Pane createUi() {
-        VBox vBox = new VBox();
-        vBox.setAlignment(Pos.TOP_LEFT);
-        if (getStrategies() != null) {
-            vBox.getChildren().add(createStrategySelectionPanel());
-            if (getStrategies().getStrategy().size() > 0)
-                setSelectedStrategy(getStrategies().getStrategy().get(0));
-            if (getSelectedStrategy() != null) {
-                this.layoutUiElement = factory.instantiateNewLayout();
-                this.layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
-                vBox.getChildren().add(this.layoutUiElement.create());
-            }
-        }
-        return vBox;
-    }
+	private void createFixLayout() {
+		if (vBox.getChildren().size() > 1)
+			vBox.getChildren().remove(1);
+		IFixLayoutUiElement<Node, EventHandler<ActionEvent>> layoutUiElement = factory.instantiateNewLayout();
+		layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
+		vBox.getChildren().add(1, layoutUiElement.create());
+	}
 
-    @Override
-    public Unmarshaller getUnmarshaller() {
-        return this.jaxbUnmarshaller;
-    }
+	@Override
+	public Unmarshaller getUnmarshaller() {
+		return this.jaxbUnmarshaller;
+	}
 
-    @Override
-    public Pane createStrategySelectionPanel() {
-        HBox strategySelectionBox = new HBox();
-        strategySelectionBox.setAlignment(Pos.CENTER);
-        if (getStrategies() != null) {
-            IFixDropDownListUiElement<ComboBox<String>, ChangeListener<String>> element = this.factory.instantiateNewDropDownList();
-            List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
-                ListItemT listItemT = new ListItemT();
-                listItemT.setUiRep(s.getUiRep());
-                return listItemT;
-            }).collect(Collectors.toList());
-            DropDownListT dropDownListT = new DropDownListT();
-            dropDownListT.getListItem().addAll(listItemTS);
-            element.setDropDownList(dropDownListT);
-            element.registerForEvent((observable, oldValue, newValue) -> {
-
-            });
-
-
-            strategySelectionBox.getChildren().add(element.create());
-        }
-        return strategySelectionBox;
-    }
+	@Override
+	public Pane createStrategySelectionPanel() {
+		HBox strategySelectionBox = new HBox();
+		strategySelectionBox.setAlignment(Pos.CENTER);
+		if (getStrategies() != null) {
+			IFixDropDownListUiElement<ComboBox<String>, ChangeListener<String>> element = this.factory.instantiateNewDropDownList();
+			List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
+				ListItemT listItemT = new ListItemT();
+				listItemT.setUiRep(s.getUiRep());
+				return listItemT;
+			}).collect(Collectors.toList());
+			DropDownListT dropDownListT = new DropDownListT();
+			dropDownListT.getListItem().addAll(listItemTS);
+			element.setDropDownList(dropDownListT);
+			element.registerForEvent((observable, oldValue, newValue) -> {
+				if (newValue != null) {
+					setSelectedStrategy(findStrategyTByName(newValue));
+					createFixLayout();
+				}
+			});
+			strategySelectionBox.getChildren().add(element.create());
+		}
+		return strategySelectionBox;
+	}
 }

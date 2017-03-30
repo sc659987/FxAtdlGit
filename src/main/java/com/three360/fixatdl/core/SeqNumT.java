@@ -23,6 +23,7 @@ import java.math.BigInteger;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
+ * 
  * <pre>
  * &lt;complexType name="SeqNum_t">
  *   &lt;complexContent>
@@ -36,29 +37,30 @@ import java.math.BigInteger;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SeqNum_t")
 public class SeqNumT
-        extends ParameterT {
+		extends ParameterT {
 
-    @XmlAttribute
-    protected BigInteger constValue;
+	@XmlAttribute
+	protected BigInteger constValue;
 
-    /**
-     * Gets the value of the constValue property.
-     *
-     * @return possible object is
-     * {@link BigInteger }
-     */
-    public BigInteger getConstValue() {
-        return constValue;
-    }
+	/**
+	 * Gets the value of the constValue property.
+	 *
+	 * @return possible object is
+	 *         {@link BigInteger }
+	 */
+	public BigInteger getConstValue() {
+		return constValue;
+	}
 
-    /**
-     * Sets the value of the constValue property.
-     *
-     * @param value allowed object is
-     *              {@link BigInteger }
-     */
-    public void setConstValue(BigInteger value) {
-        this.constValue = value;
-    }
+	/**
+	 * Sets the value of the constValue property.
+	 *
+	 * @param value
+	 *            allowed object is
+	 *            {@link BigInteger }
+	 */
+	public void setConstValue(BigInteger value) {
+		this.constValue = value;
+	}
 
 }

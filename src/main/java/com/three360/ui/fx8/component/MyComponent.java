@@ -16,19 +16,19 @@ import javax.xml.bind.Unmarshaller;
  * Created by sainik on 3/22/17.
  */
 @Singleton
-@Component(modules = {Fx8DependencyModule.class})
+@Component(modules = { Fx8DependencyModule.class })
 public interface MyComponent {
 
-    Unmarshaller provideUnmarshaller();
+	Unmarshaller provideUnmarshaller();
 
-    UiElementAbstractFactory provideUiElementAbstractFactory();
+	UiElementAbstractFactory provideUiElementAbstractFactory();
 
-    void inject(FxFixAtdlUi fxFixAtdlUiPanel);
+	void inject(FxFixAtdlUi fxFixAtdlUiPanel);
 
-    void inject(FxFixAtdlStrategyUI strategyUI);
+	void inject(FxFixAtdlStrategyUI strategyUI);
 
-    void inject(FxFixPanelUiElement fxFixPanelUiElement);
+	void inject(FxFixPanelUiElement fxFixPanelUiElement);
 
-    void inject(FxFixLayoutUiElement fxFixLabelUiElement);
+	void inject(FxFixLayoutUiElement fxFixLabelUiElement);
 
 }

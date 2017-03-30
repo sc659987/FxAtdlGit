@@ -1,5 +1,6 @@
 package com.three360.ui.fx8.element;
 
+import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.SingleSpinnerT;
 import com.three360.ui.common.element.IFixSingleSpinnerUiElement;
 import javafx.collections.FXCollections;
@@ -36,33 +37,39 @@ import javafx.scene.layout.HBox;
  */
 public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<HBox, EventHandler<ActionEvent>> {
 
-    private Spinner<Double> singleSpinner;
-    private SingleSpinnerT singleSpinnerT;
-    private HBox hBoxWrapper;
-    private Label labelForSpinner;
+	private Spinner<Double> singleSpinner;
+	private SingleSpinnerT singleSpinnerT;
+	private HBox hBoxWrapper;
+	private Label labelForSpinner;
 
-    @Override
-    public HBox create() {
-        if (this.singleSpinnerT != null) {
-            this.singleSpinner.setValueFactory(
-                    new SpinnerValueFactory.ListSpinnerValueFactory<>(
-                            FXCollections.observableArrayList(0.0, 0.1, 0.2, 0.3)));
-            this.labelForSpinner = new Label();
-            this.labelForSpinner.setText(this.singleSpinnerT.getLabel());
-            this.hBoxWrapper = new HBox();
-            this.hBoxWrapper.getChildren().addAll(this.labelForSpinner, this.singleSpinner);
-            return this.hBoxWrapper;
-        }
-        return null;
-    }
+	@Override
+	public HBox create() {
+		if (this.singleSpinnerT != null) {
+			this.singleSpinner = new Spinner<Double>();
+			this.singleSpinner.setValueFactory(
+					new SpinnerValueFactory.ListSpinnerValueFactory<>(
+							FXCollections.observableArrayList(0.0, 0.1, 0.2, 0.3)));
+			this.labelForSpinner = new Label();
+			this.labelForSpinner.setText(this.singleSpinnerT.getLabel());
+			this.hBoxWrapper = new HBox();
+			this.hBoxWrapper.getChildren().addAll(this.labelForSpinner, this.singleSpinner);
+			return this.hBoxWrapper;
+		}
+		return null;
+	}
 
-    @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
+	@Override
+	public void registerForEvent(EventHandler<ActionEvent> e) {
 
-    }
+	}
 
-    @Override
-    public void setSingleSpinner(SingleSpinnerT singleSpinnerT) {
-        this.singleSpinnerT = singleSpinnerT;
-    }
+	@Override
+	public void setSingleSpinner(SingleSpinnerT singleSpinnerT) {
+		this.singleSpinnerT = singleSpinnerT;
+	}
+
+	@Override
+	public void setParameter(ParameterT parameter) {
+
+	}
 }

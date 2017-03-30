@@ -7,19 +7,19 @@ import java.util.List;
 
 public class ListStringConverter extends StringConverter<Double> {
 
-    private List<String> values = new LinkedList<>();
+	private List<String> values = new LinkedList<>();
 
-    public ListStringConverter(List<String> values) {
-        this.values = values;
-    }
+	public ListStringConverter(List<String> values) {
+		this.values = values;
+	}
 
-    @Override
-    public String toString(Double object) {
-        return this.values.get(object.intValue());
-    }
+	@Override
+	public String toString(Double object) {
+		return this.values.get(object.intValue());
+	}
 
-    @Override
-    public Double fromString(String string) {
-        return (double) this.values.indexOf(string);
-    }
+	@Override
+	public Double fromString(String string) {
+		return (double) this.values.indexOf(string);
+	}
 }

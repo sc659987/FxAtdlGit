@@ -7,10 +7,10 @@ import com.three360.fixatdl.layout.DropDownListT;
  */
 public interface IFixDropDownListUiElement<T, K> extends IFixUiElement<T, K> {
 
-    /***
-     *
-     * @param downList
-     */
-    void setDropDownList(DropDownListT downList);
+	/***
+	 *
+	 * @param downList
+	 */
+	void setDropDownList(DropDownListT downList);
 
 }

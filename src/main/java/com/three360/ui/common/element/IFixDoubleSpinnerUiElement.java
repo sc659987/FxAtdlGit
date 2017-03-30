@@ -7,5 +7,5 @@ import com.three360.fixatdl.layout.DoubleSpinnerT;
  */
 public interface IFixDoubleSpinnerUiElement<T, K> extends IFixUiElement<T, K> {
 
-    void setDoubleSpinner(DoubleSpinnerT doubleSpinnerT);
+	void setDoubleSpinner(DoubleSpinnerT doubleSpinnerT);
 }

@@ -22,6 +22,7 @@ import java.util.List;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
+ * 
  * <pre>
  * &lt;complexType name="StrategyLayout_t">
  *   &lt;complexContent>
@@ -36,39 +37,40 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StrategyLayout_t", propOrder = {
-        "strategyPanel"
+		"strategyPanel"
 })
 public class StrategyLayoutT {
 
-    @XmlElement(name = "StrategyPanel", required = true)
-    protected List<StrategyPanelT> strategyPanel;
+	@XmlElement(name = "StrategyPanel", required = true)
+	protected List<StrategyPanelT> strategyPanel;
 
-    /**
-     * Gets the value of the strategyPanel property.
-     * <p>
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the strategyPanel property.
-     * <p>
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <p>
-     * <pre>
-     * getStrategyPanel().add(newItem);
-     * </pre>
-     * <p>
-     * <p>
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link StrategyPanelT }
-     */
-    public List<StrategyPanelT> getStrategyPanel() {
-        if (strategyPanel == null) {
-            strategyPanel = new ArrayList<StrategyPanelT>();
-        }
-        return this.strategyPanel;
-    }
+	/**
+	 * Gets the value of the strategyPanel property.
+	 * <p>
+	 * <p>
+	 * This accessor method returns a reference to the live list,
+	 * not a snapshot. Therefore any modification you make to the
+	 * returned list will be present inside the JAXB object.
+	 * This is why there is not a <CODE>set</CODE> method for the strategyPanel property.
+	 * <p>
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * <p>
+	 * 
+	 * <pre>
+	 * getStrategyPanel().add(newItem);
+	 * </pre>
+	 * <p>
+	 * <p>
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link StrategyPanelT }
+	 */
+	public List<StrategyPanelT> getStrategyPanel() {
+		if (strategyPanel == null) {
+			strategyPanel = new ArrayList<StrategyPanelT>();
+		}
+		return this.strategyPanel;
+	}
 
 }

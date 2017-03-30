@@ -16,19 +16,19 @@ import javax.xml.bind.Unmarshaller;
 @Module
 public class Fx8DependencyModule {
 
-    @Provides
-    @Singleton
-    Unmarshaller provideJAXBContext() {
-        try {
-            return JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+	@Provides
+	@Singleton
+	Unmarshaller provideJAXBContext() {
+		try {
+			return JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
-    @Provides
-    @Singleton
-    UiElementAbstractFactory provideUiElementAbstractFactory() {
-        return new FxUiElementFactory();
-    }
+	@Provides
+	@Singleton
+	UiElementAbstractFactory provideUiElementAbstractFactory() {
+		return new FxUiElementFactory();
+	}
 }

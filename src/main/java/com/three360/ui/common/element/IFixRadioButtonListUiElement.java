@@ -7,5 +7,5 @@ import com.three360.fixatdl.layout.RadioButtonListT;
  */
 public interface IFixRadioButtonListUiElement<T, K> extends IFixUiElement<T, K> {
 
-    void setRadioButtonListT(RadioButtonListT radioButtonListT);
+	void setRadioButtonListT(RadioButtonListT radioButtonListT);
 }

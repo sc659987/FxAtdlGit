@@ -4,10 +4,10 @@ import com.three360.fixatdl.layout.TextFieldT;
 
 public interface IFixTextFieldUiElement<T, K> extends IFixUiElement<T, K> {
 
-    /***
-     *
-     * @param textField
-     */
-    void setTextField(TextFieldT textField);
+	/***
+	 *
+	 * @param textField
+	 */
+	void setTextField(TextFieldT textField);
 
 }

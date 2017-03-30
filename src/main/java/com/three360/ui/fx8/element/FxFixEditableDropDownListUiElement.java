@@ -1,5 +1,6 @@
 package com.three360.ui.fx8.element;
 
+import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.EditableDropDownListT;
 import com.three360.ui.common.element.IFixEditableDropDownListUiElement;
 import com.three360.ui.fx8.FxUtils;
@@ -11,62 +12,66 @@ import javafx.scene.layout.Pane;
 
 import java.util.stream.Collectors;
 
-
 public class FxFixEditableDropDownListUiElement
-        implements IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> {
+		implements IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> {
 
-    private ComboBox<String> stringComboBox;
+	private ComboBox<String> stringComboBox;
 
-    private EditableDropDownListT editableDropDownListT;
-    private GridPane gridPane;
-    private Label label;
+	private EditableDropDownListT editableDropDownListT;
+	private GridPane gridPane;
+	private Label label;
 
-    private int nextColumn = 0;
+	private int nextColumn = 0;
 
-    private ChangeListener<String> changedListener;
+	private ChangeListener<String> changedListener;
 
-    @Override
-    public Pane create() {
-        if (this.editableDropDownListT != null) {
-            this.gridPane = new GridPane();
-            this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-            if (this.editableDropDownListT.getLabel() != null
-                    && !this.editableDropDownListT.getLabel().equals(""))
-                this.gridPane.add(this.label = new Label(this.editableDropDownListT.getLabel()), this.nextColumn++, 0);
-            this.stringComboBox = new ComboBox<>();
-            this.stringComboBox.getItems()
-                    .addAll(this.editableDropDownListT
-                            .getListItem()
-                            .stream()
-                            .map(listItemT -> listItemT.getUiRep())
-                            .collect(Collectors.toList()));
+	@Override
+	public Pane create() {
+		if (this.editableDropDownListT != null) {
+			this.gridPane = new GridPane();
+			this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+			if (this.editableDropDownListT.getLabel() != null
+					&& !this.editableDropDownListT.getLabel().equals(""))
+				this.gridPane.add(this.label = new Label(this.editableDropDownListT.getLabel()), this.nextColumn++, 0);
+			this.stringComboBox = new ComboBox<>();
+			this.stringComboBox.getItems()
+					.addAll(this.editableDropDownListT
+							.getListItem()
+							.stream()
+							.map(listItemT -> listItemT.getUiRep())
+							.collect(Collectors.toList()));
 
-            this.stringComboBox.setEditable(true);
-            if (this.editableDropDownListT.getInitValue() != null && this.editableDropDownListT.getInitValue().equals(""))
-                this.stringComboBox.getSelectionModel().selectFirst();
-            else
-                this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
+			this.stringComboBox.setEditable(true);
+			if (this.editableDropDownListT.getInitValue() != null && this.editableDropDownListT.getInitValue().equals(""))
+				this.stringComboBox.getSelectionModel().selectFirst();
+			else
+				this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
 
-            this.stringComboBox
-                    .valueProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        if (this.changedListener != null)
-                            this.changedListener.changed(observable, oldValue, newValue);
-                    });
-            this.gridPane.add(this.stringComboBox, nextColumn, 0);
-            return this.gridPane;
-        }
-        return null;
-    }
+			this.stringComboBox
+					.valueProperty()
+					.addListener((observable, oldValue, newValue) -> {
+						if (this.changedListener != null)
+							this.changedListener.changed(observable, oldValue, newValue);
+					});
+			this.gridPane.add(this.stringComboBox, nextColumn, 0);
+			return this.gridPane;
+		}
+		return null;
+	}
 
-    @Override
-    public void registerForEvent(ChangeListener<String> changedListener) {
-        this.changedListener = changedListener;
-    }
+	@Override
+	public void registerForEvent(ChangeListener<String> changedListener) {
+		this.changedListener = changedListener;
+	}
 
-    @Override
-    public void setEditableDropDownList(EditableDropDownListT editableDropDownListT) {
-        this.editableDropDownListT = editableDropDownListT;
+	@Override
+	public void setEditableDropDownList(EditableDropDownListT editableDropDownListT) {
+		this.editableDropDownListT = editableDropDownListT;
 
-    }
+	}
+
+	@Override
+	public void setParameter(ParameterT parameter) {
+
+	}
 }
