@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.util.List;
+
 public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandler<ActionEvent>> {
 
 	private TimeSpinner timeSpinner;
@@ -20,6 +22,8 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
 	private Label label;
 
 	private ClockT clockT;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Pane create() {
@@ -46,7 +50,12 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

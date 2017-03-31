@@ -13,6 +13,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixSingleSelectListUiElement
@@ -23,6 +24,8 @@ public class FxFixSingleSelectListUiElement
 	private Label label;
 
 	private SingleSelectListT singleSelectListT;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Pane create() {
@@ -54,7 +57,12 @@ public class FxFixSingleSelectListUiElement
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

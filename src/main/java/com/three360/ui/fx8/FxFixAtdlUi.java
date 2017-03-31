@@ -55,6 +55,7 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 			vBox.getChildren().remove(1);
 		IFixLayoutUiElement<Node, EventHandler<ActionEvent>> layoutUiElement = factory.instantiateNewLayout();
 		layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
+		layoutUiElement.setParameters(super.selectedStrategyT.getParameter());
 		vBox.getChildren().add(1, layoutUiElement.create());
 	}
 

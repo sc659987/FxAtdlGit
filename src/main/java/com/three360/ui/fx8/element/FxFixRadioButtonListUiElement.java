@@ -26,6 +26,8 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
 	private ToggleGroup toggleGroup;
 	private Label label;
 
+	private List<ParameterT> parameterTList;
+
 	@Override
 	public Pane create() {
 		if (this.radioButtonListT != null) {
@@ -67,7 +69,12 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +26,8 @@ public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiEleme
 	private Label label;
 
 	private MultiSelectListT multiSelectListT;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Pane create() {
@@ -56,7 +59,12 @@ public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiEleme
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

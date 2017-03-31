@@ -11,6 +11,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 /***
  * TODO
  *
@@ -42,6 +44,8 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<H
 	private HBox hBoxWrapper;
 	private Label labelForSpinner;
 
+	private List<ParameterT> parameterTList;
+
 	@Override
 	public HBox create() {
 		if (this.singleSpinnerT != null) {
@@ -69,7 +73,12 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<H
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

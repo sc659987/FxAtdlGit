@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixEditableDropDownListUiElement
@@ -24,6 +25,8 @@ public class FxFixEditableDropDownListUiElement
 	private int nextColumn = 0;
 
 	private ChangeListener<String> changedListener;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Pane create() {
@@ -71,7 +74,12 @@ public class FxFixEditableDropDownListUiElement
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

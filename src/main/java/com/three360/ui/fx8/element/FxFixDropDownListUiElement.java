@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pane, ChangeListener<String>> {
@@ -23,6 +24,8 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pan
 	private GridPane gridPane;
 
 	private int nextColumn = 0;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public void registerForEvent(ChangeListener<String> e) {
@@ -69,7 +72,12 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pan
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

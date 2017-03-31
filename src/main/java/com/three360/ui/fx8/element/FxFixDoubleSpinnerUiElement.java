@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 
+import java.util.List;
+
 public class FxFixDoubleSpinnerUiElement implements IFixDoubleSpinnerUiElement<Pane, EventHandler<ActionEvent>> {
 
 	@Override
@@ -25,7 +27,12 @@ public class FxFixDoubleSpinnerUiElement implements IFixDoubleSpinnerUiElement<P
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
 
+	}
+
+	@Override
+	public List<ParameterT> getParameter() {
+		return null;
 	}
 }

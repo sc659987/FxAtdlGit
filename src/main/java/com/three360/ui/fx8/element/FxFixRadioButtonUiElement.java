@@ -7,10 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 
+import java.util.List;
+
 public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> {
 
 	private RadioButtonT radioButtonT;
 	private RadioButton radioButton;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public RadioButton create() {
@@ -32,7 +36,12 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

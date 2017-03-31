@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+import java.util.List;
+
 public class FxFixButtonUiElement implements IFixButtonUiElement<Button, EventHandler<ActionEvent>> {
 
 	@Override
@@ -24,7 +26,12 @@ public class FxFixButtonUiElement implements IFixButtonUiElement<Button, EventHa
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
 
+	}
+
+	@Override
+	public List<ParameterT> getParameter() {
+		return null;
 	}
 }

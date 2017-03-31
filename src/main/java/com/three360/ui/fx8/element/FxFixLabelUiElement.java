@@ -7,10 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
+import java.util.List;
+
 public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandler<ActionEvent>> {
 
 	private Label label;
 	private LabelT labelT;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Label create() {
@@ -33,7 +37,12 @@ public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandl
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

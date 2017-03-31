@@ -75,7 +75,7 @@ import java.util.List;
 		MultipleCharValueT.class,
 		NumericT.class,
 		UTCTimestampT.class,
-		NumInGroupT.class
+		PriceOffsetT.class
 })
 public abstract class ParameterT {
 

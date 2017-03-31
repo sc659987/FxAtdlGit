@@ -98,7 +98,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
 	}
 
 	@Override
-	public IFixTextFieldUiElement<HBox, EventHandler<ActionEvent>> instantiateNewTextField() {
+	public IFixTextFieldUiElement<Pane, ChangeListener<String>> instantiateNewTextField() {
 		return new FxFixTextFieldUiElement();
 	}
 

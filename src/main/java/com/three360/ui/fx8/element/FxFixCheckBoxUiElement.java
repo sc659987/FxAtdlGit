@@ -7,10 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 
+import java.util.List;
+
 public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> {
 
 	private CheckBoxT checkBoxT;
 	private CheckBox checkBox;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public CheckBox create() {
@@ -33,7 +37,12 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, E
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

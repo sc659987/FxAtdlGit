@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /***
@@ -20,6 +21,8 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Slider, EventHa
 	private SliderT sliderT;
 	private Slider slider;
 	private StringConverter<Double> converter;
+
+	private List<ParameterT> parameterTList;
 
 	@Override
 	public Slider create() {
@@ -40,7 +43,12 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Slider, EventHa
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

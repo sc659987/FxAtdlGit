@@ -21,7 +21,7 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 	private List<CheckBox> checkBoxes;
 	private Label label;
 
-	private ParameterT parameterT;
+	private List<ParameterT> parameterTList;
 
 	private int nextRow = 0;
 
@@ -70,7 +70,12 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
-		this.parameterT = parameterT;
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.parameterTList = parameterTList;
+	}
+
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.parameterTList;
 	}
 }

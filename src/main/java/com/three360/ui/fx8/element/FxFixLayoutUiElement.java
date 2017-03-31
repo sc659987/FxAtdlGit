@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHandler<ActionEvent>> {
@@ -20,6 +21,8 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHand
 
 	@Inject
 	UiElementAbstractFactory factory;
+
+	private List<ParameterT> allParameterTList;
 
 	public FxFixLayoutUiElement() {
 		DaggerMyComponent.builder().build().inject(this);
@@ -31,6 +34,7 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHand
 		vBox.getChildren().addAll(this.strategyLayoutT.getStrategyPanel().stream().map(strategyPanelT -> {
 			IFixPanelUiElement<Node, EventHandler<ActionEvent>> element = factory.instantiateNewPanel();
 			element.setStrategyPanelT(strategyPanelT);
+			element.setParameters(this.allParameterTList);
 			return element.create();
 		}).collect(Collectors.toList()));
 		return vBox;
@@ -47,7 +51,12 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHand
 	}
 
 	@Override
-	public void setParameter(ParameterT parameter) {
+	public void setParameters(List<ParameterT> parameterTList) {
+		this.allParameterTList = parameterTList;
+	}
 
+	@Override
+	public List<ParameterT> getParameter() {
+		return this.allParameterTList;
 	}
 }
