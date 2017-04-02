@@ -3,12 +3,9 @@ package com.three360.ui.abs;
 import com.three360.fixatdl.core.StrategiesT;
 import com.three360.fixatdl.core.StrategyT;
 import com.three360.ui.common.IFixAtdlUi;
-import com.three360.ui.fx8.FxFixAtdlStrategyUI;
 
 import javax.xml.bind.JAXBElement;
 import java.io.File;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /***
  *

@@ -1,6 +1,5 @@
 package com.three360.ui.fx8.element;
 
-import com.sun.deploy.util.StringUtils;
 import com.sun.istack.internal.NotNull;
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.TextFieldT;
@@ -8,12 +7,9 @@ import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixTextFieldUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.List;

@@ -57,7 +57,7 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
                             return element.create();
                         }).collect(Collectors.toList()));
             } else if (this.strategyPanelT.getControl() != null) {
-                regionList = this.strategyPanelT.getControl().stream().map(controlT -> {
+                this.regionList = this.strategyPanelT.getControl().stream().map(controlT -> {
                     if (controlT instanceof CheckBoxListT) {
                         IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewCheckBoxList();
                         element.setCheckBoxListT((CheckBoxListT) controlT);
