@@ -7,42 +7,53 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> {
 
-	private CheckBoxT checkBoxT;
-	private CheckBox checkBox;
+    private CheckBoxT checkBoxT;
 
-	private List<ParameterT> parameterTList;
+    private CheckBox checkBox;
 
-	@Override
-	public CheckBox create() {
-		if (this.checkBoxT != null) {
-			this.checkBox = new CheckBox(this.checkBoxT.getLabel());
-			this.checkBox.setSelected(this.checkBoxT.isInitValue());
-			return this.checkBox;
-		}
-		return null;
-	}
+    private ParameterT parameterT;
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
 
-	}
+    @Override
+    public CheckBox create() {
+        if (this.checkBoxT != null) {
+            this.checkBox = new CheckBox(this.checkBoxT.getLabel());
+            this.checkBox.setSelected(this.checkBoxT.isInitValue());
+            this.checkBox.selectedProperty()
+                    .addListener((observable, oldValue, newValue) ->
+                            setFieldValueToParameter(newValue ?
+                                            checkBoxT.getCheckedEnumRef() :
+                                            checkBoxT.getUncheckedEnumRef(),
+                                    parameterT));
+            return this.checkBox;
+        }
+        return null;
+    }
 
-	@Override
-	public void setCheckBoxT(CheckBoxT checkBoxT) {
-		this.checkBoxT = checkBoxT;
-	}
+    @Override
+    public void registerForEvent(EventHandler<ActionEvent> e) {
+    }
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.parameterTList = parameterTList;
-	}
+    @Override
+    public void setCheckBoxT(CheckBoxT checkBoxT) {
+        this.checkBoxT = checkBoxT;
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.parameterTList;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        assert (parameterTList != null);
+        parameterT = parameterTList.get(0);
+    }
+
+    @Override
+    public List<ParameterT> getParameter() {
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
+    }
 }

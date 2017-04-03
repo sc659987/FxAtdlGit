@@ -54,6 +54,7 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
                         .map(eachStrategyPanelT -> {
                             final FxFixPanelUiElement element = new FxFixPanelUiElement();
                             element.setStrategyPanelT(eachStrategyPanelT);
+                            element.setParameters(this.parameterTList);
                             return element.create();
                         }).collect(Collectors.toList()));
             } else if (this.strategyPanelT.getControl() != null) {

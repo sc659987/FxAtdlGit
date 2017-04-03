@@ -14,33 +14,18 @@ import javafx.scene.layout.Pane;
 
 import java.util.List;
 
-/**
- * Created by sainik on 3/24/17.
- */
 public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, ChangeListener<String>> {
 
-    /***
-     *
-     */
     private TextFieldT textFieldT;
 
-    /****
-     *
-     */
     private TextField textField;
     private Label label;
     private GridPane gridPane;
 
-    /****
-     *
-     */
     private List<ParameterT> parameterTList;
 
     private ParameterT parameterT;
 
-    /****
-     *
-     */
     private int nextColumn = 0;
 
     @Override

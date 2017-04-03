@@ -11,49 +11,56 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandler<ActionEvent>> {
 
-	private TimeSpinner timeSpinner;
-	private GridPane gridPane;
-	private Label label;
+    private TimeSpinner timeSpinner;
+    private GridPane gridPane;
+    private Label label;
 
-	private ClockT clockT;
+    private ClockT clockT;
 
-	private List<ParameterT> parameterTList;
+    private ParameterT parameterT;
 
-	@Override
-	public Pane create() {
-		if (this.clockT != null) {
-			this.gridPane = new GridPane();
-			this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-			this.label = new Label(this.clockT.getLabel());
-			this.timeSpinner = new TimeSpinner();
-			this.gridPane.add(this.label, 0, 0);
-			this.gridPane.add(this.timeSpinner, 1, 0);
-			return this.gridPane;
-		}
-		return null;
-	}
+    @Override
+    public Pane create() {
+        if (this.clockT != null) {
+            this.gridPane = new GridPane();
+            this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+            this.label = new Label(this.clockT.getLabel());
+            this.timeSpinner = new TimeSpinner();
+            this.timeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                setFieldValueToParameter(newValue.toString(),parameterT);
+            });
+            this.gridPane.add(this.label, 0, 0);
+            this.gridPane.add(this.timeSpinner, 1, 0);
+            return this.gridPane;
+        }
+        return null;
+    }
 
-	@Override
-	public void setClockT(ClockT clockT) {
-		this.clockT = clockT;
-	}
+    @Override
+    public void setClockT(ClockT clockT) {
+        this.clockT = clockT;
+    }
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
+    @Override
+    public void registerForEvent(EventHandler<ActionEvent> e) {
 
-	}
+    }
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.parameterTList = parameterTList;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        assert (parameterTList != null);
+        this.parameterT = parameterTList.get(0);
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.parameterTList;
-	}
+    @Override
+    public List<ParameterT> getParameter() {
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
+    }
 }
