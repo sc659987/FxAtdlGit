@@ -16,94 +16,94 @@ import javafx.scene.layout.Pane;
 
 public class FxUiElementFactory implements UiElementAbstractFactory {
 
-	@Override
-	public IFixButtonUiElement instantiateNewButton() {
-		return null;
-	}
+    @Override
+    public IFixButtonUiElement instantiateNewButton() {
+        return null;
+    }
 
-	@Override
-	public IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewCheckBoxList() {
-		return new FxFixCheckBoxListUiElement();
-	}
+    @Override
+    public IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewCheckBoxList() {
+        return new FxFixCheckBoxListUiElement();
+    }
 
-	@Override
-	public IFixDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewDropDownList() {
-		return new FxFixDropDownListUiElement();
-	}
+    @Override
+    public IFixDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewDropDownList() {
+        return new FxFixDropDownListUiElement();
+    }
 
-	@Override
-	public IFixHiddenFieldUiElement instantiateNewHiddenField() {
-		// TODO add it
-		return null;
-	}
+    @Override
+    public IFixHiddenFieldUiElement instantiateNewHiddenField() {
+        // TODO add it
+        return null;
+    }
 
-	@Override
-	public IFixLabelUiElement<Label, EventHandler<ActionEvent>> instantiateNewLabel() {
-		return new FxFixLabelUiElement();
-	}
+    @Override
+    public IFixLabelUiElement<Label, EventHandler<ActionEvent>> instantiateNewLabel() {
+        return new FxFixLabelUiElement();
+    }
 
-	@Override
-	public IFixPanelUiElement<Node, EventHandler<ActionEvent>> instantiateNewPanel() {
-		return new FxFixPanelUiElement();
-	}
+    @Override
+    public IFixPanelUiElement<Node, EventHandler<ActionEvent>> instantiateNewPanel() {
+        return new FxFixPanelUiElement();
+    }
 
-	@Override
-	public IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> instantiateNewRadioButton() {
-		return new FxFixRadioButtonUiElement();
-	}
+    @Override
+    public IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> instantiateNewRadioButton() {
+        return new FxFixRadioButtonUiElement();
+    }
 
-	@Override
-	public IFixSliderUiElement<Slider, EventHandler<ActionEvent>> instantiateNewSlider() {
-		return new FxFixSliderUiElement();
-	}
+    @Override
+    public IFixSliderUiElement<Pane, EventHandler<ActionEvent>> instantiateNewSlider() {
+        return new FxFixSliderUiElement();
+    }
 
-	@Override
-	public IFixSingleSpinnerUiElement<HBox, EventHandler<ActionEvent>> instantiateNewSingleSpinner() {
-		return new FxFixSingleSpinnerUiElement();
-	}
+    @Override
+    public IFixSingleSpinnerUiElement<HBox, EventHandler<ActionEvent>> instantiateNewSingleSpinner() {
+        return new FxFixSingleSpinnerUiElement();
+    }
 
-	@Override
-	public IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> instantiateNewCheckBox() {
-		return new FxFixCheckBoxUiElement();
-	}
+    @Override
+    public IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> instantiateNewCheckBox() {
+        return new FxFixCheckBoxUiElement();
+    }
 
-	@Override
-	public IFixClockUiElement<Pane, EventHandler<ActionEvent>> instantiateNewClock() {
-		return new FxFixClockUiElement();
-	}
+    @Override
+    public IFixClockUiElement<Pane, EventHandler<ActionEvent>> instantiateNewClock() {
+        return new FxFixClockUiElement();
+    }
 
-	@Override
-	public IFixDoubleSpinnerUiElement<Pane, EventHandler<ActionEvent>> instantiateNewDoubleSpinner() {
-		return new FxFixDoubleSpinnerUiElement();
-	}
+    @Override
+    public IFixDoubleSpinnerUiElement<Pane, EventHandler<ActionEvent>> instantiateNewDoubleSpinner() {
+        return new FxFixDoubleSpinnerUiElement();
+    }
 
-	@Override
-	public IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewEditableDropDownList() {
-		return new FxFixEditableDropDownListUiElement();
-	}
+    @Override
+    public IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> instantiateNewEditableDropDownList() {
+        return new FxFixEditableDropDownListUiElement();
+    }
 
-	@Override
-	public IFixMultiSelectListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewMultiSelectList() {
-		return new FxFixMultiSelectListUiElement();
-	}
+    @Override
+    public IFixMultiSelectListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewMultiSelectList() {
+        return new FxFixMultiSelectListUiElement();
+    }
 
-	@Override
-	public IFixRadioButtonListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewRadioButtonList() {
-		return new FxFixRadioButtonListUiElement();
-	}
+    @Override
+    public IFixRadioButtonListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewRadioButtonList() {
+        return new FxFixRadioButtonListUiElement();
+    }
 
-	@Override
-	public IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewSingleSelectList() {
-		return new FxFixSingleSelectListUiElement();
-	}
+    @Override
+    public IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewSingleSelectList() {
+        return new FxFixSingleSelectListUiElement();
+    }
 
-	@Override
-	public IFixTextFieldUiElement<Pane, ChangeListener<String>> instantiateNewTextField() {
-		return new FxFixTextFieldUiElement();
-	}
+    @Override
+    public IFixTextFieldUiElement<Pane, ChangeListener<String>> instantiateNewTextField() {
+        return new FxFixTextFieldUiElement();
+    }
 
-	@Override
-	public IFixLayoutUiElement<Node, EventHandler<ActionEvent>> instantiateNewLayout() {
-		return new FxFixLayoutUiElement();
-	}
+    @Override
+    public IFixLayoutUiElement<Node, EventHandler<ActionEvent>> instantiateNewLayout() {
+        return new FxFixLayoutUiElement();
+    }
 }

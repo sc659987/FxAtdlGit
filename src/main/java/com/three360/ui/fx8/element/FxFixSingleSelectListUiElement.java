@@ -17,52 +17,56 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixSingleSelectListUiElement
-		implements IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> {
+        implements IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> {
 
-	private VBox vBoxWrapper;
-	private ListView<String> stringListView;
-	private Label label;
+    private VBox vBoxWrapper;
+    private ListView<String> stringListView;
+    private Label label;
 
-	private SingleSelectListT singleSelectListT;
+    private SingleSelectListT singleSelectListT;
 
-	private List<ParameterT> parameterTList;
+    private List<ParameterT> parameterTList;
 
-	@Override
-	public Pane create() {
-		if (this.singleSelectListT != null) {
-			this.vBoxWrapper = new VBox();
-			this.label = new Label(this.singleSelectListT.getLabel());
-			this.stringListView = new ListView<>(FXCollections.observableArrayList(
-					this.singleSelectListT
-							.getListItem()
-							.stream()
-							.map(ListItemT::getUiRep)
-							.collect(Collectors.toList())));
-			this.stringListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-			this.vBoxWrapper.getChildren().add(this.label);
-			this.vBoxWrapper.getChildren().add(this.stringListView);
-			return this.vBoxWrapper;
-		}
-		return null;
-	}
+    @Override
+    public Pane create() {
+        if (this.singleSelectListT != null) {
+            this.vBoxWrapper = new VBox();
+            this.label = new Label(this.singleSelectListT.getLabel());
+            this.stringListView = new ListView<>(FXCollections.observableArrayList(
+                    this.singleSelectListT
+                            .getListItem()
+                            .stream()
+                            .map(ListItemT::getUiRep)
+                            .collect(Collectors.toList())));
+            this.stringListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            this.stringListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("New Value :   " + newValue);
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
+            });
+            this.vBoxWrapper.getChildren().add(this.label);
+            this.vBoxWrapper.getChildren().add(this.stringListView);
+            return this.vBoxWrapper;
+        }
+        return null;
+    }
 
-	}
+    @Override
+    public void registerForEvent(EventHandler<ActionEvent> e) {
 
-	@Override
-	public void setSingleSelectList(SingleSelectListT singleSelectListT) {
-		this.singleSelectListT = singleSelectListT;
-	}
+    }
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.parameterTList = parameterTList;
-	}
+    @Override
+    public void setSingleSelectList(SingleSelectListT singleSelectListT) {
+        this.singleSelectListT = singleSelectListT;
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.parameterTList;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        this.parameterTList = parameterTList;
+    }
+
+    @Override
+    public List<ParameterT> getParameter() {
+        return this.parameterTList;
+    }
 }

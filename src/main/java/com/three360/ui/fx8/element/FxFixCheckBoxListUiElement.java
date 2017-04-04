@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO multi value delimiter, this will work for char and string
+// TODO bug in horizontal List show
 public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> {
 
     private CheckBoxListT checkBoxListT;

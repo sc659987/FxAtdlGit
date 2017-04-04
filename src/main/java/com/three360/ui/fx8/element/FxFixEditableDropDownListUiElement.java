@@ -10,76 +10,78 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixEditableDropDownListUiElement
-		implements IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> {
+        implements IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> {
 
-	private ComboBox<String> stringComboBox;
+    private ComboBox<String> stringComboBox;
+    private EditableDropDownListT editableDropDownListT;
+    private GridPane gridPane;
+    private Label label;
 
-	private EditableDropDownListT editableDropDownListT;
-	private GridPane gridPane;
-	private Label label;
+    private int nextColumn = 0;
+    private ChangeListener<String> changedListener;
+    private ParameterT parameterT;
 
-	private int nextColumn = 0;
+    @Override
+    public Pane create() {
+        if (this.editableDropDownListT != null) {
+            this.gridPane = new GridPane();
+            this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+            if (this.editableDropDownListT.getLabel() != null
+                    && !this.editableDropDownListT.getLabel().equals(""))
+                this.gridPane.add(this.label = new Label(this.editableDropDownListT.getLabel()),
+                        this.nextColumn++, 0);
+            this.stringComboBox = new ComboBox<>();
+            this.stringComboBox.getItems()
+                    .addAll(this.editableDropDownListT
+                            .getListItem()
+                            .stream()
+                            .map(listItemT -> listItemT.getUiRep())
+                            .collect(Collectors.toList()));
 
-	private ChangeListener<String> changedListener;
+            this.stringComboBox.setEditable(true);
+            if (this.editableDropDownListT.getInitValue() != null && this.editableDropDownListT.getInitValue().equals(""))
+                this.stringComboBox.getSelectionModel().selectFirst();
+            else
+                this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
 
-	private List<ParameterT> parameterTList;
+            this.stringComboBox
+                    .valueProperty()
+                    .addListener((observable, oldValue, newValue) -> {
+                        if (this.changedListener != null)
+                            this.changedListener.changed(observable, oldValue, newValue);
+                        setFieldValueToParameter(newValue, this.parameterT);
+                    });
+            this.gridPane.add(this.stringComboBox, nextColumn, 0);
+            return this.gridPane;
+        }
+        return null;
+    }
 
-	@Override
-	public Pane create() {
-		if (this.editableDropDownListT != null) {
-			this.gridPane = new GridPane();
-			this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-			if (this.editableDropDownListT.getLabel() != null
-					&& !this.editableDropDownListT.getLabel().equals(""))
-				this.gridPane.add(this.label = new Label(this.editableDropDownListT.getLabel()), this.nextColumn++, 0);
-			this.stringComboBox = new ComboBox<>();
-			this.stringComboBox.getItems()
-					.addAll(this.editableDropDownListT
-							.getListItem()
-							.stream()
-							.map(listItemT -> listItemT.getUiRep())
-							.collect(Collectors.toList()));
+    @Override
+    public void registerForEvent(ChangeListener<String> changedListener) {
+        this.changedListener = changedListener;
+    }
 
-			this.stringComboBox.setEditable(true);
-			if (this.editableDropDownListT.getInitValue() != null && this.editableDropDownListT.getInitValue().equals(""))
-				this.stringComboBox.getSelectionModel().selectFirst();
-			else
-				this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
+    @Override
+    public void setEditableDropDownList(EditableDropDownListT editableDropDownListT) {
+        this.editableDropDownListT = editableDropDownListT;
+    }
 
-			this.stringComboBox
-					.valueProperty()
-					.addListener((observable, oldValue, newValue) -> {
-						if (this.changedListener != null)
-							this.changedListener.changed(observable, oldValue, newValue);
-					});
-			this.gridPane.add(this.stringComboBox, nextColumn, 0);
-			return this.gridPane;
-		}
-		return null;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        assert (parameterTList != null);
+        this.parameterT = parameterTList.get(0);
+    }
 
-	@Override
-	public void registerForEvent(ChangeListener<String> changedListener) {
-		this.changedListener = changedListener;
-	}
-
-	@Override
-	public void setEditableDropDownList(EditableDropDownListT editableDropDownListT) {
-		this.editableDropDownListT = editableDropDownListT;
-
-	}
-
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.parameterTList = parameterTList;
-	}
-
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.parameterTList;
-	}
+    @Override
+    public List<ParameterT> getParameter() {
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
+    }
 }
