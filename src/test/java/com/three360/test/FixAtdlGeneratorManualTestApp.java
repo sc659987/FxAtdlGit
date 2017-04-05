@@ -78,7 +78,7 @@ public class FixAtdlGeneratorManualTestApp extends Application {
 		hBoxDown.getStyleClass().add("hbox");
 		hBoxDown.setId("hbox-custom");
 		borderPane.setBottom(hBoxDown);
-		Scene scene = new Scene(borderPane, 500, 500);
+		Scene scene = new Scene(borderPane, 1000, 700);
 		URL url = this.getClass().getResource("/fx8atdl4jtesterapp.css");
 		scene.getStylesheets().add(url.toExternalForm());
 		return scene;

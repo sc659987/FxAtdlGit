@@ -1,9 +1,9 @@
-package com.three360.validator.common;
+package com.three360.fixatdl.validator.common;
 
 
 import java.util.List;
 
-public interface StrategyEditValidator {
+public interface IStrategyEditValidator {
 
 
     List<String> validateStrategyEditRuleAndGetErrorMessage();

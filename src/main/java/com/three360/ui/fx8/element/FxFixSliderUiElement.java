@@ -1,5 +1,6 @@
 package com.three360.ui.fx8.element;
 
+import com.three360.fixatdl.core.EnumPairT;
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.ListItemT;
 import com.three360.fixatdl.layout.SliderT;
@@ -15,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,10 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
 
     private Label label;
 
-    private List<ParameterT> parameterTList;
+    private ParameterT parameterT;
 
     @Override
     public Pane create() {
-
         this.gridPane = new GridPane();
         this.gridPane.getColumnConstraints().addAll(FxUtils.getOneColumnWidthForGridPane());
 
@@ -54,12 +55,24 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
         this.slider.setMajorTickUnit(1.0);
 
         this.slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("New Value == " + newValue);
+            if (oldValue.intValue() != newValue.intValue()) {
+                setFieldValueToParameter(parameterT
+                        .getEnumPair()
+                        .stream()
+                        .filter(enumPairT -> enumPairT.getEnumID()
+                                .equals(
+                                        this.converter
+                                        .toString(newValue.doubleValue())))
+                        .map(EnumPairT::getWireValue)
+                        .findFirst()
+                        .orElse("1"), parameterT);
+            }
         });
         this.slider.setLabelFormatter(this.converter);
         this.slider.setShowTickLabels(true);
         this.slider.setShowTickMarks(true);
         this.slider.setMajorTickUnit(1.0);
+
         this.slider.setMinorTickCount(0);
         this.slider.setSnapToTicks(true);
 
@@ -82,12 +95,15 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        this.parameterTList = parameterTList;
+        assert (parameterTList != null);
+        this.parameterT = parameterTList.get(0);
     }
 
     @Override
     public List<ParameterT> getParameter() {
-        return this.parameterTList;
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
     }
 
 }

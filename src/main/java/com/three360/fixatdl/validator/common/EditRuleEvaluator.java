@@ -1,4 +1,4 @@
-package com.three360.validator.common;
+package com.three360.fixatdl.validator.common;
 
 import com.three360.fixatdl.validation.EditT;
 

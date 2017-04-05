@@ -1,8 +1,8 @@
-package com.three360.validator.impl;
+package com.three360.fixatdl.validator.impl;
 
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.validation.EditT;
-import com.three360.validator.common.EditRuleEvaluator;
+import com.three360.fixatdl.validator.common.EditRuleEvaluator;
 
 import java.lang.reflect.Field;
 import java.util.List;

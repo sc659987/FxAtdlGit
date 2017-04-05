@@ -58,7 +58,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixSingleSpinnerUiElement<HBox, EventHandler<ActionEvent>> instantiateNewSingleSpinner() {
+    public IFixSingleSpinnerUiElement<Pane, ChangeListener<String>> instantiateNewSingleSpinner() {
         return new FxFixSingleSpinnerUiElement();
     }
 

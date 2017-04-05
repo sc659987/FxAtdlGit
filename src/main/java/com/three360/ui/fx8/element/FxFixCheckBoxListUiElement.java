@@ -20,13 +20,14 @@ import java.util.stream.Collectors;
 public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> {
 
     private CheckBoxListT checkBoxListT;
+
     private GridPane gridPane;
+
     private List<CheckBox> checkBoxes;
     private Label label;
-
     private ParameterT parameterT;
-
     private int nextRow = 0;
+
 
     @Override
     public Pane create() {

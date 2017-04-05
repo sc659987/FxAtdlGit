@@ -1,4 +1,4 @@
-package com.three360.validator;
+package com.three360.fixatdl.validator;
 
 /**
  * Created by sainik on 4/4/17.

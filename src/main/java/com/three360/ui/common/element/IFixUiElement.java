@@ -43,9 +43,11 @@ public interface IFixUiElement<T, K> {
     }
 
     default boolean setFieldValueToParameter(Object object, ParameterT parameterT) {
+
         if (parameterT instanceof LanguageT) {
             if (object instanceof String)
                 ((LanguageT) parameterT).setConstValue((String) object);
+
         } else if (parameterT instanceof CountryT) {
             if (object instanceof String) {
                 ((CountryT) parameterT).setConstValue((String) object);
@@ -277,14 +279,19 @@ public interface IFixUiElement<T, K> {
             }
 
         } else if (parameterT instanceof FloatT) {
+            FloatT floatT = (FloatT) parameterT;
+            BigDecimal bigDecimal = null;
             if (object instanceof String) {
-                FloatT floatT = (FloatT) parameterT;
-                BigDecimal bigDecimal = new BigDecimal((String) object);
-                if ((floatT.getMinValue() == null || floatT.getMinValue().compareTo(bigDecimal) <= 0) &&
-                        (floatT.getMaxValue() == null || floatT.getMaxValue().compareTo(bigDecimal) >= 0)) {
-                    floatT.setConstValue(bigDecimal);
-                    return true;
-                }
+                bigDecimal = new BigDecimal((String) object);
+            } else if (object instanceof Number) {
+                bigDecimal = new BigDecimal(((Number) object).doubleValue());
+            } else {
+                return false;
+            }
+            if ((floatT.getMinValue() == null || floatT.getMinValue().compareTo(bigDecimal) <= 0) &&
+                    (floatT.getMaxValue() == null || floatT.getMaxValue().compareTo(bigDecimal) >= 0)) {
+                floatT.setConstValue(bigDecimal);
+                return true;
             }
         } else if (parameterT instanceof PriceT) {
             if (object instanceof String) {
