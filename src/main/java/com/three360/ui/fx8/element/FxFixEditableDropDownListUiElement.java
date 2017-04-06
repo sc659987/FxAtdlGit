@@ -49,13 +49,15 @@ public class FxFixEditableDropDownListUiElement
             else
                 this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
 
-            this.stringComboBox
-                    .valueProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        if (this.changedListener != null)
-                            this.changedListener.changed(observable, oldValue, newValue);
-                        setFieldValueToParameter(newValue, this.parameterT);
-                    });
+
+            if (parameterT != null)
+                this.stringComboBox
+                        .valueProperty()
+                        .addListener((observable, oldValue, newValue) -> {
+                            if (this.changedListener != null)
+                                this.changedListener.changed(observable, oldValue, newValue);
+                            setFieldValueToParameter(newValue, this.parameterT);
+                        });
             this.gridPane.add(this.stringComboBox, nextColumn, 0);
             return this.gridPane;
         }
@@ -74,8 +76,8 @@ public class FxFixEditableDropDownListUiElement
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

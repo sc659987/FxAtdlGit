@@ -41,14 +41,14 @@ public class EditRuleEvaluatorImpl implements EditRuleEvaluator {
                     return editT.getEdit().stream().allMatch(editT1 -> validate(editT1));
                 case OR:
                     // OR - new interpretation
-                    return editT.getEdit().stream().anyMatch(editT1 -> validate(editT));
+                    return editT.getEdit().stream().anyMatch(editT1 -> validate(editT1));
                 case NOT:
                     // NOT - interpreted as 'NOR'; will throw exception if any of the
                     // rules validate as true
                     return !editT.getEdit().stream().anyMatch(editT1 -> validate(editT));
                 case XOR:
                     // XOR - defined as true if exactly one argument is true
-                    // TODO wrong logic is written. find it to implement in functional way
+                    // TODO wrong logic is written. find functional implementation
                     return !editT.getEdit().stream().anyMatch(editT1 -> validate(editT));
                 default:
             }

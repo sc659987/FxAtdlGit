@@ -7,42 +7,46 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandler<ActionEvent>> {
 
-	private Label label;
-	private LabelT labelT;
+    private Label label;
+    private LabelT labelT;
 
-	private List<ParameterT> parameterTList;
+    private ParameterT parameterT;
 
-	@Override
-	public Label create() {
-		if (this.labelT != null) {
-			this.label = new Label();
-			this.label.setText(this.labelT.getLabel());
-			return this.label;
-		}
-		return null;
-	}
+    @Override
+    public Label create() {
+        if (this.labelT != null) {
+            this.label = new Label();
+            this.label.setText(this.labelT.getLabel());
+            return this.label;
+        }
+        return null;
+    }
 
-	@Override
-	public void setLabel(LabelT label) {
-		this.labelT = label;
-	}
+    @Override
+    public void setLabel(LabelT label) {
+        this.labelT = label;
+    }
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
+    @Override
+    public void registerForEvent(EventHandler<ActionEvent> e) {
 
-	}
+    }
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.parameterTList = parameterTList;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.parameterTList;
-	}
+    @Override
+    public List<ParameterT> getParameter() {
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
+    }
 }

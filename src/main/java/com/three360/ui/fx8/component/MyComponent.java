@@ -1,6 +1,5 @@
 package com.three360.ui.fx8.component;
 
-import com.three360.fixatdl.validator.common.IStrategyEditValidator;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.fx8.FxFixAtdlStrategyUI;
 import com.three360.ui.fx8.FxFixAtdlUi;

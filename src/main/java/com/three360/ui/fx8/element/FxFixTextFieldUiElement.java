@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.Collections;
 import java.util.List;
 
 public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, ChangeListener<String>> {
@@ -22,10 +23,7 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Cha
     private Label label;
     private GridPane gridPane;
 
-    private List<ParameterT> parameterTList;
-
     private ParameterT parameterT;
-
     private int nextColumn = 0;
 
     @Override
@@ -37,12 +35,15 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Cha
                 this.gridPane.add(this.label = new Label(this.textFieldT.getLabel()), this.nextColumn++, 0);
             }
             this.textField = new TextField(this.textFieldT.getInitValue());
-            this.textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue.equals("-") || parameterT == null)
-                    return;
-                if (!Utils.isEmpty(newValue) && !setFieldValueToParameter(newValue, parameterT))
-                    textField.textProperty().setValue(oldValue);
-            });
+
+            if (parameterT != null)
+                this.textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.equals("-") || parameterT == null)
+                        return;
+                    if (!Utils.isEmpty(newValue) && !setFieldValueToParameter(newValue, parameterT))
+                        textField.textProperty().setValue(oldValue);
+
+                });
             this.gridPane.add(this.textField, this.nextColumn, 0);
             return this.gridPane;
         }
@@ -61,13 +62,14 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Cha
 
     @Override
     public void setParameters(@NotNull List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterTList = parameterTList;
-        this.parameterT = this.parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override
     public List<ParameterT> getParameter() {
-        return this.parameterTList;
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
     }
 }

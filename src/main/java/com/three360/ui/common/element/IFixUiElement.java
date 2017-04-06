@@ -1,15 +1,12 @@
 package com.three360.ui.common.element;
 
 import com.three360.fixatdl.core.*;
-import com.three360.fixatdl.layout.MultiSelectListT;
-import com.three360.fixatdl.timezones.Timezone;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -79,7 +76,7 @@ public interface IFixUiElement<T, K> {
             }
         } else if (parameterT instanceof StringT) {
             if (object instanceof String) {
-                StringT stringT = (StringT) object;
+                StringT stringT = (StringT) parameterT;
                 String content = (String) object;
                 BigInteger length = new BigInteger(String.valueOf(content.length()));
                 if ((stringT.getMinLength() == null || stringT.getMinLength().compareTo(length) <= 0) &&

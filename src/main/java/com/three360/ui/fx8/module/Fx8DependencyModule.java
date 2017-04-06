@@ -1,8 +1,6 @@
 package com.three360.ui.fx8.module;
 
 import com.three360.fixatdl.core.StrategiesT;
-import com.three360.fixatdl.validator.common.IStrategyEditValidator;
-import com.three360.fixatdl.validator.impl.StrategyEditValidator;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.fx8.FxUiElementFactory;
 import dagger.Module;

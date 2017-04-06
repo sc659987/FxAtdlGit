@@ -45,25 +45,28 @@ public class FxFixSingleSelectListUiElement
                             .map(ListItemT::getUiRep)
                             .collect(Collectors.toList())));
             this.singleSelectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-            this.singleSelectListView
-                    .getSelectionModel()
-                    .selectedIndexProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        parameterT
-                                .getEnumPair()
-                                .stream()
-                                .filter(enumPairT ->
-                                        enumPairT.getEnumID()
-                                                .equals(this.singleSelectListT
-                                                        .getListItem()
-                                                        .get(newValue.intValue()).getEnumID())).findFirst().ifPresent(enumPairT -> {
-                            System.out.println("Wire Value : " + enumPairT.getWireValue());
-                            setFieldValueToParameter(enumPairT.getWireValue(), parameterT);
-                        });
+
+
+            if (parameterT != null)
+                this.singleSelectListView
+                        .getSelectionModel()
+                        .selectedIndexProperty()
+                        .addListener((observable, oldValue, newValue) -> {
+                            parameterT
+                                    .getEnumPair()
+                                    .stream()
+                                    .filter(enumPairT ->
+                                            enumPairT.getEnumID()
+                                                    .equals(this.singleSelectListT
+                                                            .getListItem()
+                                                            .get(newValue.intValue()).getEnumID())).findFirst().ifPresent(enumPairT -> {
+                                System.out.println("Wire Value : " + enumPairT.getWireValue());
+                                setFieldValueToParameter(enumPairT.getWireValue(), parameterT);
+                            });
 
 //                        System.out.println(parameterT.getClass());
 
-                    });
+                        });
 
             if (!Utils.isEmpty(this.singleSelectListT.getLabel())) {
                 this.gridPane.getColumnConstraints().addAll(FxUtils.getOneColumnWidthForGridPane());
@@ -90,8 +93,8 @@ public class FxFixSingleSelectListUiElement
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

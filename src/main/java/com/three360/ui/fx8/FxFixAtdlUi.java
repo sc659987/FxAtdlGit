@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import javax.inject.Inject;
 import javax.xml.bind.Unmarshaller;
@@ -36,6 +37,12 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
     private final BorderPane borderPane = new BorderPane();
 
     private IStrategyEditValidator iStrategyEditValidator;
+
+    private Button validateButton;
+
+    private VBox errorMessageAndValidateButtonBox;
+
+    private TextField textField;
 
     public FxFixAtdlUi() {
         DaggerMyComponent.builder().build().inject(this);
@@ -67,25 +74,43 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
     }
 
 
-
     //TODO call for validation and print error message on found
     private void createFixErrorMessage() {
-        VBox vBox = new VBox();
-        vBox.getChildren().add(new Label("kjhkehfer werjhikjwe"));
+        this.errorMessageAndValidateButtonBox = new VBox();
+
+        this.validateButton = new Button("Validate");
+        this.textField = new TextField();
+
+        this.textField.setEditable(false);
+
+        HBox validateBox = new HBox();
+        validateBox.getChildren().add(this.validateButton);
+        validateBox.getChildren().add(this.textField);
 
 
-        Button button = new Button("Validate");
-        TextField textField = new TextField();
-        textField.setEditable(false);
+        this.validateButton.setOnAction(event -> {
+            List<String> errorMessage = iStrategyEditValidator.validateStrategyEditRuleAndGetErrorMessage();
+            if (errorMessage != null && errorMessage.size() > 0) {
+                this.errorMessageAndValidateButtonBox.getChildren().addAll(errorMessage.stream().map(str -> {
+                    Label lb = new Label(str);
+                    lb.setTextFill(Color.web("#FF0040"));
+                    return lb;
+                }).collect(Collectors.toList()));
+            } else {
+                // generate the wire value and put that pn text box
 
-        HBox hBox = new HBox();
-        hBox.getChildren().add(button);
-        hBox.getChildren().add(textField);
-
+            }
+        });
         HBox.setHgrow(textField, Priority.ALWAYS);
 
-        vBox.getChildren().add(hBox);
-        this.borderPane.setBottom(vBox);
+        VBox wrapperBox = new VBox();
+
+        this.errorMessageAndValidateButtonBox.getChildren().add(validateBox);
+
+        wrapperBox.getChildren().add(this.errorMessageAndValidateButtonBox);
+        wrapperBox.getChildren().add(validateBox);
+
+        this.borderPane.setBottom(wrapperBox);
     }
 
     @Override

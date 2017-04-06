@@ -17,7 +17,9 @@ import java.util.List;
 public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandler<ActionEvent>> {
 
     private TimeSpinner timeSpinner;
+
     private GridPane gridPane;
+
     private Label label;
 
     private ClockT clockT;
@@ -31,8 +33,12 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
             this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
             this.label = new Label(this.clockT.getLabel());
             this.timeSpinner = new TimeSpinner();
+
             this.timeSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                setFieldValueToParameter(newValue.toString(),parameterT);
+                if (parameterT != null)
+                    if (!setFieldValueToParameter(newValue.toString(), parameterT)) {
+
+                    }
             });
             this.gridPane.add(this.label, 0, 0);
             this.gridPane.add(this.timeSpinner, 1, 0);
@@ -53,8 +59,8 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO fix for large level by increasing the length of slide bar
 public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHandler<ActionEvent>> {
 
     private SliderT sliderT;
@@ -54,20 +55,22 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
 
         this.slider.setMajorTickUnit(1.0);
 
-        this.slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.intValue() != newValue.intValue()) {
-                setFieldValueToParameter(parameterT
-                        .getEnumPair()
-                        .stream()
-                        .filter(enumPairT -> enumPairT.getEnumID()
-                                .equals(
-                                        this.converter
-                                        .toString(newValue.doubleValue())))
-                        .map(EnumPairT::getWireValue)
-                        .findFirst()
-                        .orElse("1"), parameterT);
-            }
-        });
+
+        if (parameterT != null)
+            this.slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (oldValue.intValue() != newValue.intValue()) {
+                    setFieldValueToParameter(parameterT
+                            .getEnumPair()
+                            .stream()
+                            .filter(enumPairT -> enumPairT.getEnumID()
+                                    .equals(
+                                            this.converter
+                                                    .toString(newValue.doubleValue())))
+                            .map(EnumPairT::getWireValue)
+                            .findFirst()
+                            .orElse("1"), parameterT);
+                }
+            });
         this.slider.setLabelFormatter(this.converter);
         this.slider.setShowTickLabels(true);
         this.slider.setShowTickMarks(true);
@@ -95,8 +98,8 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

@@ -20,15 +20,17 @@ import java.util.stream.Collectors;
 
 public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandler<ActionEvent>> {
 
+    @Inject
+    UiElementAbstractFactory factory;
+
     private StrategyPanelT strategyPanelT;
 
     private List<Region> regionList;
-    ScrollPane scrollPane;
+
+    // TODO check the functionality of it
+    private ScrollPane scrollPane;
 
     private List<ParameterT> parameterTList;
-
-    @Inject
-    UiElementAbstractFactory factory;
 
     public FxFixPanelUiElement() {
         DaggerMyComponent.builder().build().inject(this);

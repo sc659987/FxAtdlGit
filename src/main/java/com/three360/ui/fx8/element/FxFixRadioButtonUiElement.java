@@ -2,27 +2,45 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.RadioButtonT;
+import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixRadioButtonUiElement;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> {
 
     private RadioButtonT radioButtonT;
+
     private RadioButton radioButton;
 
     private ParameterT parameterT;
+
+
+    private static final Map<String, ToggleGroup> TOGGLE_GROUPS = new HashMap<>();
 
     @Override
     public RadioButton create() {
         if (this.radioButtonT != null) {
             this.radioButton = new RadioButton(this.radioButtonT.getLabel());
+            if (!Utils.isEmpty(this.radioButtonT.getRadioGroup())) {
+                ToggleGroup toggleGroup = TOGGLE_GROUPS.get(this.radioButtonT.getRadioGroup());
+                if (toggleGroup == null)
+                    TOGGLE_GROUPS.put(this.radioButtonT.getRadioGroup(), toggleGroup = new ToggleGroup());
+                this.radioButton.setToggleGroup(toggleGroup);
+            }
+            if (this.radioButtonT.isInitValue() != null) {
+                this.radioButton.setSelected(this.radioButtonT.isInitValue());
+            }
             this.radioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                setFieldValueToParameter(newValue, this.parameterT);
+                if (parameterT != null)
+                    setFieldValueToParameter(newValue, this.parameterT);
             });
             return this.radioButton;
         }
@@ -41,8 +59,8 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

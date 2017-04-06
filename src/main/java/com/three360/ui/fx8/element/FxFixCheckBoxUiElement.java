@@ -23,13 +23,19 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, E
     public CheckBox create() {
         if (this.checkBoxT != null) {
             this.checkBox = new CheckBox(this.checkBoxT.getLabel());
-            this.checkBox.setSelected(this.checkBoxT.isInitValue());
-            this.checkBox.selectedProperty()
-                    .addListener((observable, oldValue, newValue) ->
-                            setFieldValueToParameter(newValue ?
-                                            checkBoxT.getCheckedEnumRef() :
-                                            checkBoxT.getUncheckedEnumRef(),
-                                    parameterT));
+
+            if (this.checkBoxT.isInitValue() != null)
+                this.checkBox.setSelected(this.checkBoxT.isInitValue());
+
+            if (this.parameterT != null)
+                this.checkBox.selectedProperty()
+                        .addListener((observable, oldValue, newValue) ->
+                                setFieldValueToParameter(newValue ?
+                                                this.checkBoxT.getCheckedEnumRef() :
+                                                this.checkBoxT.getUncheckedEnumRef(),
+                                        this.parameterT));
+
+
             return this.checkBox;
         }
         return null;
@@ -46,8 +52,8 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, E
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

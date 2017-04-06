@@ -16,15 +16,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by sainik on 3/27/17.
- */
+
 public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiElement<Pane, EventHandler<ActionEvent>> {
 
     private RadioButtonListT radioButtonListT;
+
     private GridPane pane;
+
     private List<RadioButton> radioButtonList;
+
     private ToggleGroup toggleGroup;
+
     private Label label;
 
     private ParameterT parameterT;
@@ -47,12 +49,14 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
                     .forEach(radioButton -> {
                         radioButton.setSelected(true);
                     });
-            toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-                setFieldValueToParameter(((RadioButton) newValue).getId(), parameterT);
-            });
+
+            if (parameterT != null)
+                toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+                    setFieldValueToParameter(((RadioButton) newValue).getId(), parameterT);
+                });
             for (int i = 0; i < this.radioButtonList.size(); i++) {
                 if (this.radioButtonListT.getOrientation() == PanelOrientationT.HORIZONTAL) {
-                    this.pane.add(this.radioButtonList.get(i), 3 * i, 1, 3, 1);
+                    this.pane.add(this.radioButtonList.get(i), 3 * i, 1, 1, 1);
                 } else {
                     this.pane.add(this.radioButtonList.get(i), 0, i + 1, GridPane.REMAINING, 1);
                 }
@@ -74,8 +78,8 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

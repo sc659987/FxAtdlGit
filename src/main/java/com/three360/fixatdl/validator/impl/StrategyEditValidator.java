@@ -12,18 +12,17 @@ import java.util.stream.Collectors;
 
 public class StrategyEditValidator implements IStrategyEditValidator {
 
-    EditRuleEvaluator editRuleEvaluator;
+    private EditRuleEvaluator editRuleEvaluator;
 
-    List<StrategyEditT> strategyEditTS;
+    private List<StrategyEditT> strategyEditTS;
 
-    List<ParameterT> parameterTS;
+    private List<ParameterT> parameterTS;
 
     public StrategyEditValidator(List<StrategyEditT> strategyEditTS, List<ParameterT> parameterTS) {
         assert (strategyEditTS != null && parameterTS != null);
 
         this.strategyEditTS = strategyEditTS;
         this.parameterTS = parameterTS;
-
         this.editRuleEvaluator = new EditRuleEvaluatorImpl(this.parameterTS);
     }
 
@@ -32,7 +31,8 @@ public class StrategyEditValidator implements IStrategyEditValidator {
         return this.strategyEditTS
                 .stream()
                 .map(strategyEditT -> new Pair<>(this.editRuleEvaluator.validate(strategyEditT.getEdit()), strategyEditT.getErrorMessage()))
-                .map(booleanStringPair -> booleanStringPair.getKey() ? booleanStringPair.getValue() : null)
+                .filter(booleanStringPair -> booleanStringPair.getKey())
+                .map(booleanStringPair -> booleanStringPair.getValue())
                 .collect(Collectors.toList());
     }
 }

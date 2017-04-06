@@ -58,12 +58,14 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pan
             else
                 this.stringComboBox.getSelectionModel().select(this.dropDownListT.getInitValue());
 
+
             this.stringComboBox
                     .valueProperty()
                     .addListener((observable, oldValue, newValue) -> {
                         if (handlers != null)
                             handlers.changed(observable, oldValue, newValue);
-                        setFieldValueToParameter(newValue, this.parameterT);
+                        if (parameterT != null)
+                            setFieldValueToParameter(newValue, this.parameterT);
                     });
 
             this.gridPane.add(this.stringComboBox, this.nextColumn, 0);
@@ -75,8 +77,8 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pan
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override

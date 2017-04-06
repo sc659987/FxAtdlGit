@@ -10,8 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class FxUiElementFactory implements UiElementAbstractFactory {

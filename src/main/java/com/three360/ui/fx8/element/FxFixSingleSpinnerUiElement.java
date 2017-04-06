@@ -60,11 +60,12 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
             this.singleSpinner = new Spinner<>(limit.getKey(), limit.getValue(), singleSpinnerT.getInitValue() == null ? 0 : limit.getKey(),
                     this.singleSpinnerT.getIncrement() == null ? ((limit.getKey() == 0.0) ? 0.1 : limit.getKey()) : this.singleSpinnerT.getIncrement());
 
-            this.singleSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (!setFieldValueToParameter(newValue, parameterT)) {
-                    
-                }
-            });
+            if (parameterT != null)
+                this.singleSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!setFieldValueToParameter(newValue, parameterT)) {
+                        //TODO put logic to roll back to old value
+                    }
+                });
 
             this.gridPane = new GridPane();
             if (!Utils.isEmpty(this.singleSpinnerT.getLabel())) {

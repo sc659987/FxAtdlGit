@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO multi value delimiter, this will work for char and string
-// TODO bug in horizontal List show
 public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> {
 
     private CheckBoxListT checkBoxListT;
@@ -24,48 +22,59 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
     private GridPane gridPane;
 
     private List<CheckBox> checkBoxes;
-    private Label label;
-    private ParameterT parameterT;
-    private int nextRow = 0;
 
+    private Label label;
+
+    private ParameterT parameterT;
+
+    private int nextRow = 0;
 
     @Override
     public Pane create() {
         if (this.checkBoxListT != null) {
             this.gridPane = new GridPane();
+
             if (this.checkBoxListT.getLabel() != null && !this.checkBoxListT.getLabel().equals("")) {
                 this.label = new Label(this.checkBoxListT.getLabel());
                 this.gridPane.add(this.label, 0, this.nextRow++, GridPane.REMAINING, 1);
             }
+
             this.checkBoxes = this.checkBoxListT.getListItem().stream().map(listItemT -> {
                 CheckBox checkBox = new CheckBox();
                 checkBox.setId(listItemT.getEnumID());
                 checkBox.setText(listItemT.getUiRep());
                 return checkBox;
             }).collect(Collectors.toList());
+
             this.checkBoxes.stream()
                     .filter(checkBox -> checkBox.getId().equals(
                             this.checkBoxListT.getInitValue()))
                     .collect(Collectors.toList())
                     .forEach(checkBox -> checkBox.setSelected(true));
+
             this.gridPane.setHgap(2.0);
             this.gridPane.setVgap(2.0);
-            this.checkBoxes.stream().forEach(checkBox -> {
-                checkBox.setOnAction(event -> {
-                    CheckBox ch = (CheckBox) event.getSource();
-                    if (ch.isSelected()) {
-                        setFieldValueToParameter(String.join(" ", checkBoxes.stream()
-                                .filter(CheckBox::isSelected)
-                                .map(cb -> cb.getId())
-                                .collect(Collectors.toList())), parameterT);
-                    }
+
+            if (parameterT != null)
+                this.checkBoxes.stream().forEach(checkBox -> {
+                    checkBox.setOnAction(event -> {
+                        CheckBox ch = (CheckBox) event.getSource();
+                        if (ch.isSelected()) {
+                            setFieldValueToParameter(String.join(" ", checkBoxes.stream()
+                                    .filter(CheckBox::isSelected)
+                                    .map(cb -> cb.getId())
+                                    .collect(Collectors.toList())), parameterT);
+                        }
+                    });
                 });
-            });
-            for (int i = 0; i < this.checkBoxes.size(); i++) {
+
+
+            //TODO change it to functional code using marge
+            for (int index = 0; index < this.checkBoxes.size(); index++) {
                 if (this.checkBoxListT.getOrientation() == PanelOrientationT.HORIZONTAL) {
-                    this.gridPane.add(this.checkBoxes.get(i), 3 * i, this.nextRow, 3, 1);
+                    this.gridPane.add(this.checkBoxes.get(index), 3 * index, this.nextRow, 1, 1);
                 } else {
-                    this.gridPane.add(this.checkBoxes.get(i), 0, this.nextRow++, GridPane.REMAINING, 1);
+                    this.gridPane.add(this.checkBoxes.get(index), 0, this.nextRow++, GridPane.REMAINING, 1);
                 }
             }
             return this.gridPane;
@@ -87,8 +96,8 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
     }
 
     @Override
