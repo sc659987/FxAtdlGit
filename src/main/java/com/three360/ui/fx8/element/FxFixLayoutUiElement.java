@@ -17,46 +17,48 @@ import java.util.stream.Collectors;
 
 public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHandler<ActionEvent>> {
 
-	private StrategyLayoutT strategyLayoutT;
+    private StrategyLayoutT strategyLayoutT;
 
-	@Inject
-	UiElementAbstractFactory factory;
+    @Inject
+    UiElementAbstractFactory factory;
 
-	private List<ParameterT> allParameterTList;
+    private List<ParameterT> allParameterTList;
 
-	public FxFixLayoutUiElement() {
-		DaggerMyComponent.builder().build().inject(this);
-	}
+    public FxFixLayoutUiElement() {
+        DaggerMyComponent.builder().build().inject(this);
+    }
 
-	@Override
-	public Node create() {
-		VBox vBox = new VBox();
-		vBox.getChildren().addAll(this.strategyLayoutT.getStrategyPanel().stream().map(strategyPanelT -> {
-			IFixPanelUiElement<Node, EventHandler<ActionEvent>> element = factory.instantiateNewPanel();
-			element.setStrategyPanelT(strategyPanelT);
-			element.setParameters(this.allParameterTList);
-			return element.create();
-		}).collect(Collectors.toList()));
-		return vBox;
-	}
+    @Override
+    public Node create() {
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(this.strategyLayoutT.getStrategyPanel().stream().map(strategyPanelT -> {
+            IFixPanelUiElement<Node, EventHandler<ActionEvent>> element = factory.instantiateNewPanel();
+            element.setStrategyPanelT(strategyPanelT);
+            element.setParameters(this.allParameterTList);
+            return element.create();
+        }).collect(Collectors.toList()));
+        return vBox;
+    }
 
-	@Override
-	public void setStrategyLayout(StrategyLayoutT strategyLayoutT) {
-		this.strategyLayoutT = strategyLayoutT;
-	}
+    @Override
+    public void setStrategyLayout(StrategyLayoutT strategyLayoutT) {
+        this.strategyLayoutT = strategyLayoutT;
+    }
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
-		throw new RuntimeException();
-	}
+    @Override
+    public void registerForEvent(EventHandler<ActionEvent> e) {
+        throw new RuntimeException("element does not generate the");
+    }
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		this.allParameterTList = parameterTList;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        this.allParameterTList = parameterTList;
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		return this.allParameterTList;
-	}
+    @Override
+    public List<ParameterT> getParameter() {
+        return this.allParameterTList;
+    }
+
+
 }

@@ -5,6 +5,8 @@ import com.three360.fixatdl.layout.*;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.*;
 import com.three360.ui.fx8.component.DaggerMyComponent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,7 +17,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandler<ActionEvent>> {
@@ -35,6 +39,8 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
     public FxFixPanelUiElement() {
         DaggerMyComponent.builder().build().inject(this);
     }
+
+    private Map<String, ChangeListener<?>> controlIdChangeListenerMap = new HashMap<>();
 
     @Override
     public Node create() {
@@ -62,9 +68,15 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
             } else if (this.strategyPanelT.getControl() != null) {
                 this.regionList = this.strategyPanelT.getControl().stream().map(controlT -> {
                     if (controlT instanceof CheckBoxListT) {
-                        IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewCheckBoxList();
+                        IFixCheckBoxListUiElement<Pane, ChangeListener<List<String>>> element = factory.instantiateNewCheckBoxList();
                         element.setCheckBoxListT((CheckBoxListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        element.registerForEvent(new ChangeListener<List<String>>() {
+                            @Override
+                            public void changed(ObservableValue<? extends List<String>> observable, List<String> oldValue, List<String> newValue) {
+
+                            }
+                        });
                         return element.create();
                     } else if (controlT instanceof CheckBoxT) {
                         IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> element = factory.instantiateNewCheckBox();

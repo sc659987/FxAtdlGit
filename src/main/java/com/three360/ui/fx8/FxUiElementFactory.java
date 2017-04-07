@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
 
+import java.util.List;
+
 public class FxUiElementFactory implements UiElementAbstractFactory {
 
     @Override
@@ -20,7 +22,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> instantiateNewCheckBoxList() {
+    public IFixCheckBoxListUiElement<Pane, ChangeListener<List<String>>> instantiateNewCheckBoxList() {
         return new FxFixCheckBoxListUiElement();
     }
 

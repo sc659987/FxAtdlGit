@@ -13,19 +13,15 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 
-public interface IFixUiElement<T, K> {
+public interface IFixUiElement<T, K, P> {
 
     T create();
 
     void registerForEvent(K e);
 
+    void setParameters(List<ParameterT> parameterTList);
 
-    default void setParameters(List<ParameterT> parameterTList) {
-    }
-
-    default List<ParameterT> getParameter() {
-        return null;
-    }
+    List<ParameterT> getParameter();
 
     default List<ParameterT> findParameterByName(String... names) {
         return this.getParameter() != null ? this.getParameter()
@@ -383,5 +379,23 @@ public interface IFixUiElement<T, K> {
         }
         return false;
     }
+
+    /***
+     *
+     * @param visible
+     */
+    void makeElementVisible(boolean visible);
+
+    /***
+     *
+     * @param enable
+     */
+    void makeElementEnable(boolean enable);
+
+    /***
+     *
+     * @param value
+     */
+    void setValue(P value);
 
 }

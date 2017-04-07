@@ -4,8 +4,7 @@ import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.CheckBoxListT;
 import com.three360.fixatdl.layout.PanelOrientationT;
 import com.three360.ui.common.element.IFixCheckBoxListUiElement;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -15,7 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> {
+public class FxFixCheckBoxListUiElement
+        implements IFixCheckBoxListUiElement<Pane, ChangeListener<List<String>>, List<String>> {
 
     private CheckBoxListT checkBoxListT;
 
@@ -29,15 +29,17 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 
     private int nextRow = 0;
 
+    private ChangeListener<List<String>> listener;
+
     @Override
     public Pane create() {
         if (this.checkBoxListT != null) {
             this.gridPane = new GridPane();
 
-            if (this.checkBoxListT.getLabel() != null && !this.checkBoxListT.getLabel().equals("")) {
-                this.label = new Label(this.checkBoxListT.getLabel());
-                this.gridPane.add(this.label, 0, this.nextRow++, GridPane.REMAINING, 1);
-            }
+            if (this.checkBoxListT.getLabel() != null && !this.checkBoxListT.getLabel().equals(""))
+                this.gridPane.add(this.label = new Label(this.checkBoxListT.getLabel()),
+                        0, this.nextRow++, GridPane.REMAINING, 1);
+
 
             this.checkBoxes = this.checkBoxListT.getListItem().stream().map(listItemT -> {
                 CheckBox checkBox = new CheckBox();
@@ -56,20 +58,20 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
             this.gridPane.setVgap(2.0);
 
             if (parameterT != null)
-                this.checkBoxes.stream().forEach(checkBox -> {
-                    checkBox.setOnAction(event -> {
-                        CheckBox ch = (CheckBox) event.getSource();
-                        if (ch.isSelected()) {
-                            setFieldValueToParameter(String.join(" ", checkBoxes.stream()
+                checkBoxes.stream().forEach(checkBox ->
+                        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                            List<String> checkedCheckBoxes = checkBoxes.stream()
                                     .filter(CheckBox::isSelected)
                                     .map(cb -> cb.getId())
-                                    .collect(Collectors.toList())), parameterT);
-                        }
-                    });
-                });
-
-
+                                    .collect(Collectors.toList());
+                            if (listener != null)
+                                listener.changed(null, null, checkedCheckBoxes);
+                            setFieldValueToParameter(String.join(" ", checkedCheckBoxes), parameterT);
+                        })
+                );
             //TODO change it to functional code using marge
+
+
             for (int index = 0; index < this.checkBoxes.size(); index++) {
                 if (this.checkBoxListT.getOrientation() == PanelOrientationT.HORIZONTAL) {
                     this.gridPane.add(this.checkBoxes.get(index), 3 * index, this.nextRow, 1, 1);
@@ -77,6 +79,7 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
                     this.gridPane.add(this.checkBoxes.get(index), 0, this.nextRow++, GridPane.REMAINING, 1);
                 }
             }
+
             return this.gridPane;
         }
         return null;
@@ -84,8 +87,8 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 
 
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
+    public void registerForEvent(ChangeListener<List<String>> listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -105,5 +108,20 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public void makeElementVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeElementEnable(boolean enable) {
+
+    }
+
+    @Override
+    public void setValue(List<String> value) {
+        
     }
 }

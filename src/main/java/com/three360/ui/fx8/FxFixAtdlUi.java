@@ -57,10 +57,10 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
                 setSelectedStrategy(getStrategies().getStrategy().get(0));
             if (getSelectedStrategy() != null) {
                 createFixLayout();
-                createFixErrorMessage();
                 this.iStrategyEditValidator =
                         new StrategyEditValidator(super.selectedStrategyT.getStrategyEdit(),
                                 super.selectedStrategyT.getParameter());
+                createFixErrorMessage();
             }
         }
         return this.borderPane;
