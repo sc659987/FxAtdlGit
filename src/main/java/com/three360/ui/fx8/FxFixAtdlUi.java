@@ -2,14 +2,13 @@ package com.three360.ui.fx8;
 
 import com.three360.fixatdl.layout.DropDownListT;
 import com.three360.fixatdl.layout.ListItemT;
-import com.three360.fixatdl.validator.common.IStrategyEditValidator;
-import com.three360.fixatdl.validator.impl.StrategyEditValidator;
+import com.three360.ui.validator.common.IStrategyEditValidator;
+import com.three360.ui.validator.impl.StrategyEditValidator;
 import com.three360.ui.abs.AbstractFixAtdlUi;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.IFixDropDownListUiElement;
 import com.three360.ui.common.element.IFixLayoutUiElement;
 import com.three360.ui.fx8.component.DaggerMyComponent;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

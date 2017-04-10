@@ -73,11 +73,11 @@ public class StrategyPanelT {
 	 * This is why there is not a <CODE>set</CODE> method for the strategyPanel property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getStrategyPanel().add(newItem);
+	 * getStrategyPanel().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>
@@ -102,11 +102,11 @@ public class StrategyPanelT {
 	 * This is why there is not a <CODE>set</CODE> method for the control property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getControl().add(newItem);
+	 * getControl().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

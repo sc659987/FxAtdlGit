@@ -108,11 +108,11 @@ public class StrategiesT {
 	 * This is why there is not a <CODE>set</CODE> method for the edit property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getEdit().add(newItem);
+	 * getEdit().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>
@@ -137,11 +137,11 @@ public class StrategiesT {
 	 * This is why there is not a <CODE>set</CODE> method for the strategy property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getStrategy().add(newItem);
+	 * getStrategy().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

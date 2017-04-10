@@ -5,41 +5,34 @@ import com.three360.fixatdl.layout.PanelOrientationT;
 import com.three360.fixatdl.layout.RadioButtonListT;
 import com.three360.ui.common.element.IFixRadioButtonListUiElement;
 import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiElement<Pane, List<String>> {
+public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiElement<Pane, String> {
 
     private RadioButtonListT radioButtonListT;
-
     private GridPane pane;
-
     private List<RadioButton> radioButtonList;
-
     private ToggleGroup toggleGroup;
-
-    private Label label;
-
     private ParameterT parameterT;
+
+    private ObjectProperty<String> controlIdEmitter = new SimpleObjectProperty<>();
 
     @Override
     public Pane create() {
         if (this.radioButtonListT != null) {
             this.pane = new GridPane();
-            this.label = new Label(this.radioButtonListT.getLabel());
             this.toggleGroup = new ToggleGroup();
-            this.pane.add(this.label, 0, 0, GridPane.REMAINING, 1);
+            this.pane.add(new Label(this.radioButtonListT.getLabel()), 0, 0, GridPane.REMAINING, 1);
             this.radioButtonList = this.radioButtonListT.getListItem().stream().map(listItemT -> {
                 RadioButton radioButton = new RadioButton();
                 radioButton.setText(listItemT.getUiRep());
@@ -47,15 +40,24 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
                 radioButton.setToggleGroup(toggleGroup);
                 return radioButton;
             }).collect(Collectors.toList());
+
+
             this.radioButtonList.stream().filter(radioButton -> radioButton.getId().equals(radioButtonListT.getInitValue()) ? true : false)
                     .forEach(radioButton -> {
                         radioButton.setSelected(true);
                     });
 
-            if (parameterT != null)
-                toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-                    setFieldValueToParameter(((RadioButton) newValue).getId(), parameterT);
+            this.radioButtonList.forEach(radioButton -> {
+
+                radioButton.setOnAction(event -> {
+                    if (parameterT != null)
+                        setFieldValueToParameter(((RadioButton) event.getSource()).getId(), parameterT);
                 });
+
+
+            });
+
+
             for (int i = 0; i < this.radioButtonList.size(); i++) {
                 if (this.radioButtonListT.getOrientation() == PanelOrientationT.HORIZONTAL) {
                     this.pane.add(this.radioButtonList.get(i), 3 * i, 1, 1, 1);
@@ -88,27 +90,41 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
     }
 
     @Override
-    public ObjectProperty<Pair<String, List<String>>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return this.controlIdEmitter;
     }
 
     @Override
-    public List<String> getValue() {
-        return null;
+    public String getValue() {
+        return radioButtonList
+                .stream()
+                .filter(RadioButton::isSelected)
+                .map(radioButton -> radioButton.getId())
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
-    public void setValue(List<String> strings) {
+    public void setValue(String s) {
 
+    }
+
+    @Override
+    public RadioButtonListT getControl() {
+        return this.radioButtonListT;
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        radioButtonList.forEach(radioButton -> {
+            radioButton.setVisible(visible);
+        });
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        radioButtonList.forEach(radioButton -> {
+            radioButton.setDisable(!enable);
+        });
     }
 }

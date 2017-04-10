@@ -5,11 +5,9 @@ import com.three360.fixatdl.layout.RadioButtonT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixRadioButtonUiElement;
 import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,13 +17,11 @@ import java.util.Map;
 public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<RadioButton, String> {
 
     private RadioButtonT radioButtonT;
-
     private RadioButton radioButton;
-
     private ParameterT parameterT;
-
-
     private static final Map<String, ToggleGroup> TOGGLE_GROUPS = new HashMap<>();
+    private ObjectProperty<String> controlIdEmitter = new SimpleObjectProperty<>();
+
 
     @Override
     public RadioButton create() {
@@ -40,10 +36,14 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
             if (this.radioButtonT.isInitValue() != null) {
                 this.radioButton.setSelected(this.radioButtonT.isInitValue());
             }
-            this.radioButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+
+            this.radioButton.setOnAction(event -> {
                 if (parameterT != null)
-                    setFieldValueToParameter(newValue, this.parameterT);
+                    setFieldValueToParameter(radioButton.isSelected(), this.parameterT);
+                // publish GUI change mainly for control flow
+                controlIdEmitter.setValue(radioButtonT.getID());
             });
+
             return this.radioButton;
         }
         return null;
@@ -68,27 +68,33 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
     }
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return this.controlIdEmitter;
+    }
+
+    @Override
+    public RadioButtonT getControl() {
+        return this.radioButtonT;
     }
 
     @Override
     public String getValue() {
-        return null;
+        return this.radioButton.isSelected() ? radioButtonT.getCheckedEnumRef()
+                : radioButtonT.getUncheckedEnumRef();
     }
 
     @Override
     public void setValue(String s) {
-
+        // TODO
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        radioButton.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        radioButton.setDisable(!enable);
     }
 }

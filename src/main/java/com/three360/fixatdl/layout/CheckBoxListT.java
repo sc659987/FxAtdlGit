@@ -58,11 +58,11 @@ public class CheckBoxListT
 	 * This is why there is not a <CODE>set</CODE> method for the listItem property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getListItem().add(newItem);
+	 * getListItem().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

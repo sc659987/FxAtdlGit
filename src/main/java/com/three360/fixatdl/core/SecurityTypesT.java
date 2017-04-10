@@ -185,11 +185,11 @@ public class SecurityTypesT {
 	 * This is why there is not a <CODE>set</CODE> method for the securityType property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getSecurityType().add(newItem);
+	 * getSecurityType().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

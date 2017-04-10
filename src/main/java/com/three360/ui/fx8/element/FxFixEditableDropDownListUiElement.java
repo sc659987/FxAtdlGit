@@ -5,12 +5,12 @@ import com.three360.fixatdl.layout.EditableDropDownListT;
 import com.three360.ui.common.element.IFixEditableDropDownListUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +25,9 @@ public class FxFixEditableDropDownListUiElement
     private Label label;
 
     private int nextColumn = 0;
-    private ChangeListener<String> changedListener;
     private ParameterT parameterT;
+
+    private ObjectProperty<String> checkedProperty = new SimpleObjectProperty<>();
 
     @Override
     public Pane create() {
@@ -52,14 +53,13 @@ public class FxFixEditableDropDownListUiElement
                 this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
 
 
-            if (parameterT != null)
-                this.stringComboBox
-                        .valueProperty()
-                        .addListener((observable, oldValue, newValue) -> {
-                            if (this.changedListener != null)
-                                this.changedListener.changed(observable, oldValue, newValue);
-                            setFieldValueToParameter(newValue, this.parameterT);
-                        });
+            this.stringComboBox.setOnAction(event -> {
+                this.checkedProperty.set(editableDropDownListT.getID());
+
+                if (this.parameterT != null)
+                    setFieldValueToParameter(stringComboBox.getValue(), this.parameterT);
+            });
+
             this.gridPane.add(this.stringComboBox, nextColumn, 0);
             return this.gridPane;
         }
@@ -85,27 +85,33 @@ public class FxFixEditableDropDownListUiElement
     }
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return this.checkedProperty;
+    }
+
+    @Override
+    public EditableDropDownListT getControl() {
+        return this.editableDropDownListT;
     }
 
     @Override
     public String getValue() {
-        return null;
+        return this.stringComboBox.getValue();
     }
 
     @Override
     public void setValue(String s) {
-
+        this.stringComboBox.setValue(s);
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        stringComboBox.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        this.stringComboBox.setDisable(!enable);
     }
+
 }

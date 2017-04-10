@@ -2,11 +2,13 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.EnumPairT;
 import com.three360.fixatdl.core.ParameterT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.ListItemT;
 import com.three360.fixatdl.layout.SliderT;
 import com.three360.ui.common.element.IFixSliderUiElement;
 import com.three360.ui.fx8.FxUtils;
 import com.three360.ui.fx8.utils.ListStringConverter;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //TODO fix for large level by increasing the length of slide bar
-public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHandler<ActionEvent>> {
+public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, String> {
 
     private SliderT sliderT;
     private Slider slider;
@@ -87,8 +89,35 @@ public class FxFixSliderUiElement implements IFixSliderUiElement<Pane, EventHand
         return this.gridPane;
     }
 
+
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> handler) {
+    public ObjectProperty<String> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
+    }
+
+    @Override
+    public <C extends ControlT> C getControl() {
+        return null;
     }
 
     @Override

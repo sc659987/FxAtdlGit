@@ -21,7 +21,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixCheckBoxListUiElement<Pane, List<String>> instantiateNewCheckBoxList() {
+    public IFixCheckBoxListUiElement<Pane, String> instantiateNewCheckBoxList() {
         return new FxFixCheckBoxListUiElement();
     }
 
@@ -32,7 +32,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
 
     @Override
     public IFixHiddenFieldUiElement instantiateNewHiddenField() {
-        // TODO add it
+        // TODO registerControlFlow it
         return null;
     }
 
@@ -52,7 +52,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixSliderUiElement<Pane, EventHandler<ActionEvent>> instantiateNewSlider() {
+    public IFixSliderUiElement<Pane, String> instantiateNewSlider() {
         return new FxFixSliderUiElement();
     }
 
@@ -87,7 +87,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
     }
 
     @Override
-    public IFixRadioButtonListUiElement<Pane, List<String>> instantiateNewRadioButtonList() {
+    public IFixRadioButtonListUiElement<Pane, String> instantiateNewRadioButtonList() {
         return new FxFixRadioButtonListUiElement();
     }
 

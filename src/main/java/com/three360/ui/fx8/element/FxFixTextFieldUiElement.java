@@ -2,11 +2,13 @@ package com.three360.ui.fx8.element;
 
 import com.sun.istack.internal.NotNull;
 import com.three360.fixatdl.core.ParameterT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.TextFieldT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixTextFieldUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,19 +24,21 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Str
     private TextFieldT textFieldT;
 
     private TextField textField;
-    private Label label;
     private GridPane gridPane;
 
     private ParameterT parameterT;
     private int nextColumn = 0;
 
+    private ObjectProperty<String> controlIdEmitter = new SimpleObjectProperty<>();
+
     @Override
     public Pane create() {
         if (this.textFieldT != null) {
             this.gridPane = new GridPane();
-            if (this.textFieldT.getLabel() != null && !this.textFieldT.getLabel().equals("")) {
+
+            if (!Utils.isEmpty(this.textFieldT.getLabel())) {
                 this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-                this.gridPane.add(this.label = new Label(this.textFieldT.getLabel()), this.nextColumn++, 0);
+                this.gridPane.add(new Label(this.textFieldT.getLabel()), this.nextColumn++, 0);
             }
             this.textField = new TextField(this.textFieldT.getInitValue());
 
@@ -71,27 +75,32 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Str
     }
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return this.controlIdEmitter;
+    }
+
+    @Override
+    public TextFieldT getControl() {
+        return this.textFieldT;
     }
 
     @Override
     public String getValue() {
-        return null;
+        return this.textField.getCharacters().toString();
     }
 
     @Override
     public void setValue(String s) {
-
+        this.textField.setText(s);
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        this.textField.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        this.textField.setDisable(!enable);
     }
 }

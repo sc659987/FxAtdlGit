@@ -114,11 +114,11 @@ public abstract class ControlT {
 	 * This is why there is not a <CODE>set</CODE> method for the stateRule property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getStateRule().add(newItem);
+	 * getStateRule().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

@@ -92,11 +92,11 @@ public class RepeatingGroupT {
 	 * This is why there is not a <CODE>set</CODE> method for the parameter property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getParameter().add(newItem);
+	 * getParameter().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

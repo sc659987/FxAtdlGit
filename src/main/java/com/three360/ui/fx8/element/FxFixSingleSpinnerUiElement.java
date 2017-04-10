@@ -2,6 +2,7 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.IntT;
 import com.three360.fixatdl.core.ParameterT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.SingleSpinnerT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixSingleSpinnerUiElement;
@@ -45,7 +46,6 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
 
     private Spinner<Double> singleSpinner;
     private SingleSpinnerT singleSpinnerT;
-    private Label label;
 
     private GridPane gridPane;
 
@@ -71,7 +71,7 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
             this.gridPane = new GridPane();
             if (!Utils.isEmpty(this.singleSpinnerT.getLabel())) {
                 this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-                this.gridPane.add(this.label = new Label(this.singleSpinnerT.getLabel()),
+                this.gridPane.add(new Label(this.singleSpinnerT.getLabel()),
                         this.nextColumn++, 0);
             }
             this.gridPane.add(this.singleSpinner, this.nextColumn, 0);
@@ -107,13 +107,18 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
     }
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
+    public ObjectProperty<String> listenChange() {
         return null;
     }
 
     @Override
+    public SingleSpinnerT getControl() {
+        return this.singleSpinnerT;
+    }
+
+    @Override
     public String getValue() {
-        return null;
+        return this.singleSpinner.getValue().toString();
     }
 
     @Override
@@ -123,11 +128,11 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
 
     @Override
     public void makeVisible(boolean visible) {
-
+        this.singleSpinner.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        this.singleSpinner.setDisable(!enable);
     }
 }

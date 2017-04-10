@@ -30,7 +30,7 @@ public class FxTestApp extends Application {
         hBox.getChildren().add(doubleSpinner);
         doubleSpinner.setId("ajhgduy");
         doubleSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Old Value = " + oldValue + "New Value = " + newValue);
+            System.out.println("Old GetComparableValue = " + oldValue + "New GetComparableValue = " + newValue);
             if (observable instanceof ReadOnlyProperty) {
                 ReadOnlyProperty readOnlyProperty = (ReadOnlyProperty) observable;
                 Spinner spinner = (Spinner) readOnlyProperty.getBean();

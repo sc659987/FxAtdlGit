@@ -5,6 +5,7 @@ import com.three360.fixatdl.layout.*;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.*;
 import com.three360.ui.fx8.component.DaggerMyComponent;
+import com.three360.ui.fx8.controlflow.FxAtdlControlFlowRegister;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -33,6 +33,9 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
     private ScrollPane scrollPane;
 
     private List<ParameterT> parameterTList;
+
+
+    private FxAtdlControlFlowRegister fxAtdlControlFlowRegister = new FxAtdlControlFlowRegister();
 
     public FxFixPanelUiElement() {
         DaggerMyComponent.builder().build().inject(this);
@@ -64,31 +67,36 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
             } else if (this.strategyPanelT.getControl() != null) {
                 this.regionList = this.strategyPanelT.getControl().stream().map(controlT -> {
                     if (controlT instanceof CheckBoxListT) {
-                        IFixCheckBoxListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewCheckBoxList();
+                        IFixCheckBoxListUiElement<Pane, String> element = factory.instantiateNewCheckBoxList();
                         element.setCheckBoxListT((CheckBoxListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof CheckBoxT) {
-                        IFixCheckBoxUiElement<CheckBox, EventHandler<ActionEvent>> element = factory.instantiateNewCheckBox();
+                        IFixCheckBoxUiElement<CheckBox, String> element = factory.instantiateNewCheckBox();
                         element.setCheckBoxT((CheckBoxT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof ClockT) {
-                        IFixClockUiElement<HBox, EventHandler<ActionEvent>> element = factory.instantiateNewClock();
+                        IFixClockUiElement<HBox, String> element = factory.instantiateNewClock();
                         element.setClockT((ClockT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof DoubleSpinnerT) {
                         // TODO complete the double spinner
                     } else if (controlT instanceof DropDownListT) {
-                        IFixDropDownListUiElement<HBox, EventHandler<ActionEvent>> element = factory.instantiateNewDropDownList();
+                        IFixDropDownListUiElement<HBox, String> element = factory.instantiateNewDropDownList();
                         element.setDropDownList((DropDownListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof EditableDropDownListT) {
-                        IFixEditableDropDownListUiElement<HBox, EventHandler<ActionEvent>> element = factory.instantiateNewEditableDropDownList();
+                        IFixEditableDropDownListUiElement<HBox, String> element = factory.instantiateNewEditableDropDownList();
                         element.setEditableDropDownList((EditableDropDownListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof LabelT) {
                         IFixLabelUiElement<Label, EventHandler<ActionEvent>> element = factory.instantiateNewLabel();
@@ -96,40 +104,47 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
                         return element.create();
                     } else if (controlT instanceof MultiSelectListT) {
-                        IFixMultiSelectListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewMultiSelectList();
+                        IFixMultiSelectListUiElement<Pane, String> element = factory.instantiateNewMultiSelectList();
                         element.setMultiSelectList((MultiSelectListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof RadioButtonListT) {
-                        IFixRadioButtonListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewRadioButtonList();
+                        IFixRadioButtonListUiElement<Pane, String> element = factory.instantiateNewRadioButtonList();
                         element.setRadioButtonListT((RadioButtonListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof RadioButtonT) {
-                        IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> element = factory.instantiateNewRadioButton();
+                        IFixRadioButtonUiElement<RadioButton, String> element = factory.instantiateNewRadioButton();
                         element.setRadioButtonT((RadioButtonT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof SingleSelectListT) {
-                        IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> element = factory.instantiateNewSingleSelectList();
+                        IFixSingleSelectListUiElement<Pane, String> element = factory.instantiateNewSingleSelectList();
                         element.setSingleSelectList((SingleSelectListT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof SingleSpinnerT) {
-                        IFixSingleSpinnerUiElement<HBox, EventHandler<ActionEvent>> element = factory.instantiateNewSingleSpinner();
+                        IFixSingleSpinnerUiElement<HBox, String> element = factory.instantiateNewSingleSpinner();
                         element.setSingleSpinner((SingleSpinnerT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof SliderT) {
-                        IFixSliderUiElement<Slider, EventHandler<ActionEvent>> element = factory.instantiateNewSlider();
+                        IFixSliderUiElement<Slider, String> element = factory.instantiateNewSlider();
                         element.setSlider((SliderT) controlT);
                         element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof TextFieldT) {
-                        IFixTextFieldUiElement<HBox, EventHandler<ActionEvent>> element = factory.instantiateNewTextField();
+                        IFixTextFieldUiElement<HBox, String> element = factory.instantiateNewTextField();
                         element.setTextField((TextFieldT) controlT);
                         if (controlT.getParameterRef() != null)
                             element.setParameters(findParameterByName(controlT.getParameterRef()));
+                        this.fxAtdlControlFlowRegister.registerControlFlow(element);
                         return element.create();
                     } else if (controlT instanceof HiddenFieldT) {
 
@@ -164,7 +179,12 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
 
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
+    public ObjectProperty<String> listenChange() {
+        return null;
+    }
+
+    @Override
+    public ControlT getControl() {
         return null;
     }
 

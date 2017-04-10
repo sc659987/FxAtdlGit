@@ -1,6 +1,7 @@
 package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.ParameterT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.LabelT;
 import com.three360.ui.common.element.IFixLabelUiElement;
 import javafx.beans.property.ObjectProperty;
@@ -35,7 +36,6 @@ public class FxFixLabelUiElement implements IFixLabelUiElement<Label, String> {
     }
 
 
-
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
         if (parameterTList != null && parameterTList.size() > 0)
@@ -50,8 +50,13 @@ public class FxFixLabelUiElement implements IFixLabelUiElement<Label, String> {
     }
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
+    public ObjectProperty<String> listenChange() {
         return null;
+    }
+
+    @Override
+    public LabelT getControl() {
+        return this.labelT;
     }
 
     @Override

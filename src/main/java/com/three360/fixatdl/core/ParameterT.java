@@ -128,11 +128,11 @@ public abstract class ParameterT {
 	 * This is why there is not a <CODE>set</CODE> method for the enumPair property.
 	 * <p>
 	 * <p>
-	 * For example, to add a new item, do as follows:
+	 * For example, to registerControlFlow a new item, do as follows:
 	 * <p>
 	 * 
 	 * <pre>
-	 * getEnumPair().add(newItem);
+	 * getEnumPair().registerControlFlow(newItem);
 	 * </pre>
 	 * <p>
 	 * <p>

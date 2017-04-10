@@ -28,7 +28,7 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
      * Publish the changes by
      * @return
      */
-    ObjectProperty<Pair<String, K>> listenChange();
+    ObjectProperty<String> listenChange();
 
     /***
      *

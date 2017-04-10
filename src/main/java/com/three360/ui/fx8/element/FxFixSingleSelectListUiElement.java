@@ -7,72 +7,75 @@ import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixSingleSelectListUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FxFixSingleSelectListUiElement
         implements IFixSingleSelectListUiElement<Pane, String> {
 
     private GridPane gridPane;
-    private ListView<String> singleSelectListView;
-    private Label label;
-
+    private ListView<ListItemT> singleSelectListView;
     private SingleSelectListT singleSelectListT;
-
     private ParameterT parameterT;
-
     private int nextRow = 0;
 
+    private ObjectProperty<String> controlIdEmitter = new SimpleObjectProperty<>();
 
     @Override
     public Pane create() {
         if (this.singleSelectListT != null) {
             this.gridPane = new GridPane();
-            this.label = new Label(this.singleSelectListT.getLabel());
+
+
             this.singleSelectListView = new ListView<>(FXCollections.observableArrayList(
                     this.singleSelectListT
-                            .getListItem()
-                            .stream()
-                            .map(ListItemT::getUiRep)
-                            .collect(Collectors.toList())));
-            this.singleSelectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                            .getListItem()));
 
+            this.singleSelectListView.setCellFactory(param -> new ListCell<ListItemT>() {
+                @Override
+                protected void updateItem(ListItemT item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(item.getUiRep());
+                }
+            });
+
+            this.singleSelectListView.getSelectionModel()
+                    .setSelectionMode(SelectionMode.SINGLE);
 
             if (parameterT != null)
-                this.singleSelectListView
-                        .getSelectionModel()
-                        .selectedIndexProperty()
-                        .addListener((observable, oldValue, newValue) -> {
-                            parameterT
-                                    .getEnumPair()
-                                    .stream()
-                                    .filter(enumPairT ->
-                                            enumPairT.getEnumID()
-                                                    .equals(this.singleSelectListT
-                                                            .getListItem()
-                                                            .get(newValue.intValue()).getEnumID())).findFirst().ifPresent(enumPairT -> {
-                                System.out.println("Wire Value : " + enumPairT.getWireValue());
-                                setFieldValueToParameter(enumPairT.getWireValue(), parameterT);
-                            });
+                this.singleSelectListView.setOnMouseClicked(event ->
 
-//                        System.out.println(parameterT.getClass());
-
-                        });
+                        // TODO fix this code
+                        parameterT
+                                .getEnumPair()
+                                .stream()
+                                .filter(enumPairT ->
+                                        enumPairT.getEnumID()
+                                                .equals(this.singleSelectListT
+                                                        .getListItem()
+                                                        .get(singleSelectListView
+                                                                .getSelectionModel()
+                                                                .getSelectedIndices()
+                                                                .get(0))
+                                                        .getEnumID()))
+                                .findFirst().ifPresent(enumPairT -> {
+                            controlIdEmitter.set(singleSelectListT.getID());
+                            setFieldValueToParameter(enumPairT.getWireValue(), parameterT);
+                        })
+                );
 
             if (!Utils.isEmpty(this.singleSelectListT.getLabel())) {
                 this.gridPane.getColumnConstraints().addAll(FxUtils.getOneColumnWidthForGridPane());
-                this.gridPane.add(this.label = new Label(this.singleSelectListT.getLabel()), 0,
+                this.gridPane.add(new Label(this.singleSelectListT.getLabel()), 0,
                         this.nextRow++);
             }
 
@@ -82,7 +85,6 @@ public class FxFixSingleSelectListUiElement
         }
         return null;
     }
-
 
 
     @Override
@@ -105,27 +107,37 @@ public class FxFixSingleSelectListUiElement
 
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return this.controlIdEmitter;
+    }
+
+    @Override
+    public SingleSelectListT getControl() {
+        return this.singleSelectListT;
     }
 
     @Override
     public String getValue() {
-        return null;
+        return singleSelectListView.getItems().get(
+                singleSelectListView
+                        .getSelectionModel()
+                        .getSelectedIndices()
+                        .get(0))
+                .getEnumID();
     }
 
     @Override
     public void setValue(String s) {
-
+        // TODO to be done in future for control flow extension
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        this.singleSelectListView.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        this.singleSelectListView.setDisable(!enable);
     }
 }

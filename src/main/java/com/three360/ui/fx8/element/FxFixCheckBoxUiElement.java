@@ -2,8 +2,10 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.CheckBoxT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.ui.common.element.IFixCheckBoxUiElement;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.CheckBox;
 import javafx.util.Pair;
 
@@ -13,12 +15,11 @@ import java.util.List;
 public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, String> {
 
     private CheckBoxT checkBoxT;
-
     private CheckBox checkBox;
-
     private ParameterT parameterT;
 
 
+    private ObjectProperty<String> checkedProperty = new SimpleObjectProperty<>();
 
     @Override
     public CheckBox create() {
@@ -29,12 +30,15 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, S
                 this.checkBox.setSelected(this.checkBoxT.isInitValue());
 
             if (this.parameterT != null)
-                this.checkBox.selectedProperty()
-                        .addListener((observable, oldValue, newValue) ->
-                                setFieldValueToParameter(newValue ?
-                                                this.checkBoxT.getCheckedEnumRef() :
-                                                this.checkBoxT.getUncheckedEnumRef(),
-                                        this.parameterT));
+                this.checkBox.setOnAction(event -> {
+                    checkedProperty.setValue(this.checkBoxT.getID());
+                    if (parameterT != null)
+                        setFieldValueToParameter(checkBox.isSelected() ?
+                                        this.checkBoxT.getCheckedEnumRef() :
+                                        this.checkBoxT.getUncheckedEnumRef(),
+                                this.parameterT);
+                });
+
             return this.checkBox;
         }
         return null;
@@ -60,27 +64,35 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, S
 
 
     @Override
-    public ObjectProperty<Pair<String, String>> listenChange() {
-        return null;
+    public ObjectProperty<String> listenChange() {
+        return checkedProperty;
+    }
+
+    @Override
+    public CheckBoxT getControl() {
+        return this.checkBoxT;
     }
 
     @Override
     public String getValue() {
-        return null;
+        return checkBox.isSelected() ?
+                this.checkBoxT.getCheckedEnumRef() :
+                this.checkBoxT.getUncheckedEnumRef();
     }
 
     @Override
     public void setValue(String s) {
+        checkBox.setSelected(this.checkBoxT.getCheckedEnumRef().equals(s));
 
     }
 
     @Override
     public void makeVisible(boolean visible) {
-
+        checkBox.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-
+        checkBox.setDisable(!enable);
     }
 }

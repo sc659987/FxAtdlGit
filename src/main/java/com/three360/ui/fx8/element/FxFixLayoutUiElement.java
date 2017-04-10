@@ -1,6 +1,7 @@
 package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.ParameterT;
+import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.StrategyLayoutT;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.IFixLayoutUiElement;
@@ -59,11 +60,6 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, String> {
 	}
 
 	@Override
-	public ObjectProperty<Pair<String, String>> listenChange() {
-		return null;
-	}
-
-	@Override
 	public String getValue() {
 		return null;
 	}
@@ -73,7 +69,18 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, String> {
 
 	}
 
-	@Override
+
+    @Override
+    public ObjectProperty<String> listenChange() {
+        return null;
+    }
+
+    @Override
+    public ControlT getControl() {
+        return null;
+    }
+
+    @Override
 	public void makeVisible(boolean visible) {
 
 	}
