@@ -5,6 +5,7 @@ import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.ListItemT;
 import com.three360.fixatdl.layout.MultiSelectListT;
 import com.three360.ui.common.element.IFixMultiSelectListUiElement;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,13 +14,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiElement<Pane, EventHandler<ActionEvent>> {
+public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiElement<Pane, String> {
 
     private VBox vBoxWrapper;
     private ListView<String> multiSelectListView;
@@ -78,11 +80,6 @@ public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiEleme
     }
 
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
-    }
-
-    @Override
     public void setMultiSelectList(MultiSelectListT multiSelectListT) {
         this.multiSelectListT = multiSelectListT;
     }
@@ -98,5 +95,31 @@ public class FxFixMultiSelectListUiElement implements IFixMultiSelectListUiEleme
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

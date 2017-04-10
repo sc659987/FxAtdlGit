@@ -3,14 +3,16 @@ package com.three360.ui.fx8.element;
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.LabelT;
 import com.three360.ui.common.element.IFixLabelUiElement;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandler<ActionEvent>> {
+public class FxFixLabelUiElement implements IFixLabelUiElement<Label, String> {
 
     private Label label;
     private LabelT labelT;
@@ -32,10 +34,7 @@ public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandl
         this.labelT = label;
     }
 
-    @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
 
-    }
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
@@ -48,5 +47,30 @@ public class FxFixLabelUiElement implements IFixLabelUiElement<Label, EventHandl
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

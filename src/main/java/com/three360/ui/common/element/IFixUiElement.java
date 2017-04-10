@@ -1,6 +1,9 @@
 package com.three360.ui.common.element;
 
 import com.three360.fixatdl.core.*;
+import com.three360.fixatdl.layout.ControlT;
+import javafx.beans.property.ObjectProperty;
+import javafx.util.Pair;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -13,20 +16,69 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 
-public interface IFixUiElement<T, K> {
+public interface IFixUiElement<T, K extends Comparable<?>> {
 
+    /***
+     * create the Ui and return depending on type
+     * @return
+     */
     T create();
 
-    void registerForEvent(K e);
+    /***
+     * Publish the changes by
+     * @return
+     */
+    ObjectProperty<Pair<String, K>> listenChange();
 
+    /***
+     *
+     * @return
+     */
+    K getValue();
 
-    default void setParameters(List<ParameterT> parameterTList) {
-    }
+    /***
+     *
+     * @param k
+     */
+    void setValue(K k);
 
-    default List<ParameterT> getParameter() {
-        return null;
-    }
+    /***
+     *
+     * @param visible
+     */
+    void makeVisible(boolean visible);
 
+    /***
+     *
+     * @param enable
+     */
+    void makeEnable(boolean enable);
+
+    /***
+     *
+     *
+     * @param parameterTList
+     */
+    void setParameters(List<ParameterT> parameterTList);
+
+    /****
+     *
+     * @return
+     */
+    List<ParameterT> getParameter();
+
+    /***
+     *
+     * @param <C>
+     * @return
+     */
+    <C extends ControlT> C getControl();
+
+    /****
+     *
+     * @param names
+     * @return
+     */
     default List<ParameterT> findParameterByName(String... names) {
         return this.getParameter() != null ? this.getParameter()
                 .stream()
@@ -39,6 +91,13 @@ public interface IFixUiElement<T, K> {
                 .collect(Collectors.toList()) : null;
     }
 
+
+    /****
+     *
+     * @param object
+     * @param parameterT
+     * @return
+     */
     default boolean setFieldValueToParameter(Object object, ParameterT parameterT) {
 
         if (parameterT instanceof LanguageT) {

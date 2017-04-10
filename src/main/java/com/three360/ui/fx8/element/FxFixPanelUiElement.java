@@ -5,6 +5,7 @@ import com.three360.fixatdl.layout.*;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.*;
 import com.three360.ui.fx8.component.DaggerMyComponent;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -13,12 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandler<ActionEvent>> {
+public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
 
     @Inject
     UiElementAbstractFactory factory;
@@ -144,15 +146,6 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
         return null;
     }
 
-    private Node createControlByType(ControlT controlT) {
-
-        return null;
-    }
-
-    @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
-    }
 
     @Override
     public void setStrategyPanelT(StrategyPanelT strategyPanelT) {
@@ -167,5 +160,31 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, EventHandle
     @Override
     public List<ParameterT> getParameter() {
         return this.parameterTList;
+    }
+
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

@@ -4,18 +4,20 @@ import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.EditableDropDownListT;
 import com.three360.ui.common.element.IFixEditableDropDownListUiElement;
 import com.three360.ui.fx8.FxUtils;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixEditableDropDownListUiElement
-        implements IFixEditableDropDownListUiElement<Pane, ChangeListener<String>> {
+        implements IFixEditableDropDownListUiElement<Pane, String> {
 
     private ComboBox<String> stringComboBox;
     private EditableDropDownListT editableDropDownListT;
@@ -65,11 +67,6 @@ public class FxFixEditableDropDownListUiElement
     }
 
     @Override
-    public void registerForEvent(ChangeListener<String> changedListener) {
-        this.changedListener = changedListener;
-    }
-
-    @Override
     public void setEditableDropDownList(EditableDropDownListT editableDropDownListT) {
         this.editableDropDownListT = editableDropDownListT;
     }
@@ -85,5 +82,30 @@ public class FxFixEditableDropDownListUiElement
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

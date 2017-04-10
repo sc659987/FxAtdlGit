@@ -123,7 +123,7 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
         HBox strategySelectionBox = new HBox();
         strategySelectionBox.setAlignment(Pos.CENTER);
         if (getStrategies() != null) {
-            IFixDropDownListUiElement<ComboBox<String>, ChangeListener<String>> element = this.factory.instantiateNewDropDownList();
+            IFixDropDownListUiElement<ComboBox<String>, String> element = this.factory.instantiateNewDropDownList();
             List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
                 ListItemT listItemT = new ListItemT();
                 listItemT.setUiRep(s.getUiRep());
@@ -132,9 +132,9 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
             DropDownListT dropDownListT = new DropDownListT();
             dropDownListT.getListItem().addAll(listItemTS);
             element.setDropDownList(dropDownListT);
-            element.registerForEvent((observable, oldValue, newValue) -> {
+            element.listenChange().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    setSelectedStrategy(findStrategyTByName(newValue));
+                    setSelectedStrategy(findStrategyTByName(newValue.getValue()));
                     createFixLayout();
                 }
             });

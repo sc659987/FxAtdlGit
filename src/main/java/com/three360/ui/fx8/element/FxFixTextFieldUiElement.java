@@ -6,16 +6,18 @@ import com.three360.fixatdl.layout.TextFieldT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixTextFieldUiElement;
 import com.three360.ui.fx8.FxUtils;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, ChangeListener<String>> {
+public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, String> {
 
     private TextFieldT textFieldT;
 
@@ -56,11 +58,6 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Cha
     }
 
     @Override
-    public void registerForEvent(ChangeListener<String> e) {
-
-    }
-
-    @Override
     public void setParameters(@NotNull List<ParameterT> parameterTList) {
         if (parameterTList != null && parameterTList.size() > 0)
             this.parameterT = parameterTList.get(0);
@@ -71,5 +68,30 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Cha
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

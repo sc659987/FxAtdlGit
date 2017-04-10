@@ -4,17 +4,19 @@ import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.RadioButtonT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixRadioButtonUiElement;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<RadioButton, EventHandler<ActionEvent>> {
+public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<RadioButton, String> {
 
     private RadioButtonT radioButtonT;
 
@@ -53,11 +55,6 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
     }
 
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
-    }
-
-    @Override
     public void setParameters(List<ParameterT> parameterTList) {
         if (parameterTList != null && parameterTList.size() > 0)
             this.parameterT = parameterTList.get(0);
@@ -68,5 +65,30 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

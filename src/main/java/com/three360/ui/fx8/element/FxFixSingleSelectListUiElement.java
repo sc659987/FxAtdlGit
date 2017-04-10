@@ -6,6 +6,7 @@ import com.three360.fixatdl.layout.SingleSelectListT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixSingleSelectListUiElement;
 import com.three360.ui.fx8.FxUtils;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,13 +15,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FxFixSingleSelectListUiElement
-        implements IFixSingleSelectListUiElement<Pane, EventHandler<ActionEvent>> {
+        implements IFixSingleSelectListUiElement<Pane, String> {
 
     private GridPane gridPane;
     private ListView<String> singleSelectListView;
@@ -81,10 +83,7 @@ public class FxFixSingleSelectListUiElement
         return null;
     }
 
-    @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
 
-    }
 
     @Override
     public void setSingleSelectList(SingleSelectListT singleSelectListT) {
@@ -102,5 +101,31 @@ public class FxFixSingleSelectListUiElement
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

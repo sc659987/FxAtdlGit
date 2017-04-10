@@ -6,6 +6,7 @@ import com.three360.fixatdl.layout.SingleSpinnerT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixSingleSpinnerUiElement;
 import com.three360.ui.fx8.FxUtils;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -40,7 +41,7 @@ import java.util.List;
  *
  *
  */
-public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<Pane, ChangeListener<String>> {
+public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<Pane, String> {
 
     private Spinner<Double> singleSpinner;
     private SingleSpinnerT singleSpinnerT;
@@ -86,10 +87,6 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
                 : new Pair<>(0.0, Double.MAX_VALUE);
     }
 
-    @Override
-    public void registerForEvent(ChangeListener<String> e) {
-
-    }
 
     @Override
     public void setSingleSpinner(SingleSpinnerT singleSpinnerT) {
@@ -107,5 +104,30 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

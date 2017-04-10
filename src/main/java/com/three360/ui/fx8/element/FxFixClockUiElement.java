@@ -5,16 +5,18 @@ import com.three360.fixatdl.layout.ClockT;
 import com.three360.ui.common.element.IFixClockUiElement;
 import com.three360.ui.fx8.FxUtils;
 import com.three360.ui.fx8.customelement.TimeSpinner;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandler<ActionEvent>> {
+public class FxFixClockUiElement implements IFixClockUiElement<Pane, String> {
 
     private TimeSpinner timeSpinner;
 
@@ -53,11 +55,6 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
     }
 
     @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
-    }
-
-    @Override
     public void setParameters(List<ParameterT> parameterTList) {
         if (parameterTList != null && parameterTList.size() > 0)
             this.parameterT = parameterTList.get(0);
@@ -68,5 +65,31 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, EventHandle
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+
+    @Override
+    public ObjectProperty<Pair<String, String>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(String s) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }

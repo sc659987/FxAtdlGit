@@ -6,16 +6,18 @@ import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.IFixLayoutUiElement;
 import com.three360.ui.common.element.IFixPanelUiElement;
 import com.three360.ui.fx8.component.DaggerMyComponent;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHandler<ActionEvent>> {
+public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, String> {
 
 	private StrategyLayoutT strategyLayoutT;
 
@@ -45,10 +47,6 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHand
 		this.strategyLayoutT = strategyLayoutT;
 	}
 
-	@Override
-	public void registerForEvent(EventHandler<ActionEvent> e) {
-		throw new RuntimeException();
-	}
 
 	@Override
 	public void setParameters(List<ParameterT> parameterTList) {
@@ -58,5 +56,30 @@ public class FxFixLayoutUiElement implements IFixLayoutUiElement<Node, EventHand
 	@Override
 	public List<ParameterT> getParameter() {
 		return this.allParameterTList;
+	}
+
+	@Override
+	public ObjectProperty<Pair<String, String>> listenChange() {
+		return null;
+	}
+
+	@Override
+	public String getValue() {
+		return null;
+	}
+
+	@Override
+	public void setValue(String s) {
+
+	}
+
+	@Override
+	public void makeVisible(boolean visible) {
+
+	}
+
+	@Override
+	public void makeEnable(boolean enable) {
+
 	}
 }

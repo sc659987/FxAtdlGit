@@ -4,6 +4,7 @@ import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.PanelOrientationT;
 import com.three360.fixatdl.layout.RadioButtonListT;
 import com.three360.ui.common.element.IFixRadioButtonListUiElement;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -11,13 +12,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiElement<Pane, EventHandler<ActionEvent>> {
+public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiElement<Pane, List<String>> {
 
     private RadioButtonListT radioButtonListT;
 
@@ -71,10 +73,6 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
         this.radioButtonListT = radioButtonListT;
     }
 
-    @Override
-    public void registerForEvent(EventHandler<ActionEvent> e) {
-
-    }
 
     @Override
     public void setParameters(List<ParameterT> parameterTList) {
@@ -87,5 +85,30 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
         List<ParameterT> parameterTS = Collections.emptyList();
         parameterTS.add(this.parameterT);
         return parameterTS;
+    }
+
+    @Override
+    public ObjectProperty<Pair<String, List<String>>> listenChange() {
+        return null;
+    }
+
+    @Override
+    public List<String> getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(List<String> strings) {
+
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+
     }
 }
