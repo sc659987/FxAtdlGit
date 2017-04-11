@@ -4,8 +4,9 @@ import com.three360.fixatdl.flow.StateRuleT;
 import com.three360.ui.common.element.IFixUiElement;
 import com.three360.ui.controlflow.AtdlStateRuleEvaluator;
 import com.three360.ui.controlflow.AtdlStateRuleResultType;
-import com.three360.ui.validator.common.EditRuleEvaluator;
-import com.three360.ui.validator.impl.EditRuleEvaluatorImpl;
+import com.three360.ui.fx8.validator.EditRuleEvaluatorImpl;
+import com.three360.ui.validator.EditRuleEvaluator;
+import com.three360.ui.validator.FieldToComparableMapperCache;
 import javafx.util.Pair;
 
 import java.util.Map;
@@ -17,9 +18,12 @@ public class FxAtdlStateRuleEvaluator implements AtdlStateRuleEvaluator {
 
     private EditRuleEvaluator editRuleEvaluator;
 
-    public FxAtdlStateRuleEvaluator(){
+    private FieldToComparableMapperCache fieldToComparableMapperCache
+            = new FieldToComparableMapperControlCache();
 
-        this.editRuleEvaluator = new EditRuleEvaluatorImpl()
+    public FxAtdlStateRuleEvaluator() {
+
+        this.editRuleEvaluator = new EditRuleEvaluatorImpl(fieldToComparableMapperCache);
 
     }
 

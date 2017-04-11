@@ -2,13 +2,13 @@ package com.three360.ui.fx8;
 
 import com.three360.fixatdl.layout.DropDownListT;
 import com.three360.fixatdl.layout.ListItemT;
-import com.three360.ui.validator.common.IStrategyEditValidator;
-import com.three360.ui.validator.impl.StrategyEditValidator;
 import com.three360.ui.abs.AbstractFixAtdlUi;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.IFixDropDownListUiElement;
 import com.three360.ui.common.element.IFixLayoutUiElement;
 import com.three360.ui.fx8.component.DaggerMyComponent;
+import com.three360.ui.fx8.validator.StrategyEditValidator;
+import com.three360.ui.validator.IStrategyEditValidator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -133,7 +133,7 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
             element.setDropDownList(dropDownListT);
             element.listenChange().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    setSelectedStrategy(findStrategyTByName(newValue.getValue()));
+                    setSelectedStrategy(findStrategyTByName(element.getValue()));
                     createFixLayout();
                 }
             });
