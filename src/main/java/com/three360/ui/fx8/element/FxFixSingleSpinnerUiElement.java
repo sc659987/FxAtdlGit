@@ -2,13 +2,12 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.IntT;
 import com.three360.fixatdl.core.ParameterT;
-import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.SingleSpinnerT;
 import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixSingleSpinnerUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.GridPane;
@@ -44,95 +43,96 @@ import java.util.List;
  */
 public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<Pane, String> {
 
-    private Spinner<Double> singleSpinner;
-    private SingleSpinnerT singleSpinnerT;
+	private Spinner<Double> singleSpinner;
+	private SingleSpinnerT singleSpinnerT;
 
-    private GridPane gridPane;
+	private GridPane gridPane;
 
-    private ParameterT parameterT;
+	private ParameterT parameterT;
 
-    private int nextColumn = 0;
+	private int nextColumn = 0;
 
-    @Override
-    public Pane create() {
-        if (this.singleSpinnerT != null && parameterT != null) {
-            Pair<Double, Double> limit = extractRangeFromParameter();
+	private ObjectProperty<String> controlIdEmitter = new SimpleObjectProperty<>();
 
-            this.singleSpinner = new Spinner<>(limit.getKey(), limit.getValue(), singleSpinnerT.getInitValue() == null ? 0 : limit.getKey(),
-                    this.singleSpinnerT.getIncrement() == null ? ((limit.getKey() == 0.0) ? 0.1 : limit.getKey()) : this.singleSpinnerT.getIncrement());
+	@Override
+	public Pane create() {
+		if (this.singleSpinnerT != null && parameterT != null) {
+			Pair<Double, Double> limit = extractRangeFromParameter();
 
-            if (parameterT != null)
-                this.singleSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!setFieldValueToParameter(newValue, parameterT)) {
-                        //TODO put logic to roll back to old value
-                    }
-                });
+			this.singleSpinner = new Spinner<>(limit.getKey(), limit.getValue(), singleSpinnerT.getInitValue() == null ? 0 : limit.getKey(),
+					this.singleSpinnerT.getIncrement() == null ? ((limit.getKey() == 0.0) ? 0.1 : limit.getKey()) : this.singleSpinnerT.getIncrement());
 
-            this.gridPane = new GridPane();
-            if (!Utils.isEmpty(this.singleSpinnerT.getLabel())) {
-                this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-                this.gridPane.add(new Label(this.singleSpinnerT.getLabel()),
-                        this.nextColumn++, 0);
-            }
-            this.gridPane.add(this.singleSpinner, this.nextColumn, 0);
-            return this.gridPane;
-        }
-        return null;
-    }
+			this.singleSpinner.setOnMouseClicked(event -> {
+				if (parameterT != null)
+					setFieldValueToParameter(singleSpinner.getValue(), parameterT);
 
-    private Pair<Double, Double> extractRangeFromParameter() {
-        return parameterT != null && (parameterT instanceof IntT) ?
-                new Pair<>((((IntT) parameterT).getMinValue() == null ? 0.0 : ((IntT) parameterT).getMinValue()),
-                        (((IntT) parameterT).getMaxValue() == null ? Double.MAX_VALUE : ((IntT) parameterT).getMaxValue()))
-                : new Pair<>(0.0, Double.MAX_VALUE);
-    }
+				controlIdEmitter.setValue(singleSpinnerT.getID());
+			});
 
+			this.gridPane = new GridPane();
+			if (!Utils.isEmpty(this.singleSpinnerT.getLabel())) {
+				this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+				this.gridPane.add(new Label(this.singleSpinnerT.getLabel()),
+						this.nextColumn++, 0);
+			}
+			this.gridPane.add(this.singleSpinner, this.nextColumn, 0);
+			return this.gridPane;
+		}
+		return null;
+	}
 
-    @Override
-    public void setSingleSpinner(SingleSpinnerT singleSpinnerT) {
-        this.singleSpinnerT = singleSpinnerT;
-    }
+	private Pair<Double, Double> extractRangeFromParameter() {
+		return parameterT != null && (parameterT instanceof IntT)
+				? new Pair<>((((IntT) parameterT).getMinValue() == null ? 0.0 : ((IntT) parameterT).getMinValue()),
+						(((IntT) parameterT).getMaxValue() == null ? Double.MAX_VALUE : ((IntT) parameterT).getMaxValue()))
+				: new Pair<>(0.0, Double.MAX_VALUE);
+	}
 
-    @Override
-    public void setParameters(List<ParameterT> parameterTList) {
-        assert (parameterTList != null);
-        this.parameterT = parameterTList.get(0);
-    }
+	@Override
+	public void setSingleSpinner(SingleSpinnerT singleSpinnerT) {
+		this.singleSpinnerT = singleSpinnerT;
+	}
 
-    @Override
-    public List<ParameterT> getParameter() {
-        List<ParameterT> parameterTS = Collections.emptyList();
-        parameterTS.add(this.parameterT);
-        return parameterTS;
-    }
+	@Override
+	public void setParameters(List<ParameterT> parameterTList) {
+		assert (parameterTList != null);
+		this.parameterT = parameterTList.get(0);
+	}
 
-    @Override
-    public ObjectProperty<String> listenChange() {
-        return null;
-    }
+	@Override
+	public List<ParameterT> getParameter() {
+		List<ParameterT> parameterTS = Collections.emptyList();
+		parameterTS.add(this.parameterT);
+		return parameterTS;
+	}
 
-    @Override
-    public SingleSpinnerT getControl() {
-        return this.singleSpinnerT;
-    }
+	@Override
+	public ObjectProperty<String> listenChange() {
+		return this.controlIdEmitter;
+	}
 
-    @Override
-    public String getValue() {
-        return this.singleSpinner.getValue().toString();
-    }
+	@Override
+	public SingleSpinnerT getControl() {
+		return this.singleSpinnerT;
+	}
 
-    @Override
-    public void setValue(String s) {
+	@Override
+	public String getValue() {
+		return this.singleSpinner.getValue().toString();
+	}
 
-    }
+	@Override
+	public void setValue(String s) {
 
-    @Override
-    public void makeVisible(boolean visible) {
-        this.singleSpinner.setVisible(visible);
-    }
+	}
 
-    @Override
-    public void makeEnable(boolean enable) {
-        this.singleSpinner.setDisable(!enable);
-    }
+	@Override
+	public void makeVisible(boolean visible) {
+		this.singleSpinner.setVisible(visible);
+	}
+
+	@Override
+	public void makeEnable(boolean enable) {
+		this.singleSpinner.setDisable(!enable);
+	}
 }

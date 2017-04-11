@@ -21,15 +21,15 @@ public class FxUtils {
 		return columnConstraintsList;
 	}
 
-	public static List<ColumnConstraints> getOneColumnWidthForGridPane(){
+	public static List<ColumnConstraints> getOneColumnWidthForGridPane() {
 
-        final ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(100);
+		final ColumnConstraints column1 = new ColumnConstraints();
+		column1.setPercentWidth(100);
 
-        final List<ColumnConstraints> columnConstraintsList = new ArrayList<>();
-        columnConstraintsList.add(column1);
+		final List<ColumnConstraints> columnConstraintsList = new ArrayList<>();
+		columnConstraintsList.add(column1);
 
-        return columnConstraintsList;
-    }
+		return columnConstraintsList;
+	}
 
 }

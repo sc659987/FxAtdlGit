@@ -5,7 +5,7 @@ import com.three360.fixatdl.layout.DropDownListT;
 /**
  * Created by sainik on 3/23/17.
  */
-public interface IFixDropDownListUiElement<T, K> extends IFixUiElement<T, K> {
+public interface IFixDropDownListUiElement<T, K extends Comparable<?>> extends IFixUiElement<T, K> {
 
 	/***
 	 *

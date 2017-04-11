@@ -5,10 +5,7 @@ import com.three360.fixatdl.layout.ControlT;
 import com.three360.fixatdl.layout.DoubleSpinnerT;
 import com.three360.ui.common.element.IFixDoubleSpinnerUiElement;
 import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
-import javafx.util.Pair;
 
 import java.util.List;
 
@@ -18,7 +15,6 @@ public class FxFixDoubleSpinnerUiElement implements IFixDoubleSpinnerUiElement<P
 	public Pane create() {
 		return null;
 	}
-
 
 	@Override
 	public void setDoubleSpinner(DoubleSpinnerT doubleSpinnerT) {
@@ -35,18 +31,17 @@ public class FxFixDoubleSpinnerUiElement implements IFixDoubleSpinnerUiElement<P
 		return null;
 	}
 
+	@Override
+	public ObjectProperty<String> listenChange() {
+		return null;
+	}
 
-    @Override
-    public ObjectProperty<String> listenChange() {
-        return null;
-    }
+	@Override
+	public <C extends ControlT> C getControl() {
+		return null;
+	}
 
-    @Override
-    public <C extends ControlT> C getControl() {
-        return null;
-    }
-
-    @Override
+	@Override
 	public String getValue() {
 		return null;
 	}

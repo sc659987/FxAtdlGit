@@ -3,106 +3,109 @@ package com.three360.ui.fx8;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.*;
 import com.three360.ui.fx8.element.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
 
-import java.util.List;
-
 public class FxUiElementFactory implements UiElementAbstractFactory {
 
-    @Override
-    public IFixButtonUiElement instantiateNewButton() {
-        return null;
-    }
+	private FxUiElementFactory() {
 
-    @Override
-    public IFixCheckBoxListUiElement<Pane, String> instantiateNewCheckBoxList() {
-        return new FxFixCheckBoxListUiElement();
-    }
+	}
 
-    @Override
-    public IFixDropDownListUiElement<Pane, String> instantiateNewDropDownList() {
-        return new FxFixDropDownListUiElement();
-    }
+	private static FxUiElementFactory _singleInstance;
 
-    @Override
-    public IFixHiddenFieldUiElement instantiateNewHiddenField() {
-        // TODO registerControlFlow it
-        return null;
-    }
+	public synchronized static FxUiElementFactory getInstance() {
+		if (_singleInstance == null)
+			_singleInstance = new FxUiElementFactory();
+		return _singleInstance;
+	}
 
-    @Override
-    public IFixLabelUiElement<Label, String> instantiateNewLabel() {
-        return new FxFixLabelUiElement();
-    }
+	@Override
+	public IFixCheckBoxListUiElement<Pane, String> instantiateNewCheckBoxList() {
+		return new FxFixCheckBoxListUiElement();
+	}
 
-    @Override
-    public IFixPanelUiElement<Node, String> instantiateNewPanel() {
-        return new FxFixPanelUiElement();
-    }
+	@Override
+	public IFixDropDownListUiElement<Pane, String> instantiateNewDropDownList() {
+		return new FxFixDropDownListUiElement();
+	}
 
-    @Override
-    public IFixRadioButtonUiElement<RadioButton, String> instantiateNewRadioButton() {
-        return new FxFixRadioButtonUiElement();
-    }
+	@Override
+	public IFixHiddenFieldUiElement instantiateNewHiddenField() {
+		// TODO registerControlFlow it
+		return null;
+	}
 
-    @Override
-    public IFixSliderUiElement<Pane, String> instantiateNewSlider() {
-        return new FxFixSliderUiElement();
-    }
+	@Override
+	public IFixLabelUiElement<Label, String> instantiateNewLabel() {
+		return new FxFixLabelUiElement();
+	}
 
-    @Override
-    public IFixSingleSpinnerUiElement<Pane, String> instantiateNewSingleSpinner() {
-        return new FxFixSingleSpinnerUiElement();
-    }
+	@Override
+	public IFixPanelUiElement<Node, String> instantiateNewPanel() {
+		return new FxFixPanelUiElement();
+	}
 
-    @Override
-    public IFixCheckBoxUiElement<CheckBox, String> instantiateNewCheckBox() {
-        return new FxFixCheckBoxUiElement();
-    }
+	@Override
+	public IFixRadioButtonUiElement<RadioButton, String> instantiateNewRadioButton() {
+		return new FxFixRadioButtonUiElement();
+	}
 
-    @Override
-    public IFixClockUiElement<Pane, String> instantiateNewClock() {
-        return new FxFixClockUiElement();
-    }
+	@Override
+	public IFixSliderUiElement<Pane, String> instantiateNewSlider() {
+		return new FxFixSliderUiElement();
+	}
 
-    @Override
-    public IFixDoubleSpinnerUiElement<Pane, String> instantiateNewDoubleSpinner() {
-        return new FxFixDoubleSpinnerUiElement();
-    }
+	@Override
+	public IFixSingleSpinnerUiElement<Pane, String> instantiateNewSingleSpinner() {
+		return new FxFixSingleSpinnerUiElement();
+	}
 
-    @Override
-    public IFixEditableDropDownListUiElement<Pane, String> instantiateNewEditableDropDownList() {
-        return new FxFixEditableDropDownListUiElement();
-    }
+	@Override
+	public IFixCheckBoxUiElement<CheckBox, String> instantiateNewCheckBox() {
+		return new FxFixCheckBoxUiElement();
+	}
 
-    @Override
-    public IFixMultiSelectListUiElement<Pane, String> instantiateNewMultiSelectList() {
-        return new FxFixMultiSelectListUiElement();
-    }
+	@Override
+	public IFixClockUiElement<Pane, String> instantiateNewClock() {
+		return new FxFixClockUiElement();
+	}
 
-    @Override
-    public IFixRadioButtonListUiElement<Pane, String> instantiateNewRadioButtonList() {
-        return new FxFixRadioButtonListUiElement();
-    }
+	@Override
+	public IFixDoubleSpinnerUiElement<Pane, String> instantiateNewDoubleSpinner() {
+		return new FxFixDoubleSpinnerUiElement();
+	}
 
-    @Override
-    public IFixSingleSelectListUiElement<Pane, String> instantiateNewSingleSelectList() {
-        return new FxFixSingleSelectListUiElement();
-    }
+	@Override
+	public IFixEditableDropDownListUiElement<Pane, String> instantiateNewEditableDropDownList() {
+		return new FxFixEditableDropDownListUiElement();
+	}
 
-    @Override
-    public IFixTextFieldUiElement<Pane, String> instantiateNewTextField() {
-        return new FxFixTextFieldUiElement();
-    }
+	@Override
+	public IFixMultiSelectListUiElement<Pane, String> instantiateNewMultiSelectList() {
+		return new FxFixMultiSelectListUiElement();
+	}
 
-    @Override
-    public IFixLayoutUiElement<Node, String> instantiateNewLayout() {
-        return new FxFixLayoutUiElement();
-    }
+	@Override
+	public IFixRadioButtonListUiElement<Pane, String> instantiateNewRadioButtonList() {
+		return new FxFixRadioButtonListUiElement();
+	}
+
+	@Override
+	public IFixSingleSelectListUiElement<Pane, String> instantiateNewSingleSelectList() {
+		return new FxFixSingleSelectListUiElement();
+	}
+
+	@Override
+	public IFixTextFieldUiElement<Pane, String> instantiateNewTextField() {
+		return new FxFixTextFieldUiElement();
+	}
+
+	@Override
+	public IFixLayoutUiElement<Node, String> instantiateNewLayout() {
+		return new FxFixLayoutUiElement();
+	}
 }

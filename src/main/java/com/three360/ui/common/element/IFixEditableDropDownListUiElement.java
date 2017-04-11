@@ -5,7 +5,7 @@ import com.three360.fixatdl.layout.EditableDropDownListT;
 /**
  * Created by sainik on 3/24/17.
  */
-public interface IFixEditableDropDownListUiElement<T, K> extends IFixUiElement<T, K> {
+public interface IFixEditableDropDownListUiElement<T, K extends Comparable<?>> extends IFixUiElement<T, K> {
 
 	/***
 	 *

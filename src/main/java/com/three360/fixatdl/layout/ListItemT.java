@@ -21,6 +21,7 @@ import java.util.List;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
+ * <p>
  * 
  * <pre>
  * &lt;complexType name="ListItem_t">
@@ -66,6 +67,7 @@ public class ListItemT {
 	 * <p>
 	 * <p>
 	 * For example, to registerControlFlow a new item, do as follows:
+	 * <p>
 	 * <p>
 	 * 
 	 * <pre>
@@ -126,4 +128,8 @@ public class ListItemT {
 		this.uiRep = value;
 	}
 
+	@Override
+	public String toString() {
+		return uiRep;
+	}
 }

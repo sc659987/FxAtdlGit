@@ -5,7 +5,7 @@ import com.three360.fixatdl.layout.CheckBoxT;
 /**
  * Created by sainik on 3/28/17.
  */
-public interface IFixCheckBoxUiElement<T, K> extends IFixUiElement<T, K> {
+public interface IFixCheckBoxUiElement<T, K extends Comparable<?>> extends IFixUiElement<T, K> {
 
-    void setCheckBoxT(CheckBoxT checkBoxT);
+	void setCheckBoxT(CheckBoxT checkBoxT);
 }
