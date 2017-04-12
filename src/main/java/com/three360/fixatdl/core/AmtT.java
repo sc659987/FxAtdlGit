@@ -115,4 +115,8 @@ public class AmtT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 10;
+    }
 }

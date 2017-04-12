@@ -143,4 +143,8 @@ public class MultipleCharValueT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 15;
+    }
 }

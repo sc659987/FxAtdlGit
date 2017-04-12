@@ -62,4 +62,9 @@ public class CountryT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 25;
+    }
+
 }

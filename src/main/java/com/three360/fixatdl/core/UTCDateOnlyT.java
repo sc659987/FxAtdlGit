@@ -111,4 +111,9 @@ public class UTCDateOnlyT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 22;
+    }
+
 }

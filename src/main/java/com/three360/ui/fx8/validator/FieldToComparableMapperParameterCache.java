@@ -16,7 +16,7 @@ public class FieldToComparableMapperParameterCache implements FieldToComparableM
 	public Comparable get(String key) {
 		ParameterT parameterT = this.stringParameterTMap.get(key);
 		try {
-			Field field = parameterT.getClass().getField("constValue");
+			Field field = parameterT.getClass().getDeclaredField("constValue");
 			field.setAccessible(true);
 			if (field != null)
 				return (Comparable) field.get(parameterT);

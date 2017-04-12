@@ -18,95 +18,94 @@ import java.util.List;
 
 public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pane, String> {
 
-	private DropDownListT dropDownListT;
-	private ComboBox<ListItemT> comboBox = new ComboBox<>();
-	private GridPane gridPane;
-	private int nextColumn = 0;
-	private ParameterT parameterT;
+    private DropDownListT dropDownListT;
+    private ComboBox<ListItemT> comboBox = new ComboBox<>();
+    private GridPane gridPane;
+    private int nextColumn = 0;
+    private ParameterT parameterT;
 
-	private ObjectProperty<String> checkedProperty = new SimpleObjectProperty<>();
+    private ObjectProperty<String> checkedProperty = new SimpleObjectProperty<>();
 
-	@Override
-	public void setDropDownList(DropDownListT downList) {
-		this.dropDownListT = downList;
-	}
+    @Override
+    public void setDropDownList(DropDownListT downList) {
+        this.dropDownListT = downList;
+    }
 
-	@Override
-	public Pane create() {
-		if (this.dropDownListT != null) {
-			this.gridPane = new GridPane();
+    @Override
+    public Pane create() {
+        if (this.dropDownListT != null) {
 
-			if (!Utils.isEmpty(this.dropDownListT.getLabel())) {
-				this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-				this.gridPane.add(new Label(this.dropDownListT.getLabel()), this.nextColumn++, 0);
-			}
+            this.gridPane = new GridPane();
 
-			this.comboBox.getItems().addAll(this.dropDownListT.getListItem());
+            if (!Utils.isEmpty(this.dropDownListT.getLabel())) {
+                this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
+                this.gridPane.add(new Label(this.dropDownListT.getLabel()), this.nextColumn++, 0);
+            }
 
-			if (this.dropDownListT.getInitValue() == null || this.dropDownListT.getInitValue().equals(""))
-				this.comboBox.getSelectionModel().selectFirst();
-			else
-				this.comboBox.getSelectionModel().select(0);
+            this.comboBox.getItems().addAll(this.dropDownListT.getListItem());
 
-			this.comboBox.setOnAction(event -> {
-				if (parameterT != null)
-					setFieldValueToParameter(comboBox.getValue(), this.parameterT);
-				checkedProperty.setValue(new String(dropDownListT.getID()));
-			});
+            if (Utils.isEmpty(this.dropDownListT.getInitValue()))
+                this.comboBox.getSelectionModel().selectFirst();
+            else
+                setValue(this.dropDownListT.getInitValue());
 
-			comboBox.getSelectionModel().selectFirst();
-			this.gridPane.add(this.comboBox, this.nextColumn, 0);
+            this.comboBox.setOnAction(event -> {
+                setFieldValueToParameter(comboBox.getValue(), this.parameterT);
+                checkedProperty.setValue(dropDownListT.getID() + ":" + comboBox.getValue());
+            });
 
-			return this.gridPane;
-		}
-		return null;
-	}
+            this.gridPane.add(this.comboBox, this.nextColumn, 0);
 
-	@Override
-	public void setParameters(List<ParameterT> parameterTList) {
-		if (parameterTList != null && parameterTList.size() > 0)
-			this.parameterT = parameterTList.get(0);
-	}
+            return this.gridPane;
+        }
+        return null;
+    }
 
-	@Override
-	public List<ParameterT> getParameter() {
-		List<ParameterT> parameterTS = Collections.emptyList();
-		parameterTS.add(this.parameterT);
-		return parameterTS;
-	}
 
-	@Override
-	public ObjectProperty<String> listenChange() {
-		return this.checkedProperty;
-	}
+    @Override
+    public void setParameters(List<ParameterT> parameterTList) {
+        if (parameterTList != null && parameterTList.size() > 0)
+            this.parameterT = parameterTList.get(0);
+    }
 
-	@Override
-	public DropDownListT getControl() {
-		return this.dropDownListT;
-	}
+    @Override
+    public List<ParameterT> getParameter() {
+        List<ParameterT> parameterTS = Collections.emptyList();
+        parameterTS.add(this.parameterT);
+        return parameterTS;
+    }
 
-	@Override
-	public String getValue() {
-		return this.comboBox.getValue().getEnumID();
-	}
+    @Override
+    public ObjectProperty<String> listenChange() {
+        return this.checkedProperty;
+    }
 
-	@Override
-	public void setValue(String s) {
-		dropDownListT
-				.getListItem()
-				.stream()
-				.filter(listItemT -> listItemT.getEnumID().equals(s))
-				.findFirst()
-				.ifPresent(listItemT -> comboBox.setValue(listItemT));
-	}
+    @Override
+    public DropDownListT getControl() {
+        return this.dropDownListT;
+    }
 
-	@Override
-	public void makeVisible(boolean visible) {
-		this.comboBox.setVisible(visible);
-	}
+    @Override
+    public String getValue() {
+        return this.comboBox.getValue().getEnumID();
+    }
 
-	@Override
-	public void makeEnable(boolean enable) {
-		this.comboBox.setDisable(!enable);
-	}
+    @Override
+    public void setValue(String enumId) {
+        dropDownListT.getListItem().stream()
+                .filter(listItemT -> listItemT.getEnumID().equals(enumId))
+                .findFirst()
+                .ifPresent(listItemT -> comboBox.setValue(listItemT));
+        setFieldValueToParameter(comboBox.getValue(), this.parameterT);
+    }
+
+    @Override
+    public void makeVisible(boolean visible) {
+        this.comboBox.setVisible(visible);
+    }
+
+    @Override
+    public void makeEnable(boolean enable) {
+        this.comboBox.setDisable(!enable);
+    }
 }

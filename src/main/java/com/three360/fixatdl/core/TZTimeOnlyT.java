@@ -111,4 +111,9 @@ public class TZTimeOnlyT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 27;
+    }
+
 }

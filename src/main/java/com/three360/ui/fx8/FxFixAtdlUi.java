@@ -3,6 +3,8 @@ package com.three360.ui.fx8;
 import com.three360.fixatdl.core.StrategiesT;
 import com.three360.fixatdl.layout.DropDownListT;
 import com.three360.fixatdl.layout.ListItemT;
+import com.three360.fixatdl.wire.WireValueManipulator;
+import com.three360.ui.Utils;
 import com.three360.ui.abs.AbstractFixAtdlUi;
 import com.three360.ui.common.UiElementAbstractFactory;
 import com.three360.ui.common.element.IFixDropDownListUiElement;
@@ -28,122 +30,124 @@ import java.util.stream.Stream;
 
 public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 
-	private Unmarshaller jaxbUnmarshaller;
+    private Unmarshaller jaxbUnmarshaller;
 
-	private UiElementAbstractFactory factory = FxUiElementFactory.getInstance();
+    private UiElementAbstractFactory factory = FxUiElementFactory.getInstance();
 
-	private final BorderPane borderPane = new BorderPane();
+    private final BorderPane borderPane = new BorderPane();
 
-	private IStrategyEditValidator iStrategyEditValidator;
+    private IStrategyEditValidator iStrategyEditValidator;
 
-	private IParameterValidator iParameterValidator;
+    private IParameterValidator iParameterValidator;
 
-	private Button validateButton;
+    private Button validateButton;
 
-	private VBox errorMessageAndValidateButtonBox;
+    private VBox errorMessageAndValidateButtonBox;
 
-	private TextField textField;
+    private TextField textField;
 
-	public FxFixAtdlUi() {
-		try {
-			jaxbUnmarshaller = JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
-		} catch (Exception e) {
-		}
-	}
+    private WireValueManipulator wireValueManipulator = WireValueManipulator.getInstance();
 
-	@Override
-	public Pane createUi() {
-		if (getStrategies() != null) {
-			this.borderPane.getChildren().clear();
-			this.borderPane.setTop(createStrategySelectionPanel());
-			if (getStrategies().getStrategy().size() > 0)
-				setSelectedStrategy(getStrategies().getStrategy().get(0));
-			if (getSelectedStrategy() != null) {
-				createFixLayout();
-				createFixErrorMessage();
-				this.iStrategyEditValidator = new StrategyEditValidator(super.selectedStrategyT.getStrategyEdit(),
-						super.selectedStrategyT.getParameter());
-				this.iParameterValidator = new ParameterValidatorImpl(super.selectedStrategyT.getParameter());
-			}
-		}
-		return this.borderPane;
-	}
+    public FxFixAtdlUi() {
+        try {
+            jaxbUnmarshaller = JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
+        } catch (Exception e) {
+        }
+    }
 
-	private void createFixLayout() {
-		IFixLayoutUiElement<Node, String> layoutUiElement = factory.instantiateNewLayout();
-		layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
-		layoutUiElement.setParameters(super.selectedStrategyT.getParameter());
-		this.borderPane.setCenter(layoutUiElement.create());
-	}
+    @Override
+    public Pane createUi() {
+        if (getStrategies() != null) {
+            this.borderPane.getChildren().clear();
+            this.borderPane.setTop(createStrategySelectionPanel());
+            if (getStrategies().getStrategy().size() > 0)
+                setSelectedStrategy(getStrategies().getStrategy().get(0));
+            if (getSelectedStrategy() != null) {
+                createFixLayout();
+                createFixErrorMessage();
+                this.iStrategyEditValidator = new StrategyEditValidator(super.selectedStrategyT.getStrategyEdit(),
+                        super.selectedStrategyT.getParameter());
+                this.iParameterValidator = new ParameterValidatorImpl(super.selectedStrategyT.getParameter());
+            }
+        }
+        return this.borderPane;
+    }
 
-	// TODO call for validation and print error message on found
-	private void createFixErrorMessage() {
-		this.errorMessageAndValidateButtonBox = new VBox();
+    private void createFixLayout() {
+        IFixLayoutUiElement<Node, String> layoutUiElement = factory.instantiateNewLayout();
+        layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
+        layoutUiElement.setParameters(super.selectedStrategyT.getParameter());
+        this.borderPane.setCenter(layoutUiElement.create());
+    }
 
-		this.validateButton = new Button("Validate");
-		this.textField = new TextField();
+    private void createFixErrorMessage() {
+        this.errorMessageAndValidateButtonBox = new VBox();
 
-		this.textField.setEditable(false);
+        this.validateButton = new Button("Validate");
+        this.textField = new TextField();
 
-		HBox validateBox = new HBox();
-		validateBox.getChildren().add(this.validateButton);
-		validateBox.getChildren().add(this.textField);
+        this.textField.setEditable(false);
 
-		this.validateButton.setOnAction(event -> {
-			List<String> errorMessage = Stream.concat(
-					iStrategyEditValidator.validateStrategyEditRuleAndGetErrorMessage().stream(),
-					iParameterValidator.validateParameter().stream()).collect(Collectors.toList());
+        HBox validateBox = new HBox();
+        validateBox.getChildren().add(this.validateButton);
+        validateBox.getChildren().add(this.textField);
 
-			if (errorMessage != null && errorMessage.size() > 0) {
-				this.errorMessageAndValidateButtonBox.getChildren().addAll(errorMessage.stream().map(str -> {
-					Label lb = new Label(str);
-					lb.setTextFill(Color.web("#FF0040"));
-					return lb;
-				}).collect(Collectors.toList()));
-			} else {
-				// generate the wire value and put that pn text box
+        this.validateButton.setOnAction(event -> {
+            List<String> errorMessage = Stream.concat(
+                    iStrategyEditValidator.validateStrategyEditRuleAndGetErrorMessage().stream(),
+                    iParameterValidator.validateParameter().stream()).filter(Utils::isNonEmpty).collect(Collectors.toList());
 
-			}
-		});
-		HBox.setHgrow(textField, Priority.ALWAYS);
+            if (errorMessage != null && errorMessage.size() > 0) {
+                this.errorMessageAndValidateButtonBox.getChildren().addAll(errorMessage.stream().map(str -> {
+                    Label lb = new Label(str);
+                    lb.setTextFill(Color.web("#FF0040"));
+                    return lb;
+                }).collect(Collectors.toList()));
+            } else {
+                // generate the wire value and put that in text box
+                textField.setText(wireValueManipulator.generateWireValue(super.strategiesT, super.selectedStrategyT));
 
-		VBox wrapperBox = new VBox();
+            }
+        });
+        HBox.setHgrow(textField, Priority.ALWAYS);
 
-		this.errorMessageAndValidateButtonBox.getChildren().add(validateBox);
+        VBox wrapperBox = new VBox();
 
-		wrapperBox.getChildren().add(this.errorMessageAndValidateButtonBox);
-		wrapperBox.getChildren().add(validateBox);
+        this.errorMessageAndValidateButtonBox.getChildren().add(validateBox);
 
-		this.borderPane.setBottom(wrapperBox);
-	}
+        wrapperBox.getChildren().add(this.errorMessageAndValidateButtonBox);
+        wrapperBox.getChildren().add(validateBox);
 
-	@Override
-	public Unmarshaller getUnmarshaller() {
-		return this.jaxbUnmarshaller;
-	}
+        this.borderPane.setBottom(wrapperBox);
+    }
 
-	@Override
-	public Pane createStrategySelectionPanel() {
-		HBox strategySelectionBox = new HBox();
-		strategySelectionBox.setAlignment(Pos.CENTER);
-		if (getStrategies() != null) {
-			IFixDropDownListUiElement<ComboBox<String>, String> element = this.factory.instantiateNewDropDownList();
-			List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
-				ListItemT listItemT = new ListItemT();
-				listItemT.setUiRep(s.getUiRep());
-				return listItemT;
-			}).collect(Collectors.toList());
-			DropDownListT dropDownListT = new DropDownListT();
-			dropDownListT.getListItem().addAll(listItemTS);
-			element.setDropDownList(dropDownListT);
-			element.listenChange().addListener((observable, oldValue, newValue) -> {
-				if (newValue != null) {
-					setSelectedStrategy(findStrategyTByName(element.getValue()));
-					createFixLayout();
-				}
-			});
-			strategySelectionBox.getChildren().add(element.create());
-		}
-		return strategySelectionBox;
-	}
+    @Override
+    public Unmarshaller getUnmarshaller() {
+        return this.jaxbUnmarshaller;
+    }
+
+    @Override
+    public Pane createStrategySelectionPanel() {
+        HBox strategySelectionBox = new HBox();
+        strategySelectionBox.setAlignment(Pos.CENTER);
+        if (getStrategies() != null) {
+            IFixDropDownListUiElement<ComboBox<String>, String> element = this.factory.instantiateNewDropDownList();
+            List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
+                ListItemT listItemT = new ListItemT();
+                listItemT.setUiRep(s.getUiRep());
+                return listItemT;
+            }).collect(Collectors.toList());
+            DropDownListT dropDownListT = new DropDownListT();
+            dropDownListT.getListItem().addAll(listItemTS);
+            element.setDropDownList(dropDownListT);
+            element.listenChange().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    setSelectedStrategy(findStrategyTByName(element.getValue()));
+                    createFixLayout();
+                }
+            });
+            strategySelectionBox.getChildren().add(element.create());
+        }
+        return strategySelectionBox;
+    }
 }

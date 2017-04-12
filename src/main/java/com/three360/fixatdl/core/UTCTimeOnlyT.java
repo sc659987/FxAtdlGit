@@ -137,4 +137,8 @@ public class UTCTimeOnlyT
 		this.localMktTz = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 20;
+    }
 }

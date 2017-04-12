@@ -20,7 +20,7 @@ import java.math.BigInteger;
  * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <p>
- * 
+ * <p>
  * <pre>
  * &lt;complexType name="Numeric_t">
  *   &lt;complexContent>
@@ -34,39 +34,38 @@ import java.math.BigInteger;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Numeric_t")
 @XmlSeeAlso({
-		FloatT.class,
-		PriceT.class,
-		AmtT.class,
-		PercentageT.class,
-		QtyT.class,
-		PriceOffsetT.class
+        FloatT.class,
+        PriceT.class,
+        AmtT.class,
+        PercentageT.class,
+        QtyT.class,
+        PriceOffsetT.class
 })
 public class NumericT
-		extends ParameterT {
+        extends ParameterT {
 
-	@XmlAttribute
-	@XmlSchemaType(name = "nonNegativeInteger")
-	protected BigInteger precision;
+    @XmlAttribute
+    @XmlSchemaType(name = "nonNegativeInteger")
+    protected BigInteger precision;
 
-	/**
-	 * Gets the value of the precision property.
-	 *
-	 * @return possible object is
-	 *         {@link BigInteger }
-	 */
-	public BigInteger getPrecision() {
-		return precision;
-	}
+    /**
+     * Gets the value of the precision property.
+     *
+     * @return possible object is
+     * {@link BigInteger }
+     */
+    public BigInteger getPrecision() {
+        return precision;
+    }
 
-	/**
-	 * Sets the value of the precision property.
-	 *
-	 * @param value
-	 *            allowed object is
-	 *            {@link BigInteger }
-	 */
-	public void setPrecision(BigInteger value) {
-		this.precision = value;
-	}
+    /**
+     * Sets the value of the precision property.
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
+     */
+    public void setPrecision(BigInteger value) {
+        this.precision = value;
+    }
 
 }

@@ -115,4 +115,9 @@ public class StringT
 		this.constValue = value;
 	}
 
+    @Override
+    public int getTag959() {
+        return 14;
+    }
+
 }
