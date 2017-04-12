@@ -25,15 +25,12 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, S
 
             if (this.checkBoxT.isInitValue() != null) {
                 this.checkBox.setSelected(this.checkBoxT.isInitValue());
-                setFieldValueToParameter(checkBox.isSelected() ?
-                                this.checkBoxT.getCheckedEnumRef() :
-                                this.checkBoxT.getUncheckedEnumRef(),
-                        this.parameterT);
+                setValue(getValue());
             }
 
 
             this.checkBox.setOnAction(event -> {
-                checkedProperty.setValue(this.checkBoxT.getID());
+                checkedProperty.setValue(this.checkBoxT.getID() + ":" + getValue());
                 setFieldValueToParameter(checkBox.isSelected() ? this.checkBoxT.getCheckedEnumRef() : this.checkBoxT.getUncheckedEnumRef(),
                         this.parameterT);
             });
@@ -79,6 +76,10 @@ public class FxFixCheckBoxUiElement implements IFixCheckBoxUiElement<CheckBox, S
     @Override
     public void setValue(String s) {
         checkBox.setSelected(this.checkBoxT.getCheckedEnumRef().equals(s));
+        setFieldValueToParameter(checkBox.isSelected() ?
+                        this.checkBoxT.getCheckedEnumRef() :
+                        this.checkBoxT.getUncheckedEnumRef(),
+                this.parameterT);
 
     }
 

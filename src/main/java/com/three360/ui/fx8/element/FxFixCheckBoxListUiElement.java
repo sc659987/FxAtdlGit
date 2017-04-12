@@ -35,20 +35,26 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
             this.gridPane = new GridPane();
 
             // GUI label addition to grid
-            if (!Utils.isEmpty(this.checkBoxListT.getLabel())) {
-                this.gridPane.add(new Label(this.checkBoxListT.getLabel()), 0, this.nextRow++, GridPane.REMAINING, 1);
-            }
+            if (!Utils.isEmpty(this.checkBoxListT.getLabel()))
+                this.gridPane.add(new Label(this.checkBoxListT.getLabel()),
+                        0, this.nextRow++, GridPane.REMAINING, 1);
+
 
             // creating checkbox in fx from checkboxListT
-            this.checkBoxes = this.checkBoxListT.getListItem().stream().map(listItemT -> {
-                CheckBox checkBox = new CheckBox();
-                checkBox.setId(listItemT.getEnumID());
-                checkBox.setText(listItemT.getUiRep());
-                return checkBox;
-            }).collect(Collectors.toList());
+            this.checkBoxes = this.checkBoxListT
+                    .getListItem()
+                    .stream()
+                    .map(listItemT -> {
+                        CheckBox checkBox = new CheckBox();
+                        checkBox.setId(listItemT.getEnumID());
+                        checkBox.setText(listItemT.getUiRep());
+                        return checkBox;
+                    }).collect(Collectors.toList());
 
             // create a map
-            enumIdAndCheckBoxMap = checkBoxes.stream().collect(Collectors.toMap(CheckBox::getId, checkBox -> checkBox));
+            enumIdAndCheckBoxMap = checkBoxes
+                    .stream()
+                    .collect(Collectors.toMap(CheckBox::getId, checkBox -> checkBox));
 
             // Initialize the check box selected or not on the basis of
             this.checkBoxes.stream()
@@ -58,21 +64,17 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
                     .forEach(checkBox -> checkBox.setSelected(true));
 
             // put the value for first time
-            if (parameterT != null)
-                setFieldValueToParameter(getValue(), parameterT);
+            setValue(getValue());
 
             this.gridPane.setHgap(2.0);
             this.gridPane.setVgap(2.0);
 
             // call back for all checkbox
             this.checkBoxes.forEach(checkBox -> checkBox.setOnAction(event -> {
-                // From GUI user has changed the check status
-                String checkboxListStatus = String.join(" ", getValue());
                 // set the property to notify changes
-                controlIdEmitter.setValue(this.checkBoxListT.getID());
+                controlIdEmitter.setValue(this.checkBoxListT.getID() + ":" + getValue());
                 // set the parameter when ever value is changed
-                if (parameterT != null)
-                    setFieldValueToParameter(checkboxListStatus, parameterT);
+                setFieldValueToParameter(getValue(), parameterT);
             }));
 
             // GUI arrangement of checkboxes
@@ -120,7 +122,11 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
 
     @Override
     public String getValue() {
-        return String.join(" ", checkBoxes.stream().filter(CheckBox::isSelected).map(cb -> cb.getId()).collect(Collectors.toList()));
+        return String.join(" ", checkBoxes
+                .stream()
+                .filter(CheckBox::isSelected)
+                .map(cb -> cb.getId())
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -128,7 +134,7 @@ public class FxFixCheckBoxListUiElement implements IFixCheckBoxListUiElement<Pan
         Arrays.asList(strings.split(" ")).forEach(s -> {
             enumIdAndCheckBoxMap.get(s).setSelected(true);
         });
-
+        setFieldValueToParameter(getValue(), parameterT);
     }
 
     @Override

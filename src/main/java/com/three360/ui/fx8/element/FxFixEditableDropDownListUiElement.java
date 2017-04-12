@@ -2,6 +2,8 @@ package com.three360.ui.fx8.element;
 
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.EditableDropDownListT;
+import com.three360.fixatdl.layout.ListItemT;
+import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixEditableDropDownListUiElement;
 import com.three360.ui.fx8.FxUtils;
 import javafx.beans.property.ObjectProperty;
@@ -13,13 +15,12 @@ import javafx.scene.layout.Pane;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 // todo check if editable case is working fine up to wire value
 public class FxFixEditableDropDownListUiElement
         implements IFixEditableDropDownListUiElement<Pane, String> {
 
-    private ComboBox<String> stringComboBox;
+    private ComboBox<ListItemT> editableComboBox;
     private EditableDropDownListT editableDropDownListT;
     private GridPane gridPane;
 
@@ -33,32 +34,27 @@ public class FxFixEditableDropDownListUiElement
         if (this.editableDropDownListT != null) {
             this.gridPane = new GridPane();
             this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
-            if (this.editableDropDownListT.getLabel() != null
-                    && !this.editableDropDownListT.getLabel().equals(""))
+            if (Utils.isNonEmpty(this.editableDropDownListT.getLabel()))
                 this.gridPane.add(new Label(this.editableDropDownListT.getLabel()),
                         this.nextColumn++, 0);
-            this.stringComboBox = new ComboBox<>();
-            this.stringComboBox.getItems()
+            this.editableComboBox = new ComboBox<>();
+            this.editableComboBox.getItems()
                     .addAll(this.editableDropDownListT
-                            .getListItem()
-                            .stream()
-                            .map(listItemT -> listItemT.getUiRep())
-                            .collect(Collectors.toList()));
+                            .getListItem());
 
-            this.stringComboBox.setEditable(true);
-            if (this.editableDropDownListT.getInitValue() != null && this.editableDropDownListT.getInitValue().equals(""))
-                this.stringComboBox.getSelectionModel().selectFirst();
-            else
-                this.stringComboBox.getSelectionModel().select(this.editableDropDownListT.getInitValue());
+            this.editableComboBox.setEditable(true);
 
-            this.stringComboBox.setOnAction(event -> {
-                this.checkedProperty.set(editableDropDownListT.getID());
+            if (Utils.isNonEmpty(this.editableDropDownListT.getInitValue()))
+                setValue(this.editableDropDownListT.getInitValue());
+
+            this.editableComboBox.setOnAction(event -> {
+                this.checkedProperty.set(editableDropDownListT.getID() + ":" + getValue());
 
                 if (this.parameterT != null)
-                    setFieldValueToParameter(stringComboBox.getValue(), this.parameterT);
+                    setFieldValueToParameter(editableComboBox.getValue(), this.parameterT);
             });
 
-            this.gridPane.add(this.stringComboBox, nextColumn, 0);
+            this.gridPane.add(this.editableComboBox, nextColumn, 0);
             return this.gridPane;
         }
         return null;
@@ -92,24 +88,34 @@ public class FxFixEditableDropDownListUiElement
         return this.editableDropDownListT;
     }
 
+    // TODO test with example and debug
     @Override
     public String getValue() {
-        return this.stringComboBox.getValue();
+        return this.editableComboBox.getValue().getEnumID();
     }
 
     @Override
-    public void setValue(String s) {
-        this.stringComboBox.setValue(s);
+    public void setValue(String enumId) {
+        this.editableDropDownListT
+                .getListItem()
+                .stream()
+                .filter(listItemT -> listItemT.getEnumID().equals(enumId))
+                .findFirst()
+                .ifPresent(listItemT -> {
+                    editableComboBox.setValue(listItemT);
+
+                });
+        setFieldValueToParameter(getValue(), this.parameterT);
     }
 
     @Override
     public void makeVisible(boolean visible) {
-        stringComboBox.setVisible(visible);
+        editableComboBox.setVisible(visible);
     }
 
     @Override
     public void makeEnable(boolean enable) {
-        this.stringComboBox.setDisable(!enable);
+        this.editableComboBox.setDisable(!enable);
     }
 
 }

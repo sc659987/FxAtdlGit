@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public interface IFixUiElement<T, K extends Comparable<?>> {
 
-    public static final String NULL_VALUE = "{NULL}";
+    String NULL_VALUE = "{NULL}";
 
     /***
      * create the Ui and return depending on type
@@ -89,8 +89,7 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
                     for (int i = 0; i < names.length; i++)
                         matched |= parameterT.getName().equals(names[i]);
                     return matched;
-                })
-                .collect(Collectors.toList()) : null;
+                }).collect(Collectors.toList()) : null;
     }
 
     /****
@@ -100,7 +99,7 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
      * @return
      */
     default void setFieldValueToParameter(Object object, ParameterT parameterT) {
-        if(parameterT==null)
+        if (parameterT == null)
             return;
 
         if (parameterT instanceof LanguageT) {
