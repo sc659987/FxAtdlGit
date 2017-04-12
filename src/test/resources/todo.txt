@@ -1,0 +1,26 @@
+
+1. make control flow triggered at starting
+2. take xml validation againest xsd from atdl4j
+
+
+(4pm -7pm)
+3. For all control: (13 controls)
+
+
+
+
+
+
+
+
+
+	next :
+	2. work on set value for all controls (5pm -6pm)
+	3. make variable are filled with data at the starting with init value if available for all controls (4pm -5pm)
+	1. make object property change triggerd for all controls (6pm -7pm)
+
+
+	Bug
+
+	1. clock value is not translated to wire value
+	2. multi select value setting is wrong

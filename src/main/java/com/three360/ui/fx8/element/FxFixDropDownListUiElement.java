@@ -95,8 +95,10 @@ public class FxFixDropDownListUiElement implements IFixDropDownListUiElement<Pan
         dropDownListT.getListItem().stream()
                 .filter(listItemT -> listItemT.getEnumID().equals(enumId))
                 .findFirst()
-                .ifPresent(listItemT -> comboBox.setValue(listItemT));
-        setFieldValueToParameter(comboBox.getValue(), this.parameterT);
+                .ifPresent(listItemT -> {
+                    comboBox.setValue(listItemT);
+                    setFieldValueToParameter(comboBox.getValue(), this.parameterT);
+                });
     }
 
     @Override
