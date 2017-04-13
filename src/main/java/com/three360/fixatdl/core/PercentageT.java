@@ -143,9 +143,9 @@ public class PercentageT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 11;
-    }
+	@Override
+	public int getTag959() {
+		return 11;
+	}
 
 }

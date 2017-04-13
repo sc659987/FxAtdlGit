@@ -65,8 +65,8 @@ public class LanguageT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 26;
-    }
+	@Override
+	public int getTag959() {
+		return 26;
+	}
 }

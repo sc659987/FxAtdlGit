@@ -41,7 +41,7 @@ import java.util.List;
  *
  *
  */
-public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<Pane, String> {
+public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<Pane, Double> {
 
 	private Spinner<Double> singleSpinner;
 	private SingleSpinnerT singleSpinnerT;
@@ -56,25 +56,25 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
 
 	@Override
 	public Pane create() {
-		if (this.singleSpinnerT != null && parameterT != null) {
-			Pair<Double, Double> limit = extractRangeFromParameter();
-
-			this.singleSpinner = new Spinner<>(limit.getKey(), limit.getValue(), singleSpinnerT.getInitValue() == null ? 0 : limit.getKey(),
-					this.singleSpinnerT.getIncrement() == null ? ((limit.getKey() == 0.0) ? 0.1 : limit.getKey()) : this.singleSpinnerT.getIncrement());
-
-			this.singleSpinner.setOnMouseClicked(event -> {
-				if (parameterT != null)
-					setFieldValueToParameter(singleSpinner.getValue(), parameterT);
-
-				controlIdEmitter.setValue(singleSpinnerT.getID());
-			});
-
+		if (this.singleSpinnerT != null) {
 			this.gridPane = new GridPane();
 			if (!Utils.isEmpty(this.singleSpinnerT.getLabel())) {
 				this.gridPane.getColumnConstraints().addAll(FxUtils.getTwoColumnSameWidthForGridPane());
 				this.gridPane.add(new Label(this.singleSpinnerT.getLabel()),
 						this.nextColumn++, 0);
 			}
+
+			Pair<Double, Double> limit = extractRangeFromParameter();
+			this.singleSpinner = new Spinner<>(limit.getKey(),
+					limit.getValue(),
+					singleSpinnerT.getInitValue() == null ? 0 : limit.getKey(),
+					this.singleSpinnerT.getIncrement() == null ? ((limit.getKey() == 0.0) ? 0.1 : limit.getKey()) : this.singleSpinnerT.getIncrement());
+
+			this.singleSpinner.setOnMouseClicked(event -> {
+				setValue(getValue());
+				controlIdEmitter.setValue(singleSpinnerT.getID() + ":" + getValue());
+			});
+
 			this.gridPane.add(this.singleSpinner, this.nextColumn, 0);
 			return this.gridPane;
 		}
@@ -117,13 +117,14 @@ public class FxFixSingleSpinnerUiElement implements IFixSingleSpinnerUiElement<P
 	}
 
 	@Override
-	public String getValue() {
-		return this.singleSpinner.getValue().toString();
+	public Double getValue() {
+		return this.singleSpinner.getValue();
 	}
 
 	@Override
-	public void setValue(String s) {
-
+	public void setValue(Double s) {
+		this.singleSpinner.getValueFactory().setValue(s);
+		setFieldValueToParameter(singleSpinner.getValue(), parameterT);
 	}
 
 	@Override

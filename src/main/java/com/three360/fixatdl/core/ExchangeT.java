@@ -62,8 +62,8 @@ public class ExchangeT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 17;
-    }
+	@Override
+	public int getTag959() {
+		return 17;
+	}
 }

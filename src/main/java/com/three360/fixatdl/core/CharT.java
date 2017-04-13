@@ -62,9 +62,9 @@ public class CharT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 12;
-    }
+	@Override
+	public int getTag959() {
+		return 12;
+	}
 
 }

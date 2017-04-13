@@ -38,10 +38,11 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Str
 			}
 			this.textField = new TextField(this.textFieldT.getInitValue());
 
-			if (parameterT != null)
-				this.textField.textProperty().addListener((observable, oldValue, newValue) -> {
-					setFieldValueToParameter(newValue, parameterT);
-				});
+			this.textField.textProperty().addListener((observable, oldValue, newValue) -> setValue(getValue()));
+
+			if (Utils.isNonEmpty(this.textFieldT.getInitValue()))
+				setValue(this.textFieldT.getInitValue());
+
 			this.gridPane.add(this.textField, this.nextColumn, 0);
 			return this.gridPane;
 		}
@@ -82,8 +83,9 @@ public class FxFixTextFieldUiElement implements IFixTextFieldUiElement<Pane, Str
 	}
 
 	@Override
-	public void setValue(String s) {
-		this.textField.setText(s);
+	public void setValue(String text) {
+		this.textField.setText(text);
+		setFieldValueToParameter(text, parameterT);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class FxFixSingleSelectListUiElement
 		implements IFixSingleSelectListUiElement<Pane, String> {
@@ -34,47 +35,32 @@ public class FxFixSingleSelectListUiElement
 	public Pane create() {
 		if (this.singleSelectListT != null) {
 			this.gridPane = new GridPane();
-
-			this.singleSelectListView = new ListView<>(FXCollections.observableArrayList(
-					this.singleSelectListT
-							.getListItem()));
-
-			this.singleSelectListView.setCellFactory(param -> new ListCell<ListItemT>() {
-				@Override
-				protected void updateItem(ListItemT item, boolean empty) {
-					super.updateItem(item, empty);
-					setText(item.getUiRep());
-				}
-			});
-
-			this.singleSelectListView.getSelectionModel()
-					.setSelectionMode(SelectionMode.SINGLE);
-
-			if (parameterT != null)
-				this.singleSelectListView.setOnMouseClicked(event ->
-
-				// TODO fix this code
-				parameterT
-						.getEnumPair()
-						.stream()
-						.filter(enumPairT -> enumPairT.getEnumID()
-								.equals(this.singleSelectListT
-										.getListItem()
-										.get(singleSelectListView
-												.getSelectionModel()
-												.getSelectedIndices()
-												.get(0))
-										.getEnumID()))
-						.findFirst().ifPresent(enumPairT -> {
-							controlIdEmitter.set(singleSelectListT.getID());
-							setFieldValueToParameter(enumPairT.getWireValue(), parameterT);
-						}));
-
 			if (!Utils.isEmpty(this.singleSelectListT.getLabel())) {
 				this.gridPane.getColumnConstraints().addAll(FxUtils.getOneColumnWidthForGridPane());
 				this.gridPane.add(new Label(this.singleSelectListT.getLabel()), 0,
 						this.nextRow++);
 			}
+
+			this.singleSelectListView = new ListView<>(FXCollections.observableArrayList(
+					this.singleSelectListT.getListItem()));
+
+			// TODO check and test it
+			// this.singleSelectListView.setCellFactory(param -> new ListCell<ListItemT>() {
+			// @Override
+			// protected void updateItem(ListItemT item, boolean empty) {
+			// super.updateItem(item, empty);
+			// setText(item.getUiRep());
+			// }
+			// });
+
+			this.singleSelectListView.getSelectionModel()
+					.setSelectionMode(SelectionMode.SINGLE);
+
+			this.singleSelectListView.setOnMouseClicked(event -> {
+				setValue(this.singleSelectListView.getItems().get(
+						singleSelectListView.getSelectionModel().getSelectedIndices().get(0)).getEnumID());
+				controlIdEmitter.set(singleSelectListT.getID() + ":" + getValue());
+			});
 
 			this.gridPane.add(this.singleSelectListView, 0, this.nextRow);
 
@@ -123,7 +109,11 @@ public class FxFixSingleSelectListUiElement
 
 	@Override
 	public void setValue(String s) {
-		// TODO to be done in future for control flow extension
+		IntStream.range(0, singleSelectListT.getListItem().size())
+				.filter(value -> singleSelectListT.getListItem().get(value).getEnumID().equals(s)).findFirst().ifPresent(value -> {
+					singleSelectListView.getSelectionModel().select(value);
+					setFieldValueToParameter(getValue(), this.parameterT);
+				});
 	}
 
 	@Override

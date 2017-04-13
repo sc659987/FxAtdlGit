@@ -60,7 +60,7 @@ public class FxUiElementFactory implements UiElementAbstractFactory {
 	}
 
 	@Override
-	public IFixSingleSpinnerUiElement<Pane, String> instantiateNewSingleSpinner() {
+	public IFixSingleSpinnerUiElement<Pane, Double> instantiateNewSingleSpinner() {
 		return new FxFixSingleSpinnerUiElement();
 	}
 

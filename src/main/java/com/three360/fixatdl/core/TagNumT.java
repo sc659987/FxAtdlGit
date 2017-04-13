@@ -61,9 +61,9 @@ public class TagNumT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 5;
-    }
+	@Override
+	public int getTag959() {
+		return 5;
+	}
 
 }

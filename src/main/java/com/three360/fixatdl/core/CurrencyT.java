@@ -62,9 +62,9 @@ public class CurrencyT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 16;
-    }
+	@Override
+	public int getTag959() {
+		return 16;
+	}
 
 }

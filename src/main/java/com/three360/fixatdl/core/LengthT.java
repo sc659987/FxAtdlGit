@@ -63,9 +63,9 @@ public class LengthT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 2;
-    }
+	@Override
+	public int getTag959() {
+		return 2;
+	}
 
 }

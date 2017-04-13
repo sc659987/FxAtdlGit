@@ -111,9 +111,9 @@ public class TZTimestampT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 28;
-    }
+	@Override
+	public int getTag959() {
+		return 28;
+	}
 
 }

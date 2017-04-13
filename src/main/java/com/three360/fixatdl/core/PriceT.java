@@ -115,9 +115,9 @@ public class PriceT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 8;
-    }
+	@Override
+	public int getTag959() {
+		return 8;
+	}
 
 }

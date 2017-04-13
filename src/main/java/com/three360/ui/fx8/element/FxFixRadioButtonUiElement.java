@@ -32,13 +32,14 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
 					TOGGLE_GROUPS.put(this.radioButtonT.getRadioGroup(), toggleGroup = new ToggleGroup());
 				this.radioButton.setToggleGroup(toggleGroup);
 			}
+
 			if (this.radioButtonT.isInitValue() != null) {
 				this.radioButton.setSelected(this.radioButtonT.isInitValue());
+				setValue(getValue());
 			}
 
 			this.radioButton.setOnAction(event -> {
-				if (parameterT != null)
-					setFieldValueToParameter(radioButton.isSelected(), this.parameterT);
+				setFieldValueToParameter(getValue(), this.parameterT);
 				// publish GUI change mainly for control flow
 				controlIdEmitter.setValue(radioButtonT.getID());
 			});
@@ -83,8 +84,9 @@ public class FxFixRadioButtonUiElement implements IFixRadioButtonUiElement<Radio
 	}
 
 	@Override
-	public void setValue(String s) {
-		// TODO
+	public void setValue(String enumId) {
+		this.radioButton.setSelected(this.radioButtonT.getCheckedEnumRef().equals(enumId));
+		setFieldValueToParameter(getValue(), this.parameterT);
 	}
 
 	@Override

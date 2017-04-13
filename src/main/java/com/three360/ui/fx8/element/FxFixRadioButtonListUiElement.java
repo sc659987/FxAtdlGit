@@ -3,6 +3,7 @@ package com.three360.ui.fx8.element;
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.layout.PanelOrientationT;
 import com.three360.fixatdl.layout.RadioButtonListT;
+import com.three360.ui.Utils;
 import com.three360.ui.common.element.IFixRadioButtonListUiElement;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -40,16 +41,14 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
 				return radioButton;
 			}).collect(Collectors.toList());
 
-			this.radioButtonList.stream().filter(radioButton -> radioButton.getId().equals(radioButtonListT.getInitValue()) ? true : false)
-					.forEach(radioButton -> {
-						radioButton.setSelected(true);
-					});
+			if (Utils.isNonEmpty(this.radioButtonListT.getInitValue()))
+				setValue(this.radioButtonListT.getInitValue());
 
 			this.radioButtonList.forEach(radioButton -> {
 
 				radioButton.setOnAction(event -> {
-					if (parameterT != null)
-						setFieldValueToParameter(((RadioButton) event.getSource()).getId(), parameterT);
+					setFieldValueToParameter(((RadioButton) event.getSource()).getId(), parameterT);
+					this.controlIdEmitter.setValue(this.radioButtonListT.getID() + ":" + getValue());
 				});
 
 			});
@@ -96,12 +95,17 @@ public class FxFixRadioButtonListUiElement implements IFixRadioButtonListUiEleme
 				.filter(RadioButton::isSelected)
 				.map(radioButton -> radioButton.getId())
 				.findFirst()
-				.orElse(null);
+				.orElse("");
 	}
 
 	@Override
 	public void setValue(String s) {
-
+		this.radioButtonList
+				.stream()
+				.filter(radioButton -> radioButton.getId().equals(s) ? true : false)
+				.forEach(radioButton -> {
+					radioButton.setSelected(true);
+				});
 	}
 
 	@Override

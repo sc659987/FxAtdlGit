@@ -111,9 +111,9 @@ public class FloatT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 6;
-    }
+	@Override
+	public int getTag959() {
+		return 6;
+	}
 
 }

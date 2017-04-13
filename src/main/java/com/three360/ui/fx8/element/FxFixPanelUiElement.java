@@ -25,9 +25,6 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
 
 	private List<Region> regionList;
 
-	// TODO check the functionality of it
-	private ScrollPane scrollPane;
-
 	private List<ParameterT> parameterTList;
 
 	private FxFxAtdlControlFlowRegister fxAtdlControlFlowRegister = new FxFxAtdlControlFlowRegister();
@@ -147,8 +144,6 @@ public class FxFixPanelUiElement implements IFixPanelUiElement<Node, String> {
 					throw new RuntimeException("control is not recognized");
 				}).collect(Collectors.toList());
 				parent.getChildren().setAll(regionList);
-				scrollPane = new ScrollPane();
-				scrollPane.setContent(parent);
 			}
 			titledPane.setContent(parent);
 			return titledPane;

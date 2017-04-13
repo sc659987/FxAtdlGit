@@ -115,9 +115,9 @@ public class QtyT
 		this.constValue = value;
 	}
 
-    @Override
-    public int getTag959() {
-        return 7;
-    }
+	@Override
+	public int getTag959() {
+		return 7;
+	}
 
 }
