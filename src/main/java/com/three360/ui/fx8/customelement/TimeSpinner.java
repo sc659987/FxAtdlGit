@@ -144,6 +144,7 @@ public class TimeSpinner extends Spinner<LocalTime> {
 	public TimeSpinner(LocalTime time) {
 		setEditable(true);
 		this.time = time;
+		this.valueFactory.setValue(this.time);
 		// Create a StringConverter for converting between the text in the
 		// editor and the actual value:
 

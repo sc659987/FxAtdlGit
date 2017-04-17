@@ -38,18 +38,16 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, String> {
 
 			this.timeSpinner = new TimeSpinner();
 
-			timeSpinner.setOnMouseClicked(event -> {
-				if (parameterT != null)
-					setFieldValueToParameter(getValue(), parameterT);
-			});
+			timeSpinner.setOnMouseClicked(event -> setFieldValueToParameter(getValue(), parameterT));
 
 			if (clockT.getInitValue() != null) {
 				XMLGregorianCalendar xmlGregorianCalendar = clockT.getInitValue();
 				setValue(xmlGregorianCalendar.getHour() + ":"
 						+ xmlGregorianCalendar.getMinute() + ":"
 						+ xmlGregorianCalendar.getSecond());
+			} else {
+				setValue(getValue());
 			}
-
 			this.gridPane.add(this.timeSpinner, 1, 0);
 			return this.gridPane;
 		}
@@ -93,6 +91,7 @@ public class FxFixClockUiElement implements IFixClockUiElement<Pane, String> {
 	public void setValue(String s) {
 		if (Utils.isNonEmpty(s))
 			timeSpinner.setTime(s.equals(NULL_VALUE) ? LocalTime.now() : LocalTime.parse(s, ATDL_TIME_ONLY_FORMATTER));
+		setFieldValueToParameter(getValue(), parameterT);
 	}
 
 	// TODO clean the code on 13-04-2017 after 12 PM

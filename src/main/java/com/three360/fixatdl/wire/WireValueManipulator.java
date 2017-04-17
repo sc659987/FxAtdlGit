@@ -38,7 +38,7 @@ public class WireValueManipulator implements WireValueGenerator, WireValueInterp
 		try {
 			Field field = parameterT.getClass().getDeclaredField("constValue");
 			field.setAccessible(true);
-			return field != null ? (Comparable) field.get(parameterT) : null;
+			return field != null ? field.get(parameterT) : null;
 		} catch (Exception e) {
 		}
 		return null;

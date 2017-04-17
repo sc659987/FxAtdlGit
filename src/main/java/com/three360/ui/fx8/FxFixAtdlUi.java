@@ -50,7 +50,7 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 
 	public FxFixAtdlUi() {
 		try {
-			jaxbUnmarshaller = JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
+			this.jaxbUnmarshaller = JAXBContext.newInstance(StrategiesT.class.getPackage().getName()).createUnmarshaller();
 		} catch (Exception e) {
 		}
 	}
@@ -63,20 +63,21 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 			if (getStrategies().getStrategy().size() > 0)
 				setSelectedStrategy(getStrategies().getStrategy().get(0));
 			if (getSelectedStrategy() != null) {
-				createFixLayout();
-				createFixErrorMessage();
-				this.iStrategyEditValidator = new StrategyEditValidator(super.selectedStrategyT.getStrategyEdit(),
+				this.iStrategyEditValidator = new StrategyEditValidator(
 						super.selectedStrategyT.getParameter());
 				this.iParameterValidator = new ParameterValidatorImpl(super.selectedStrategyT.getParameter());
+				createFixLayout();
+				createFixErrorMessage();
 			}
 		}
 		return this.borderPane;
 	}
 
 	private void createFixLayout() {
-		IFixLayoutUiElement<Node, String> layoutUiElement = factory.instantiateNewLayout();
+		IFixLayoutUiElement<Node, String> layoutUiElement = this.factory.instantiateNewLayout();
 		layoutUiElement.setStrategyLayout(getSelectedStrategy().getStrategyLayout());
 		layoutUiElement.setParameters(super.selectedStrategyT.getParameter());
+		this.iStrategyEditValidator.setStrategyEditTS(super.selectedStrategyT.getStrategyEdit());
 		this.borderPane.setCenter(layoutUiElement.create());
 	}
 
@@ -135,6 +136,7 @@ public class FxFixAtdlUi extends AbstractFixAtdlUi<Pane> {
 			List<ListItemT> listItemTS = getStrategies().getStrategy().stream().map(s -> {
 				ListItemT listItemT = new ListItemT();
 				listItemT.setUiRep(s.getUiRep());
+				listItemT.setEnumID(s.getUiRep());
 				return listItemT;
 			}).collect(Collectors.toList());
 			DropDownListT dropDownListT = new DropDownListT();

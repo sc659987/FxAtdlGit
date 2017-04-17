@@ -4,14 +4,15 @@ import com.three360.fixatdl.core.*;
 import com.three360.fixatdl.layout.ControlT;
 import javafx.beans.property.ObjectProperty;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 public interface IFixUiElement<T, K extends Comparable<?>> {
@@ -116,7 +117,6 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 					BigInteger bigDecimal = new BigInteger((String) object);
 					((LengthT) parameterT).setConstValue(bigDecimal);
 				} catch (NumberFormatException e) {
-
 				}
 			} else if (object instanceof BigInteger) {
 				((LengthT) parameterT).setConstValue((BigInteger) object);
@@ -143,16 +143,10 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 		} else if (parameterT instanceof UTCTimeOnlyT) {
 			if (object instanceof String) {
 				UTCTimeOnlyT utcTimeOnlyT = (UTCTimeOnlyT) parameterT;
-				// TODO check and change code to use time only hh:mm:ss
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
-				simpleDateFormat.setTimeZone(TimeZone.getTimeZone(utcTimeOnlyT.getLocalMktTz().value()));
 				try {
-					GregorianCalendar gregorianCalendar = new GregorianCalendar();
-					gregorianCalendar.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar calendar = DatatypeFactory
+					utcTimeOnlyT.setConstValue(DatatypeFactory
 							.newInstance()
-							.newXMLGregorianCalendar(gregorianCalendar);
-					utcTimeOnlyT.setConstValue(calendar);
+							.newXMLGregorianCalendar(getValue((String) object, hMmSsFormat)));
 				} catch (Exception e) {
 				}
 			}
@@ -171,27 +165,22 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 				}
 			}
 		} else if (parameterT instanceof TZTimestampT) {
+			// TODO read about the date type
 			if (object instanceof String) {
 				TZTimestampT tzTimestampT = (TZTimestampT) parameterT;
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 				try {
-					GregorianCalendar gregorianCalendar = new GregorianCalendar();
-					gregorianCalendar.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
-							.newXMLGregorianCalendar(gregorianCalendar);
-					tzTimestampT.setConstValue(xmlGregorianCalendar);
+					tzTimestampT.setConstValue(DatatypeFactory.newInstance()
+							.newXMLGregorianCalendar(getValue((String) object, hMmSsFormat, hMmFormat)));
 				} catch (Exception e) {
 				}
 			}
 		} else if (parameterT instanceof LocalMktDateT) {
+			// TODO read about the date type
 			if (object instanceof String) {
 				LocalMktDateT localMktDateT = (LocalMktDateT) parameterT;
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 				try {
-					GregorianCalendar gregorianCalendar1 = new GregorianCalendar();
-					gregorianCalendar1.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar calendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar1);
-					localMktDateT.setConstValue(calendar);
+					localMktDateT.setConstValue(DatatypeFactory.newInstance()
+							.newXMLGregorianCalendar(getValue((String) object, hMmSsFormat, hMmFormat)));
 				} catch (Exception e) {
 				}
 			}
@@ -219,7 +208,7 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 		} else if (parameterT instanceof MonthYearT) {
 			if (object instanceof String) {
 				MonthYearT monthYearT = (MonthYearT) parameterT;
-				// TODO consumeWireString and debug
+				// TODO consumeWireString and debug test
 				monthYearT.setConstValue((String) object);
 			}
 		} else if (parameterT instanceof TenorT) {
@@ -232,34 +221,33 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 				((BooleanT) parameterT).setConstValue((String) object);
 			}
 		} else if (parameterT instanceof TZTimeOnlyT) {
+			//
 			if (object instanceof String) {
 				TZTimeOnlyT tzTimeOnlyT = (TZTimeOnlyT) parameterT;
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
 				try {
-					GregorianCalendar gregorianCalendar = new GregorianCalendar();
-					gregorianCalendar.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory
-							.newInstance()
-							.newXMLGregorianCalendar(gregorianCalendar);
+					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
+							.newXMLGregorianCalendar(getValue((String) object, hMmSsFormat, hMmFormat));
+					xmlGregorianCalendar.setYear(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setMonth(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setDay(DatatypeConstants.FIELD_UNDEFINED);
 					tzTimeOnlyT.setConstValue(xmlGregorianCalendar);
 				} catch (Exception e) {
 				}
 			}
 		} else if (parameterT instanceof UTCDateOnlyT) {
-			if (object instanceof UTCTimeOnlyT) {
-				UTCTimeOnlyT utcTimeOnlyT = (UTCTimeOnlyT) parameterT;
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+			//
+			if (object instanceof String) {
+				UTCDateOnlyT utcDateOnlyT = (UTCDateOnlyT) parameterT;
 				try {
-					GregorianCalendar gregorianCalendar = new GregorianCalendar();
-					gregorianCalendar.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory
-							.newInstance()
-							.newXMLGregorianCalendar(gregorianCalendar);
-					utcTimeOnlyT.setConstValue(xmlGregorianCalendar);
+					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
+							.newXMLGregorianCalendar(getValue((String) object, mmDdYyyyFormat));
+					xmlGregorianCalendar.setHour(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+					utcDateOnlyT.setConstValue(xmlGregorianCalendar);
 				} catch (Exception e) {
 				}
 			}
-
 		} else if (parameterT instanceof MultipleCharValueT) {
 			if (object instanceof String) {
 				MultipleCharValueT charValueT = (MultipleCharValueT) parameterT;
@@ -310,7 +298,6 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 
 				}
 			}
-
 		} else if (parameterT instanceof QtyT) {
 			if (object instanceof String) {
 				try {
@@ -331,20 +318,34 @@ public interface IFixUiElement<T, K extends Comparable<?>> {
 				}
 			}
 		} else if (parameterT instanceof UTCTimestampT) {
-			if (object instanceof String) {
-				UTCTimestampT utcTimestampT = (UTCTimestampT) parameterT;
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+			if (object instanceof String)
 				try {
-					GregorianCalendar gregorianCalendar = new GregorianCalendar();
-					gregorianCalendar.setTime(simpleDateFormat.parse((String) object));
-					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance()
-							.newXMLGregorianCalendar(gregorianCalendar);
+					UTCTimestampT utcTimestampT = (UTCTimestampT) parameterT;
+					XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory
+							.newInstance()
+							.newXMLGregorianCalendar(getValue((String) object, hMmSsFormat, hMmFormat));
+					xmlGregorianCalendar.setYear(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setMonth(DatatypeConstants.FIELD_UNDEFINED);
+					xmlGregorianCalendar.setDay(DatatypeConstants.FIELD_UNDEFINED);
 					utcTimestampT.setConstValue(xmlGregorianCalendar);
 				} catch (Exception e) {
 				}
-			}
-
 		}
+	}
+
+	SimpleDateFormat hMmSsFormat = new SimpleDateFormat("H:mm:ss");
+	SimpleDateFormat hMmFormat = new SimpleDateFormat("H:mm");
+	SimpleDateFormat mmDdYyyyFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+	default GregorianCalendar getValue(String string, SimpleDateFormat... args) {
+		GregorianCalendar gregorianCalendar = new GregorianCalendar();
+		for (SimpleDateFormat simpleDateFormat : args)
+			try {
+				gregorianCalendar.setTime(simpleDateFormat.parse((String) string));
+				return gregorianCalendar;
+			} catch (ParseException e) {
+			}
+		return null;
 	}
 
 }

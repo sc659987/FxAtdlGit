@@ -2,7 +2,7 @@ package com.three360.ui.fx8.validator;
 
 import com.three360.fixatdl.core.ParameterT;
 import com.three360.fixatdl.validation.StrategyEditT;
-import com.three360.ui.validator.EditRuleEvaluator;
+import com.three360.ui.validator.EditEvaluator;
 import com.three360.ui.validator.IStrategyEditValidator;
 import javafx.util.Pair;
 
@@ -11,33 +11,26 @@ import java.util.stream.Collectors;
 
 public class StrategyEditValidator implements IStrategyEditValidator {
 
-	private EditRuleEvaluator editRuleEvaluator;
-
+	private EditEvaluator editEvaluator;
 	private List<StrategyEditT> strategyEditTS;
-
-	private List<ParameterT> parameterTS;
-
 	private FieldToComparableMapperParameterCache fieldToComparableMapperParameterCache;
 
-	public StrategyEditValidator(List<StrategyEditT> strategyEditTS, List<ParameterT> parameterTS) {
+	public StrategyEditValidator(List<ParameterT> parameterTS) {
 		assert (strategyEditTS != null && parameterTS != null);
+		this.fieldToComparableMapperParameterCache = new FieldToComparableMapperParameterCache(parameterTS);
+		this.editEvaluator = new RecursiveEditEvaluatorImpl(this.fieldToComparableMapperParameterCache);
+	}
 
-		this.strategyEditTS = strategyEditTS;
-		this.parameterTS = parameterTS;
-
-		this.fieldToComparableMapperParameterCache = new FieldToComparableMapperParameterCache(this.parameterTS);
-
-		this.editRuleEvaluator = new EditRuleEvaluatorImpl(this.fieldToComparableMapperParameterCache);
-
+	public void setStrategyEditTS(List<StrategyEditT> editTS) {
+		this.strategyEditTS = editTS;
 	}
 
 	@Override
 	public List<String> validateStrategyEditRuleAndGetErrorMessage() {
-		return this.strategyEditTS
-				.stream()
-				.map(strategyEditT -> new Pair<>(this.editRuleEvaluator
+		return this.strategyEditTS.stream()
+				.map(strategyEditT -> new Pair<>(this.editEvaluator
 						.validate(strategyEditT.getEdit()), strategyEditT.getErrorMessage()))
-				.filter(booleanStringPair -> booleanStringPair.getKey())
+				.filter(booleanStringPair -> !booleanStringPair.getKey())
 				.map(booleanStringPair -> booleanStringPair.getValue())
 				.collect(Collectors.toList());
 	}
